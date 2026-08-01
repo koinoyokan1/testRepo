@@ -42,7 +42,14 @@
     {
       "description": "Disable all updates by default - only Black Duck findings will be enabled",
       "matchPackagePatterns": ["*"],
+      "matchManagers": ["gomod", "npm"],
       "enabled": false
+    },
+    {
+      "description": "Enable Docker updates for vulnerable base images",
+      "matchManagers": ["docker-compose", "dockerfile"],
+      "matchPackageNames": ["nginx", "postgres", "redis", "node", "golang"],
+      "enabled": true
     },
     {
       "description": "Black Duck - gin CVE fixes (HIGH + MEDIUM)",
@@ -248,9 +255,10 @@
     },
     {
       "description": "Black Duck - nginx CVE-2021-23017 (HIGH)",
-      "matchFileNames": ["image_versions.json"],
+      "matchFileNames": ["image_versions.json", "docker-compose.yml"],
       "matchPackageNames": ["nginx"],
       "enabled": true,
+      "allowedVersions": ">=1.25.3",
       "prTitle": "fix(security): update nginx to 1.25.3 to fix CVE-2021-23017",
       "prBodyNotes": [
         "### 🔒 Security Update - Container Image (PREBUILT)",
@@ -295,9 +303,10 @@
     },
     {
       "description": "Black Duck - postgres CVE-2021-32027 (HIGH)",
-      "matchFileNames": ["image_versions.json"],
+      "matchFileNames": ["image_versions.json", "docker-compose.yml"],
       "matchPackageNames": ["postgres"],
       "enabled": true,
+      "allowedVersions": ">=15.5",
       "prTitle": "fix(security): update postgres to 15.5 to fix CVE-2021-32027",
       "prBodyNotes": [
         "### 🔒 Security Update - Container Image (PREBUILT)",
@@ -342,10 +351,59 @@
       "reviewers": ["database-team@company.com"]
     },
     {
+      "description": "Black Duck - redis CVE-2021-32672 (MEDIUM)",
+      "matchFileNames": ["image_versions.json", "docker-compose.yml"],
+      "matchPackageNames": ["redis"],
+      "enabled": true,
+      "allowedVersions": ">=7.2.3",
+      "prTitle": "fix(security): update redis to 7.2.3 to fix CVE-2021-32672",
+      "prBodyNotes": [
+        "### 🔒 Security Update - Container Image (PREBUILT)",
+        "",
+        "**Image**: redis:6.0.9",
+        "**Current Version**: 6.0.9",
+        "**Recommended Version**: 7.2.3",
+        "",
+        "**Vulnerabilities Fixed**:",
+        "",
+        "#### CVE-2021-32672 (MEDIUM)",
+        "- **CVSS Score**: 6.5",
+        "- **Description**: Integer overflow in Redis allows authenticated users to cause denial of service",
+        "",
+        "**Remediation**: Update redis to version 6.0.14 or later, preferably 7.2.3 for latest features and security",
+        "",
+        "---",
+        "",
+        "### 👥 Reviewers",
+        "",
+        "**Owner**: platform-team@company.com",
+        "",
+        "**Components Using This Image:**",
+        "- services/api-gateway",
+        "- services/auth",
+        "",
+        "---",
+        "",
+        "**File to Update**: `image_versions.json` and `docker-compose.yml`",
+        "",
+        "This PR was created based on Black Duck container image scan findings."
+      ],
+      "labels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "container-image",
+        "prebuilt",
+        "cve-2021-32672"
+      ],
+      "reviewers": ["platform-team@company.com"]
+    },
+    {
       "description": "Black Duck - node CVE-2022-21824 (HIGH)",
-      "matchFileNames": ["image_versions.json"],
+      "matchFileNames": ["image_versions.json", "docker-compose.yml", "services/web-frontend/Dockerfile"],
       "matchPackageNames": ["node"],
       "enabled": true,
+      "allowedVersions": ">=20.10.0",
       "prTitle": "fix(security): update node to 20.10.0-alpine to fix CVE-2022-21824",
       "prBodyNotes": [
         "### 🔒 Security Update - Container Image (PREBUILT)",
@@ -392,9 +450,10 @@
     },
     {
       "description": "Black Duck - golang CVE-2022-41716 (HIGH)",
-      "matchFileNames": ["image_versions.json"],
+      "matchFileNames": ["image_versions.json", "docker-compose.yml", "services/api-gateway/Dockerfile", "services/auth/Dockerfile"],
       "matchPackageNames": ["golang"],
       "enabled": true,
+      "allowedVersions": ">=1.21.5",
       "prTitle": "fix(security): update golang to 1.21.5-alpine to fix CVE-2022-41716",
       "prBodyNotes": [
         "### 🔒 Security Update - Container Image (PREBUILT)",
