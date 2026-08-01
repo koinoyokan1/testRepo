@@ -61,9 +61,9 @@ Ensure these files exist in your repository:
    - Uploads artifacts
 
 2. **Renovate workflow** runs:
-   - Processes Black Duck findings
-   - Reads `renovate.json` configuration
-   - Creates **separate PRs** for each vulnerability:
+   - Dynamically generates Renovate rules from Black Duck findings
+   - Merges generated rules with base `renovate.json` configuration
+   - Creates **separate PRs** for each vulnerability found in Black Duck reports:
      - `fix(security): update gin to v1.9.1+ to fix CVE-2023-29401 (HIGH)`
      - Each PR includes CVE details, severity, and remediation steps
 

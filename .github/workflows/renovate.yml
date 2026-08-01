@@ -37,25 +37,95 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Process Black Duck findings
+      - name: Generate Renovate rules from Black Duck findings
         id: blackduck
         run: |
           echo "Processing Black Duck vulnerability reports..."
-          
-          if [ -f "blackduck.json" ]; then
-            echo "Found blackduck.json"
-            python3 simulate_blackduck.py --simple
-          fi
-          
-          if [ -f "blackduck_report.json" ]; then
-            echo "Found blackduck_report.json"
-            python3 simulate_blackduck.py --report
+
+          # Check if Black Duck reports exist
+          if [ -f "blackduck.json" ] || [ -f "blackduck_report.json" ]; then
+            echo "Found Black Duck vulnerability reports"
+
+            # Generate dynamic Renovate rules
+            python3 generate_renovate_rules.py
+
+            # Merge generated rules with base renovate.json
+            if [ -f "renovate-blackduck-generated.json" ]; then
+              echo "Successfully generated renovate-blackduck-generated.json"
+
+              # Create a merged config that extends both base and generated rules
+              cat > renovate-merged.json << 'EOF'
+          {
+            "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+            "extends": [
+              "config:recommended"
+            ],
+            "description": "Renovate configuration with Black Duck vulnerability remediation",
+            "prConcurrentLimit": 0,
+            "branchConcurrentLimit": 0,
+            "separateMinorPatch": true,
+            "separateMultipleMajor": true,
+            "separateMajorMinor": true,
+            "rangeStrategy": "update-lockfile",
+            "semanticCommits": "enabled",
+            "commitMessagePrefix": "fix(deps):",
+            "commitMessageTopic": "{{depName}}",
+            "commitMessageExtra": "to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+            "labels": [
+              "dependencies",
+              "security"
+            ],
+            "assignees": [],
+            "reviewers": [],
+            "vulnerabilityAlerts": {
+              "enabled": true,
+              "labels": ["security"],
+              "assignees": []
+            },
+            "golang": {
+              "enabled": true,
+              "commitMessageTopic": "Go module {{depName}}"
+            }
+          }
+          EOF
+
+              # Merge package rules from generated config into merged config
+              python3 << 'PYTHON'
+          import json
+
+          # Read base merged config
+          with open('renovate-merged.json') as f:
+              merged = json.load(f)
+
+          # Read generated rules
+          with open('renovate-blackduck-generated.json') as f:
+              generated = json.load(f)
+
+          # Add generated package rules
+          merged['packageRules'] = generated.get('packageRules', [])
+
+          # Write merged config
+          with open('renovate-merged.json', 'w') as f:
+              json.dump(merged, f, indent=2)
+
+          print("✓ Merged Black Duck rules into Renovate configuration")
+          print(f"✓ Total package rules: {len(merged['packageRules'])}")
+          PYTHON
+
+              echo "Using merged configuration with dynamic Black Duck rules"
+            else
+              echo "Warning: Failed to generate Black Duck rules, using base renovate.json"
+              cp renovate.json renovate-merged.json
+            fi
+          else
+            echo "No Black Duck reports found, using base renovate.json"
+            cp renovate.json renovate-merged.json
           fi
 
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@v40.3.2
         with:
-          configurationFile: renovate.json
+          configurationFile: renovate-merged.json
           token: ${{ secrets.RENOVATE_TOKEN || secrets.GITHUB_TOKEN }}
         env:
           LOG_LEVEL: ${{ inputs.logLevel || 'debug' }}

@@ -26,6 +26,7 @@ vendor/
 
 # Generated files
 renovate-blackduck-generated.json
+renovate-merged.json
 blackduck_scan_output.txt
 __pycache__/
 *.py[cod]

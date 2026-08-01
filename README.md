@@ -87,9 +87,10 @@ This project is configured to automatically create PRs for vulnerability fixes:
 
 ### How It Works
 
-1. **Black Duck findings** are stored in JSON files
-2. **Renovate** reads the configuration and creates **separate PRs** for each CVE
-3. **GitHub Actions** orchestrates the automation
+1. **Black Duck findings** are stored in JSON files (`blackduck.json`, `blackduck_report.json`)
+2. **On every run**, Renovate workflow dynamically generates rules from Black Duck reports
+3. **Renovate** uses the generated rules and creates **separate PRs** for each CVE found
+4. **GitHub Actions** orchestrates the automation (runs hourly)
 
 ### Expected PRs
 
@@ -112,11 +113,13 @@ Based on current vulnerabilities, Renovate will create:
 
 ### Generate Renovate Rules
 
+The workflow automatically generates rules on every run. To test locally:
+
 ```bash
 python3 generate_renovate_rules.py
 ```
 
-This creates `renovate-blackduck-generated.json` with package rules for each vulnerability.
+This creates `renovate-blackduck-generated.json` with package rules for each vulnerability found in the Black Duck reports.
 
 ## 📚 Documentation
 
