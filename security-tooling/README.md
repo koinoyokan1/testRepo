@@ -31,8 +31,11 @@ Note: GitHub Actions workflows are in the repository root at `../.github/workflo
 All scripts expect to be run from the **repository root directory**:
 
 ```bash
-# Generate Renovate rules from Black Duck findings
+# Generate Renovate rules from Black Duck findings (code dependencies)
 python3 security-tooling/generate_renovate_rules.py
+
+# Scan container images and generate rules
+python3 security-tooling/scan_container_images.py
 
 # Analyze all vulnerabilities (Go + npm)
 python3 security-tooling/manage_reviewers.py process-report
@@ -50,14 +53,16 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 ### Configuration Files
 - **`component_ownership.json`** - Maps directories to team owners
 - **`renovate.json`** - Base Renovate configuration
-- **`blackduck_report.json`** - Black Duck vulnerability scan results
+- **`blackduck_report.json`** - Black Duck vulnerability scan results (code + containers)
+- **`../image_versions.json`** - Container image versions (prebuilt + custom)
 
 ### GitHub Workflows (in `../.github/workflows/`)
 - **`blackduck-integration.yml`** - Automated Black Duck security scanning
 - **`renovate.yml`** - Renovate PR creation and reviewer assignment
 
 ### Scripts
-- **`generate_renovate_rules.py`** - Creates Renovate package rules from Black Duck findings
+- **`generate_renovate_rules.py`** - Creates Renovate package rules from Black Duck findings (code dependencies)
+- **`scan_container_images.py`** - Scans container images from Black Duck findings and generates Renovate rules
 - **`manage_reviewers.py`** - Unified reviewer management (Go + npm)
 - **`npm_reviewer_utils.py`** - npm/TypeScript dependency analysis utilities
 - **`simulate_blackduck.py`** - Test tool for Black Duck report processing
@@ -86,12 +91,13 @@ See **[DOCUMENTATION.md](DOCUMENTATION.md)** for complete documentation covering
 
 ## 🎯 Features
 
-- **Multi-Ecosystem Support** - Go (via `go list`) + npm (via import analysis)
+- **Multi-Ecosystem Support** - Go (via `go list`) + npm (via import analysis) + Container images
+- **Container Image Scanning** - Both prebuilt (nginx, postgres, redis) and custom-built images
 - **Nested Module Support** - Handles monorepos with multiple `go.mod` and `package.json` files
 - **Automated Reviewer Assignment** - Finds affected components and assigns correct teams
 - **Version Constraints** - Stays within same minor version to minimize breaking changes
-- **Component Ownership** - Maps directory structure to teams
-- **Unified Analysis** - Single tool processes entire Black Duck report
+- **Component Ownership** - Maps directory structure and images to teams
+- **Unified Analysis** - Single tool processes entire Black Duck report (code + containers)
 
 ## 🔧 Requirements
 

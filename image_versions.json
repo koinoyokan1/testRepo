@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "description": "Container image versions used across the platform",
+  "prebuilt_images": {
+    "nginx": {
+      "registry": "docker.io",
+      "repository": "library/nginx",
+      "tag": "1.21.0",
+      "full_image": "nginx:1.21.0",
+      "purpose": "Web server and reverse proxy",
+      "owner": "platform-team@company.com",
+      "components_using": [
+        "services/web-frontend",
+        "services/admin-dashboard"
+      ]
+    },
+    "postgres": {
+      "registry": "docker.io",
+      "repository": "library/postgres",
+      "tag": "13.2",
+      "full_image": "postgres:13.2",
+      "purpose": "Primary database",
+      "owner": "database-team@company.com",
+      "components_using": [
+        "services/auth",
+        "services/users",
+        "services/payment"
+      ]
+    },
+    "redis": {
+      "registry": "docker.io",
+      "repository": "library/redis",
+      "tag": "6.0.9",
+      "full_image": "redis:6.0.9",
+      "purpose": "Cache and session store",
+      "owner": "platform-team@company.com",
+      "components_using": [
+        "services/api-gateway",
+        "services/auth"
+      ]
+    },
+    "node": {
+      "registry": "docker.io",
+      "repository": "library/node",
+      "tag": "16.14.0-alpine",
+      "full_image": "node:16.14.0-alpine",
+      "purpose": "Base image for Node.js services",
+      "owner": "frontend-team@company.com",
+      "components_using": [
+        "services/web-frontend",
+        "services/admin-dashboard",
+        "contrib/analytics-plugin"
+      ]
+    },
+    "golang": {
+      "registry": "docker.io",
+      "repository": "library/golang",
+      "tag": "1.19.0-alpine",
+      "full_image": "golang:1.19.0-alpine",
+      "purpose": "Base image for Go services",
+      "owner": "backend-team@company.com",
+      "components_using": [
+        "services/api-gateway",
+        "services/auth",
+        "services/users",
+        "services/payment"
+      ]
+    }
+  },
+  "custom_images": {
+    "api-gateway": {
+      "registry": "ghcr.io",
+      "repository": "company/api-gateway",
+      "tag": "v2.3.1",
+      "full_image": "ghcr.io/company/api-gateway:v2.3.1",
+      "base_image": "golang:1.19.0-alpine",
+      "purpose": "API Gateway service",
+      "owner": "alice@company.com",
+      "dockerfile": "services/api-gateway/Dockerfile",
+      "components_using": [
+        "services/api-gateway"
+      ]
+    },
+    "auth-service": {
+      "registry": "ghcr.io",
+      "repository": "company/auth-service",
+      "tag": "v1.5.2",
+      "full_image": "ghcr.io/company/auth-service:v1.5.2",
+      "base_image": "golang:1.19.0-alpine",
+      "purpose": "Authentication and authorization service",
+      "owner": "david@company.com",
+      "dockerfile": "services/auth/Dockerfile",
+      "components_using": [
+        "services/auth"
+      ]
+    },
+    "user-service": {
+      "registry": "ghcr.io",
+      "repository": "company/user-service",
+      "tag": "v1.8.0",
+      "full_image": "ghcr.io/company/user-service:v1.8.0",
+      "base_image": "golang:1.19.0-alpine",
+      "purpose": "User management service",
+      "owner": "frank@company.com",
+      "dockerfile": "services/users/Dockerfile",
+      "components_using": [
+        "services/users"
+      ]
+    },
+    "web-frontend": {
+      "registry": "ghcr.io",
+      "repository": "company/web-frontend",
+      "tag": "v3.2.0",
+      "full_image": "ghcr.io/company/web-frontend:v3.2.0",
+      "base_image": "node:16.14.0-alpine",
+      "purpose": "Main web frontend application",
+      "owner": "xavier@company.com",
+      "dockerfile": "services/web-frontend/Dockerfile",
+      "components_using": [
+        "services/web-frontend"
+      ]
+    },
+    "admin-dashboard": {
+      "registry": "ghcr.io",
+      "repository": "company/admin-dashboard",
+      "tag": "v2.1.5",
+      "full_image": "ghcr.io/company/admin-dashboard:v2.1.5",
+      "base_image": "node:16.14.0-alpine",
+      "purpose": "Administrative dashboard",
+      "owner": "zoe@company.com",
+      "dockerfile": "services/admin-dashboard/Dockerfile",
+      "components_using": [
+        "services/admin-dashboard"
+      ]
+    }
+  }
+}
