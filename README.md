@@ -1,19 +1,55 @@
-# Black Duck Vulnerability Simulation - Go Project
+# Black Duck + Renovate Integration with Component Ownership
 
-This repository simulates a Go project with known vulnerabilities detected by Black Duck, specifically targeting the **Gin web framework**. It demonstrates automated vulnerability remediation using **Renovate** integration.
+This repository demonstrates automated vulnerability remediation using **Black Duck** security scanning and **Renovate** dependency updates, with intelligent **component-based reviewer assignment**.
 
 ## Project Overview
 
 - **Go Module**: `example.com/oldversion`
 - **Vulnerable Package**: `github.com/gin-gonic/gin v1.8.0` (older version with known CVEs)
-- **Application**: Simple REST API with `/ping` and `/hello/:name` endpoints
-- **Automation**: Renovate creates **separate PRs** for each vulnerability fix
+- **Application**: Multi-service Go application (API Gateway, Auth, Users, Payment, Utilities)
+- **Automation**:
+  - Black Duck detects vulnerabilities
+  - Renovate creates PRs with version constraints (e.g., v1.9.x, not v1.12.0)
+  - Component owners automatically assigned as reviewers
+
+## ✨ Key Features
+
+1. **Automated Reviewer Assignment** - Uses `go list` to find affected components
+2. **Version Constraints** - Stays within same minor version to minimize breaking changes
+3. **Component Ownership** - Maps directory structure to teams and owners
+4. **Mock Infrastructure** - Complete working example with 6 components
+
+## 📋 Requirements
+
+- **Go 1.20+** (required for `go list` dependency analysis)
+- **Python 3.9+**
+- **Git**
+- **GitHub Actions** (for automated workflow)
 
 ## 🚀 Quick Start
 
-### Self-Hosted Renovate Setup
+### 1. Review Component Ownership
 
-See [RENOVATE_SETUP.md](RENOVATE_SETUP.md) for detailed setup instructions.
+See [COMPONENT_OWNERSHIP.md](COMPONENT_OWNERSHIP.md) for the ownership system.
+
+Edit `component_ownership.json` to map your directories to teams:
+```json
+{
+  "name": "API Gateway",
+  "directories": ["services/api-gateway"],
+  "owners": {
+    "primary": ["alice@company.com"],
+    "secondary": ["bob@company.com"]
+  }
+}
+```
+
+### 2. Test Reviewer Assignment
+
+```bash
+# Find reviewers for a dependency
+python3 find_reviewers.py github.com/gin-gonic/gin
+```
 
 ## Simulated Vulnerabilities
 
@@ -105,21 +141,26 @@ Based on current vulnerabilities, Renovate will create:
 
 ### Configuration Files
 
+- `component_ownership.json` - **Component to owner mapping**
 - `renovate.json` - Base Renovate configuration
 - `blackduck_report.json` - Black Duck vulnerability scan report
 - `.github/workflows/renovate.yml` - Renovate automation workflow
-- `.github/workflows/blackduck-integration.yml` - Black Duck integration workflow
 - `generate_renovate_rules.py` - Dynamic rule generator from Black Duck findings
+- `find_reviewers.py` - Component ownership analyzer (uses `go list`)
+- `add_renovate_reviewers.py` - Renovate reviewer config generator
 
-### Generate Renovate Rules
-
-The workflow automatically generates rules on every run. To test locally:
+### Test Locally
 
 ```bash
-python3 generate_renovate_rules.py
-```
+# Analyze dependency impact
+python3 find_reviewers.py github.com/gin-gonic/gin
 
-This creates `renovate-blackduck-generated.json` with package rules for each vulnerability found in the Black Duck reports.
+# Generate Renovate config with reviewers
+python3 add_renovate_reviewers.py
+
+# Run full test
+./test_reviewer_assignment.sh
+```
 
 ## 📚 Documentation
 
