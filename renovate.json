@@ -6,7 +6,7 @@
   "description": "Renovate configuration for Black Duck vulnerability remediation ONLY",
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": false,
-  "enabledManagers": ["gomod"],
+  "enabledManagers": ["gomod", "npm"],
   "ignorePresets": [":prHourlyLimit2"],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,

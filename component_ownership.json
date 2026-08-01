@@ -112,6 +112,36 @@
         "primary": ["victor@company.com"],
         "secondary": ["wendy@company.com"]
       }
+    },
+    {
+      "name": "Web Frontend",
+      "directories": [
+        "services/web-frontend"
+      ],
+      "owners": {
+        "primary": ["xavier@company.com"],
+        "secondary": ["yvonne@company.com"]
+      }
+    },
+    {
+      "name": "Admin Dashboard",
+      "directories": [
+        "services/admin-dashboard"
+      ],
+      "owners": {
+        "primary": ["zoe@company.com"],
+        "secondary": ["adam@company.com"]
+      }
+    },
+    {
+      "name": "Analytics Plugin",
+      "directories": [
+        "contrib/analytics-plugin"
+      ],
+      "owners": {
+        "primary": ["blake@company.com"],
+        "secondary": ["clara@company.com"]
+      }
     }
   ],
   "default_reviewers": {

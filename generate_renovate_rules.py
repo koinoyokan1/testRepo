@@ -12,7 +12,7 @@ import sys
 
 def generate_package_rule_from_vuln(vuln, index):
     """Generate a Renovate package rule for a single vulnerability"""
-    
+
     # Determine the package name based on the format
     if 'component' in vuln:
         package_name = vuln['component']
@@ -22,6 +22,7 @@ def generate_package_rule_from_vuln(vuln, index):
         severity = vuln.get('severity', 'UNKNOWN')
         description = vuln.get('description', '')
         cvss_score = vuln.get('cvss_score', 'N/A')
+        ecosystem = vuln.get('ecosystem', 'go')  # Default to 'go' for backwards compatibility
     else:
         package_name = vuln.get('package', 'unknown')
         current_version = vuln.get('current', 'unknown')
@@ -30,7 +31,19 @@ def generate_package_rule_from_vuln(vuln, index):
         severity = vuln.get('severity', 'UNKNOWN')
         description = vuln.get('description', '')
         cvss_score = vuln.get('cvss_score', 'N/A')
-    
+        ecosystem = vuln.get('ecosystem', 'go')
+
+    # Determine the datasource based on ecosystem
+    if ecosystem == 'npm':
+        datasources = ["npm"]
+        package_short_name = package_name  # npm packages don't have path separators
+    elif ecosystem == 'go':
+        datasources = ["go"]
+        package_short_name = package_name.split('/')[-1]
+    else:
+        datasources = [ecosystem]
+        package_short_name = package_name.split('/')[-1]
+
     # Parse the fixed version to create a constraint that stays within the same minor version
     # e.g., if fixed_version is "1.9.1", constraint is ">=1.9.1 <1.10.0"
     version_parts = fixed_version.split('.')
@@ -44,19 +57,20 @@ def generate_package_rule_from_vuln(vuln, index):
         version_constraint = f">={fixed_version}"
 
     rule = {
-        "description": f"Black Duck - {cve} ({severity})",
-        "matchDatasources": ["go"],
+        "description": f"Black Duck - {cve} ({severity}) - {ecosystem}",
+        "matchDatasources": datasources,
         "matchPackageNames": [package_name],
         "allowedVersions": version_constraint,
         "groupName": None,  # Don't group - create separate PR
         "separateMinorPatch": False,
         "commitMessageTopic": package_name,
-        "prTitle": f"fix(security): update {package_name.split('/')[-1]} to v{fixed_version} to fix {cve} ({severity})",
+        "prTitle": f"fix(security): update {package_short_name} to v{fixed_version} to fix {cve} ({severity})",
         "prBodyNotes": [
-            "### 🔒 Security Update - Black Duck Finding",
+            f"### 🔒 Security Update - Black Duck Finding ({ecosystem.upper()})",
             "",
             f"**Vulnerability**: {cve}",
             f"**Severity**: {severity} (CVSS {cvss_score})",
+            f"**Ecosystem**: {ecosystem}",
             f"**Current Version**: {current_version}",
             f"**Fixed Version**: {fixed_version} (minimum safe version)",
             f"**Version Constraint**: {version_constraint}",
@@ -71,10 +85,11 @@ def generate_package_rule_from_vuln(vuln, index):
             "security",
             f"{severity.lower()}-priority" if severity else "priority",
             "blackduck",
-            cve.lower()
+            cve.lower(),
+            ecosystem
         ]
     }
-    
+
     return rule
 
 

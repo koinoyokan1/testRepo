@@ -1,0 +1,22 @@
+{
+  "name": "@company/analytics-plugin",
+  "version": "0.5.0",
+  "description": "Analytics plugin for tracking user behavior",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "axios": "0.21.1",
+    "lodash": "4.17.19",
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@types/express": "^4.17.13",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  }
+}

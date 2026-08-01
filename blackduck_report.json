@@ -2,7 +2,7 @@
   "scan_date": "2024-08-01T19:23:00Z",
   "project_name": "example.com/oldversion",
   "scan_status": "COMPLETED",
-  "total_vulnerabilities": 2,
+  "total_vulnerabilities": 5,
   "vulnerabilities": [
     {
       "component": "github.com/gin-gonic/gin",
@@ -15,7 +15,8 @@
       "fixed_versions": ["1.9.1", "1.10.0"],
       "recommended_version": "1.9.1",
       "file_path": "go.mod",
-      "remediation": "Update github.com/gin-gonic/gin to version 1.9.1 or later"
+      "remediation": "Update github.com/gin-gonic/gin to version 1.9.1 or later",
+      "ecosystem": "go"
     },
     {
       "component": "github.com/gin-gonic/gin",
@@ -28,13 +29,56 @@
       "fixed_versions": ["1.8.2", "1.9.0"],
       "recommended_version": "1.9.1",
       "file_path": "go.mod",
-      "remediation": "Update github.com/gin-gonic/gin to version 1.8.2 or later"
+      "remediation": "Update github.com/gin-gonic/gin to version 1.8.2 or later",
+      "ecosystem": "go"
+    },
+    {
+      "component": "axios",
+      "version": "0.21.1",
+      "vulnerability_id": "CVE-2021-3749",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "description": "Server-Side Request Forgery (SSRF) vulnerability in axios allows attackers to perform unauthorized requests",
+      "published_date": "2021-08-31",
+      "fixed_versions": ["0.21.2", "0.22.0", "1.6.0"],
+      "recommended_version": "1.6.0",
+      "file_path": "package.json",
+      "remediation": "Update axios to version 0.21.2 or later",
+      "ecosystem": "npm"
+    },
+    {
+      "component": "lodash",
+      "version": "4.17.20",
+      "vulnerability_id": "CVE-2021-23337",
+      "severity": "HIGH",
+      "cvss_score": 7.2,
+      "description": "Command injection vulnerability in lodash allows attackers to execute arbitrary code",
+      "published_date": "2021-02-15",
+      "fixed_versions": ["4.17.21"],
+      "recommended_version": "4.17.21",
+      "file_path": "package.json",
+      "remediation": "Update lodash to version 4.17.21 or later",
+      "ecosystem": "npm"
+    },
+    {
+      "component": "lodash",
+      "version": "4.17.19",
+      "vulnerability_id": "CVE-2020-8203",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "description": "Prototype pollution vulnerability in lodash",
+      "published_date": "2020-07-15",
+      "fixed_versions": ["4.17.20", "4.17.21"],
+      "recommended_version": "4.17.21",
+      "file_path": "package.json",
+      "remediation": "Update lodash to version 4.17.20 or later",
+      "ecosystem": "npm"
     }
   ],
   "summary": {
     "critical": 0,
-    "high": 1,
-    "medium": 1,
+    "high": 3,
+    "medium": 2,
     "low": 0
   }
 }
