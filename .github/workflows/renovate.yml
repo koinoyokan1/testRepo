@@ -22,7 +22,8 @@ on:
     paths:
       - '.github/workflows/renovate.yml'
       - 'renovate.json'
-      - 'blackduck_report.json'
+      - 'security-tooling/blackduck_report.json'
+      - 'security-tooling/renovate.json'
 
 permissions:
   contents: write
