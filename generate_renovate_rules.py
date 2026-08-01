@@ -31,26 +31,39 @@ def generate_package_rule_from_vuln(vuln, index):
         description = vuln.get('description', '')
         cvss_score = vuln.get('cvss_score', 'N/A')
     
+    # Parse the fixed version to create a constraint that stays within the same minor version
+    # e.g., if fixed_version is "1.9.1", constraint is ">=1.9.1 <1.10.0"
+    version_parts = fixed_version.split('.')
+    if len(version_parts) >= 2:
+        major = version_parts[0]
+        minor = version_parts[1]
+        next_minor = str(int(minor) + 1)
+        version_constraint = f">={fixed_version} <{major}.{next_minor}.0"
+    else:
+        # Fallback if version format is unexpected
+        version_constraint = f">={fixed_version}"
+
     rule = {
         "description": f"Black Duck - {cve} ({severity})",
         "matchDatasources": ["go"],
         "matchPackageNames": [package_name],
-        "allowedVersions": f">={fixed_version}",
+        "allowedVersions": version_constraint,
         "groupName": None,  # Don't group - create separate PR
         "separateMinorPatch": False,
         "commitMessageTopic": package_name,
-        "prTitle": f"fix(security): update {package_name.split('/')[-1]} to v{fixed_version}+ to fix {cve} ({severity})",
+        "prTitle": f"fix(security): update {package_name.split('/')[-1]} to v{fixed_version} to fix {cve} ({severity})",
         "prBodyNotes": [
             "### 🔒 Security Update - Black Duck Finding",
             "",
             f"**Vulnerability**: {cve}",
             f"**Severity**: {severity} (CVSS {cvss_score})",
             f"**Current Version**: {current_version}",
-            f"**Fixed Version**: {fixed_version}+",
+            f"**Fixed Version**: {fixed_version} (minimum safe version)",
+            f"**Version Constraint**: {version_constraint}",
             "",
             f"**Description**: {description}",
             "",
-            f"**Remediation**: Update {package_name} to version {fixed_version} or later.",
+            f"**Remediation**: Update {package_name} to version {fixed_version}. Constrained to same minor version to minimize breaking changes.",
             "",
             "This PR was created based on Black Duck security scan findings."
         ],
