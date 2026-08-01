@@ -1,27 +1,41 @@
-# Black Duck + Renovate Integration with Component Ownership
+# Black Duck + Renovate Integration - Multi-Ecosystem
 
-This repository demonstrates automated vulnerability remediation using **Black Duck** security scanning and **Renovate** dependency updates, with intelligent **component-based reviewer assignment**.
+This repository demonstrates automated vulnerability remediation using **Black Duck** security scanning and **Renovate** dependency updates, with intelligent **component-based reviewer assignment** across **multiple ecosystems** (Go + npm/TypeScript).
 
 ## Project Overview
 
-- **Go Module**: `example.com/oldversion`
-- **Vulnerable Package**: `github.com/gin-gonic/gin v1.8.0` (older version with known CVEs)
-- **Application**: Multi-service Go application (API Gateway, Auth, Users, Payment, Utilities)
-- **Automation**:
-  - Black Duck detects vulnerabilities
-  - Renovate creates PRs with version constraints (e.g., v1.9.x, not v1.12.0)
-  - Component owners automatically assigned as reviewers
+**Ecosystems Supported:**
+- **Go**: 4 modules (main + 3 nested contrib modules)
+- **npm/TypeScript**: 3 packages (2 services + 1 contrib plugin)
+
+**Vulnerable Packages:**
+- `github.com/gin-gonic/gin v1.8.0` (Go - CVE-2023-29401, CVE-2023-26125)
+- `axios 0.21.1` (npm - CVE-2021-3749)
+- `lodash 4.17.19/4.17.20` (npm - CVE-2021-23337, CVE-2020-8203)
+
+**Application Structure:**
+- Go services: API Gateway, Auth, Users, Payment, Utilities
+- TypeScript services: Web Frontend, Admin Dashboard
+- Contrib plugins: Go (plugin-a, plugin-b, shared-lib) + TypeScript (analytics-plugin)
+
+**Automation:**
+- Black Duck detects vulnerabilities across both ecosystems
+- Renovate creates separate PRs per package with version constraints
+- Component owners automatically assigned as reviewers based on file analysis
 
 ## ✨ Key Features
 
-1. **Automated Reviewer Assignment** - Uses `go list` to find affected components
-2. **Version Constraints** - Stays within same minor version to minimize breaking changes
-3. **Component Ownership** - Maps directory structure to teams and owners
-4. **Mock Infrastructure** - Complete working example with 6 components
+1. **Multi-Ecosystem Support** - Go (via `go list`) + npm (via import analysis)
+2. **Nested Module Support** - Handles monorepos with multiple `go.mod` and `package.json` files
+3. **Automated Reviewer Assignment** - Finds affected components and assigns correct teams
+4. **Version Constraints** - Stays within same minor version to minimize breaking changes
+5. **Component Ownership** - Maps directory structure to teams (11 components total)
+6. **Unified Analysis** - Single tool processes entire Black Duck report (24 unique reviewers)
 
 ## 📋 Requirements
 
 - **Go 1.20+** (required for `go list` dependency analysis)
+- **Node.js/npm** (optional, for npm projects)
 - **Python 3.9+**
 - **Git**
 - **GitHub Actions** (for automated workflow)
@@ -46,14 +60,38 @@ Edit `component_ownership.json` to map your directories to teams:
 
 ### 2. Test Reviewer Assignment
 
+**For Go packages:**
 ```bash
-# Find reviewers for a dependency
 python3 find_reviewers.py github.com/gin-gonic/gin
+```
+
+**For npm packages:**
+```bash
+python3 find_npm_reviewers.py axios
+```
+
+**For all vulnerabilities (unified):**
+```bash
+python3 find_all_reviewers.py
+```
+
+Output:
+```
+📊 Overall Statistics:
+  • Vulnerable packages: 3
+  • Total unique reviewers: 24
+
+📦 Packages:
+  GO: github.com/gin-gonic/gin → 8 components, 18 reviewers
+  NPM: axios → 3 components, 6 reviewers
+  NPM: lodash → 2 components, 4 reviewers
 ```
 
 ## Simulated Vulnerabilities
 
-The project uses Gin v1.8.0, which has the following simulated CVEs:
+### Go Vulnerabilities
+
+**gin-gonic/gin v1.8.0**
 
 1. **CVE-2023-29401** (HIGH - CVSS 7.5)
    - Directory traversal vulnerability
@@ -63,17 +101,35 @@ The project uses Gin v1.8.0, which has the following simulated CVEs:
    - Denial of service through malformed requests
    - Fixed in: v1.8.2, v1.9.0
 
+### npm Vulnerabilities
+
+**axios 0.21.1**
+
+1. **CVE-2021-3749** (HIGH - CVSS 7.5)
+   - Server-Side Request Forgery (SSRF)
+   - Fixed in: 0.21.2, 1.6.0
+
+**lodash 4.17.19/4.17.20**
+
+1. **CVE-2021-23337** (HIGH - CVSS 7.2)
+   - Command injection vulnerability
+   - Fixed in: 4.17.21
+
+2. **CVE-2020-8203** (MEDIUM - CVSS 5.3)
+   - Prototype pollution vulnerability
+   - Fixed in: 4.17.20, 4.17.21
+
 ## Black Duck Output File
 
 ### `blackduck_report.json`
-Full scan report format with multiple vulnerabilities and summary statistics.
+Full scan report format with vulnerabilities from multiple ecosystems.
 
 Example structure:
 ```json
 {
   "scan_date": "2024-08-01T19:23:00Z",
   "project_name": "example.com/oldversion",
-  "total_vulnerabilities": 2,
+  "total_vulnerabilities": 5,
   "vulnerabilities": [
     {
       "component": "github.com/gin-gonic/gin",
@@ -141,29 +197,45 @@ Based on current vulnerabilities, Renovate will create:
 
 ### Configuration Files
 
-- `component_ownership.json` - **Component to owner mapping**
-- `renovate.json` - Base Renovate configuration
-- `blackduck_report.json` - Black Duck vulnerability scan report
+- `component_ownership.json` - **Component to owner mapping (11 components)**
+- `renovate.json` - Base Renovate configuration (enables gomod + npm)
+- `blackduck_report.json` - Black Duck vulnerability scan report (5 CVEs)
 - `.github/workflows/renovate.yml` - Renovate automation workflow
+
+### Analysis Tools
+
+- `find_reviewers.py` - Go dependency analyzer (uses `go list`)
+- `find_npm_reviewers.py` - npm dependency analyzer (uses grep for imports)
+- `find_all_reviewers.py` - **Unified multi-ecosystem analyzer**
 - `generate_renovate_rules.py` - Dynamic rule generator from Black Duck findings
-- `find_reviewers.py` - Component ownership analyzer (uses `go list`)
 - `add_renovate_reviewers.py` - Renovate reviewer config generator
 
 ### Test Locally
 
 ```bash
-# Analyze dependency impact
-python3 find_reviewers.py github.com/gin-gonic/gin
+# Analyze all vulnerabilities (Go + npm)
+python3 find_all_reviewers.py
 
-# Generate Renovate config with reviewers
-python3 add_renovate_reviewers.py
+# Generate Renovate rules
+python3 generate_renovate_rules.py
 
-# Run full test
-./test_reviewer_assignment.sh
+# Test specific ecosystem
+python3 find_reviewers.py github.com/gin-gonic/gin  # Go
+python3 find_npm_reviewers.py axios                  # npm
 ```
 
 ## 📚 Documentation
 
-- [RENOVATE_SETUP.md](RENOVATE_SETUP.md) - Complete setup guide
+### Comprehensive Guides
+
+- **[MULTI_ECOSYSTEM_SUMMARY.md](MULTI_ECOSYSTEM_SUMMARY.md)** - Complete multi-ecosystem guide (Go + npm)
+- **[TYPESCRIPT_SUPPORT.md](TYPESCRIPT_SUPPORT.md)** - TypeScript/npm integration details
+- **[NESTED_MODULES.md](NESTED_MODULES.md)** - Go nested modules support
+- **[COMPONENT_OWNERSHIP.md](COMPONENT_OWNERSHIP.md)** - Component ownership system
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture diagrams
+
+### Configuration Files
+
 - [renovate.json](renovate.json) - Base Renovate configuration
-- [blackduck_report.json](blackduck_report.json) - Black Duck scan report
+- [blackduck_report.json](blackduck_report.json) - Black Duck scan report (5 CVEs)
+- [component_ownership.json](component_ownership.json) - Component ownership mapping (11 components)
