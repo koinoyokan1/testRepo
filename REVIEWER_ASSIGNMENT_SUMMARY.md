@@ -16,8 +16,9 @@ A complete system for automatically assigning code reviewers to Renovate PRs bas
   - Default reviewers for unowned code
 
 ### Core Scripts
-- **`find_reviewers.py`** - Main analysis tool
-  - Finds all files importing a package
+- **`find_reviewers.py`** - Main analysis tool (uses `go list`)
+  - Uses Go's native tooling to find all packages importing a dependency
+  - Respects Go module boundaries, build tags, and Go build system
   - Maps files to components via recursive directory matching
   - Outputs affected components and reviewers
   
@@ -58,9 +59,9 @@ Black Duck Report
        ↓
 [Package: github.com/gin-gonic/gin needs update]
        ↓
-find_reviewers.py scans codebase
+find_reviewers.py runs 'go list -json ./...'
        ↓
-Files found:
+Go packages found (that import gin):
   - services/api-gateway/main.go
   - services/auth/server.go
   - services/users/handler.go

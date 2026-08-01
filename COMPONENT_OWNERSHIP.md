@@ -59,7 +59,11 @@ This works recursively, so subdirectories automatically inherit ownership.
 
 ### `find_reviewers.py`
 
-Analyzes which components are affected by a dependency update.
+Analyzes which components are affected by a dependency update using Go's native `go list` command.
+
+**Requirements:**
+- Go toolchain installed
+- Valid `go.mod` file
 
 **Usage:**
 ```bash

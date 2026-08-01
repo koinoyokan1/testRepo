@@ -31,8 +31,9 @@
         ┌───────────────────────────────────────────────┐
         │  add_renovate_reviewers.py                    │
         │  ┌──────────────────────────────────────────┐ │
-        │  │ 1. find_reviewers.py                     │ │
-        │  │    • Find files importing package        │ │
+        │  │ 1. find_reviewers.py (go list)           │ │
+        │  │    • Run 'go list -json ./...'           │ │
+        │  │    • Find packages importing dependency  │ │
         │  │    • Map files → components              │ │
         │  │    • Collect component owners            │ │
         │  └──────────────────────────────────────────┘ │
@@ -108,7 +109,10 @@ Repository Root
 github.com/gin-gonic/gin update detected
                 │
                 ▼
-        grep -r "gin-gonic/gin"
+        go list -json ./...
+                │
+                ▼
+   Parse Imports for each package
                 │
         ┌───────┴───────┬────────┬─────────┬──────────┐
         ▼               ▼        ▼         ▼          ▼
