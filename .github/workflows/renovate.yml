@@ -57,9 +57,14 @@ jobs:
           {
             "$schema": "https://docs.renovatebot.com/renovate-schema.json",
             "extends": [
-              "config:recommended"
+              "config:base"
             ],
-            "description": "Renovate configuration with Black Duck vulnerability remediation",
+            "description": "Renovate configuration with Black Duck vulnerability remediation ONLY",
+            "dependencyDashboard": true,
+            "dependencyDashboardAutoclose": false,
+            "enabledManagers": ["gomod"],
+            "ignorePresets": [":prHourlyLimit2"],
+            "prHourlyLimit": 0,
             "prConcurrentLimit": 0,
             "branchConcurrentLimit": 0,
             "separateMinorPatch": true,
@@ -77,14 +82,15 @@ jobs:
             "assignees": [],
             "reviewers": [],
             "vulnerabilityAlerts": {
-              "enabled": true,
-              "labels": ["security"],
-              "assignees": []
+              "enabled": false
             },
-            "golang": {
-              "enabled": true,
-              "commitMessageTopic": "Go module {{depName}}"
-            }
+            "packageRules": [
+              {
+                "description": "Disable all updates by default - only Black Duck findings will be enabled",
+                "matchPackagePatterns": ["*"],
+                "enabled": false
+              }
+            ]
           }
           EOF
 

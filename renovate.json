@@ -1,11 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:base"
   ],
-  "description": "Renovate configuration for Black Duck vulnerability remediation",
+  "description": "Renovate configuration for Black Duck vulnerability remediation ONLY",
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": false,
+  "enabledManagers": ["gomod"],
+  "ignorePresets": [":prHourlyLimit2"],
+  "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
   "branchConcurrentLimit": 0,
   "separateMinorPatch": true,
@@ -25,9 +28,15 @@
   "reviewers": [],
   "packageRules": [
     {
+      "description": "Disable all updates by default - only Black Duck findings will be enabled",
+      "matchPackagePatterns": ["*"],
+      "enabled": false
+    },
+    {
       "description": "Black Duck - Gin CVE-2023-29401 (HIGH) - Directory traversal vulnerability",
       "matchDatasources": ["go"],
       "matchPackageNames": ["github.com/gin-gonic/gin"],
+      "enabled": true,
       "groupName": null,
       "separateMinorPatch": false,
       "commitMessageTopic": "gin",
@@ -51,12 +60,6 @@
         "high-priority",
         "blackduck"
       ]
-    },
-    {
-      "description": "Group all other Go dependency updates",
-      "matchDatasources": ["go"],
-      "excludePackageNames": ["github.com/gin-gonic/gin"],
-      "groupName": "go dependencies"
     }
   ],
   "vulnerabilityAlerts": {
