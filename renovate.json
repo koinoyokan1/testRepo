@@ -6,7 +6,7 @@
   "description": "Renovate configuration for Black Duck vulnerability remediation",
   "dependencyDashboard": true,
   "dependencyDashboardAutoclose": false,
-  "enabledManagers": ["gomod", "npm"],
+  "enabledManagers": ["gomod", "npm", "docker-compose", "dockerfile", "regex"],
   "ignorePresets": [":prHourlyLimit2"],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
