@@ -4,8 +4,6 @@
     "config:recommended"
   ],
   "description": "Renovate configuration for Black Duck vulnerability remediation",
-  "onboarding": false,
-  "requireConfig": "optional",
   "prConcurrentLimit": 0,
   "branchConcurrentLimit": 0,
   "separateMinorPatch": true,
