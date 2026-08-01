@@ -1,0 +1,71 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "description": "Renovate configuration for Black Duck vulnerability remediation",
+  "prConcurrentLimit": 0,
+  "branchConcurrentLimit": 0,
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "separateMajorMinor": true,
+  "rangeStrategy": "update-lockfile",
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "fix(deps):",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+  "prTitle": "fix(deps): update {{depName}} to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+  "prBodyTemplate": "This PR updates **{{depName}}** from `{{currentValue}}` to `{{newValue}}`.\n\n### Black Duck Security Finding\n\n{{#if vulnerabilitySeverity}}- **Severity**: {{vulnerabilitySeverity}}\n{{/if}}{{#if vulnerabilityCount}}- **Vulnerabilities Fixed**: {{vulnerabilityCount}}\n{{/if}}\n### Changes\n\n{{#if displayPending}}- [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box\n{{/if}}\n---\n\n{{body}}",
+  "labels": [
+    "dependencies",
+    "security"
+  ],
+  "assignees": [],
+  "reviewers": [],
+  "packageRules": [
+    {
+      "description": "Black Duck - Gin CVE-2023-29401 (HIGH) - Directory traversal vulnerability",
+      "matchDatasources": ["go"],
+      "matchPackageNames": ["github.com/gin-gonic/gin"],
+      "allowedVersions": ">=1.9.1",
+      "groupName": null,
+      "separateMinorPatch": false,
+      "commitMessageTopic": "github.com/gin-gonic/gin",
+      "prTitle": "fix(security): update gin to v1.9.1+ to fix CVE-2023-29401 (HIGH)",
+      "prBodyNotes": [
+        "### 🔒 Security Update - Black Duck Finding",
+        "",
+        "**Vulnerability**: CVE-2023-29401",
+        "**Severity**: HIGH (CVSS 7.5)",
+        "**Current Version**: 1.8.0",
+        "**Fixed Version**: 1.9.1+",
+        "",
+        "**Description**: Directory traversal vulnerability in gin-gonic/gin allows attackers to access files outside the intended directory.",
+        "",
+        "**Remediation**: Update github.com/gin-gonic/gin to version 1.9.1 or later.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck"
+      ]
+    },
+    {
+      "description": "Group all other Go dependency updates",
+      "matchDatasources": ["go"],
+      "excludePackageNames": ["github.com/gin-gonic/gin"],
+      "groupName": "go dependencies"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": ["security"],
+    "assignees": []
+  },
+  "golang": {
+    "enabled": true,
+    "commitMessageTopic": "Go module {{depName}}"
+  }
+}

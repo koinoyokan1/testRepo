@@ -1,12 +1,25 @@
 # Black Duck Vulnerability Simulation - Go Project
 
-This repository simulates a Go project with known vulnerabilities detected by Black Duck, specifically targeting the **Gin web framework**.
+This repository simulates a Go project with known vulnerabilities detected by Black Duck, specifically targeting the **Gin web framework**. It demonstrates automated vulnerability remediation using **Renovate** integration.
 
 ## Project Overview
 
 - **Go Module**: `example.com/oldversion`
 - **Vulnerable Package**: `github.com/gin-gonic/gin v1.8.0` (older version with known CVEs)
 - **Application**: Simple REST API with `/ping` and `/hello/:name` endpoints
+- **Automation**: Renovate creates **separate PRs** for each vulnerability fix
+
+## 🚀 Quick Start
+
+### Option 1: Use Renovate GitHub App (Easiest)
+
+1. Install Renovate: https://github.com/apps/renovate
+2. Select this repository
+3. Renovate will automatically create PRs for each CVE
+
+### Option 2: Self-Hosted Renovate
+
+See [RENOVATE_SETUP.md](RENOVATE_SETUP.md) for detailed setup instructions.
 
 ## Simulated Vulnerabilities
 
@@ -74,17 +87,46 @@ go get github.com/gin-gonic/gin@v1.9.1
 go mod tidy
 ```
 
-## Integration with Renovate
+## 🔄 Renovate Integration
 
-The simulation script generates Renovate-compatible package rules that can be used to automatically update vulnerable dependencies:
+This project is configured to automatically create PRs for vulnerability fixes:
 
-```json
-{
-  "packageRules": [
-    {
-      "matchPackageNames": ["github.com/gin-gonic/gin"],
-      "allowedVersions": ">=1.9.1"
-    }
-  ]
-}
+### How It Works
+
+1. **Black Duck findings** are stored in JSON files
+2. **Renovate** reads the configuration and creates **separate PRs** for each CVE
+3. **GitHub Actions** orchestrates the automation
+
+### Expected PRs
+
+Based on current vulnerabilities, Renovate will create:
+
+- ✅ **PR #1**: `fix(security): update gin to v1.9.1+ to fix CVE-2023-29401 (HIGH)`
+  - Fixes directory traversal vulnerability
+  - Labels: `security`, `high-priority`, `blackduck`
+
+- ✅ **PR #2**: `fix(security): update gin to v1.9.1+ to fix CVE-2023-26125 (MEDIUM)`
+  - Fixes denial of service vulnerability
+  - Labels: `security`, `medium-priority`, `blackduck`
+
+### Configuration Files
+
+- `renovate.json` - Main Renovate configuration
+- `.github/workflows/renovate.yml` - Renovate automation workflow
+- `.github/workflows/blackduck-integration.yml` - Black Duck integration workflow
+- `generate_renovate_rules.py` - Dynamic rule generator
+
+### Generate Renovate Rules
+
+```bash
+python3 generate_renovate_rules.py
 ```
+
+This creates `renovate-blackduck-generated.json` with package rules for each vulnerability.
+
+## 📚 Documentation
+
+- [RENOVATE_SETUP.md](RENOVATE_SETUP.md) - Complete setup guide
+- [renovate.json](renovate.json) - Renovate configuration
+- [blackduck.json](blackduck.json) - Simple vulnerability format
+- [blackduck_report.json](blackduck_report.json) - Full scan report

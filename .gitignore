@@ -23,3 +23,10 @@ vendor/
 *.swp
 *.swo
 *~
+
+# Generated files
+renovate-blackduck-generated.json
+blackduck_scan_output.txt
+__pycache__/
+*.py[cod]
+*$py.class

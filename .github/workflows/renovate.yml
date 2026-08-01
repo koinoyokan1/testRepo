@@ -1,0 +1,62 @@
+name: Renovate
+
+on:
+  schedule:
+    # Run every hour
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: false
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - info
+          - warn
+          - error
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/renovate.yml'
+      - 'renovate.json'
+      - 'blackduck.json'
+      - 'blackduck_report.json'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Process Black Duck findings
+        id: blackduck
+        run: |
+          echo "Processing Black Duck vulnerability reports..."
+          
+          if [ -f "blackduck.json" ]; then
+            echo "Found blackduck.json"
+            python3 simulate_blackduck.py --simple
+          fi
+          
+          if [ -f "blackduck_report.json" ]; then
+            echo "Found blackduck_report.json"
+            python3 simulate_blackduck.py --report
+          fi
+
+      - name: Self-hosted Renovate
+        uses: renovatebot/github-action@v40.3.2
+        with:
+          configurationFile: renovate.json
+          token: ${{ secrets.RENOVATE_TOKEN }}
+        env:
+          LOG_LEVEL: ${{ inputs.logLevel || 'debug' }}
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
