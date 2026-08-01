@@ -29,11 +29,10 @@
       "description": "Black Duck - Gin CVE-2023-29401 (HIGH) - Directory traversal vulnerability",
       "matchDatasources": ["go"],
       "matchPackageNames": ["github.com/gin-gonic/gin"],
-      "allowedVersions": ">=1.9.1",
       "groupName": null,
       "separateMinorPatch": false,
       "commitMessageTopic": "github.com/gin-gonic/gin",
-      "prTitle": "fix(security): update gin to v1.9.1+ to fix CVE-2023-29401 (HIGH)",
+      "prTitle": "fix(security): update gin to {{newVersion}} to fix CVE-2023-29401 (HIGH)",
       "prBodyNotes": [
         "### 🔒 Security Update - Black Duck Finding",
         "",
