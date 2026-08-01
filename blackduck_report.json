@@ -1,0 +1,40 @@
+{
+  "scan_date": "2024-08-01T19:23:00Z",
+  "project_name": "example.com/oldversion",
+  "scan_status": "COMPLETED",
+  "total_vulnerabilities": 2,
+  "vulnerabilities": [
+    {
+      "component": "github.com/gin-gonic/gin",
+      "version": "1.8.0",
+      "vulnerability_id": "CVE-2023-29401",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "description": "Directory traversal vulnerability in gin-gonic/gin allows attackers to access files outside the intended directory",
+      "published_date": "2023-06-08",
+      "fixed_versions": ["1.9.1", "1.10.0"],
+      "recommended_version": "1.9.1",
+      "file_path": "go.mod",
+      "remediation": "Update github.com/gin-gonic/gin to version 1.9.1 or later"
+    },
+    {
+      "component": "github.com/gin-gonic/gin",
+      "version": "1.8.0",
+      "vulnerability_id": "CVE-2023-26125",
+      "severity": "MEDIUM",
+      "cvss_score": 5.3,
+      "description": "Denial of service vulnerability through malformed requests in gin-gonic/gin",
+      "published_date": "2023-04-15",
+      "fixed_versions": ["1.8.2", "1.9.0"],
+      "recommended_version": "1.9.1",
+      "file_path": "go.mod",
+      "remediation": "Update github.com/gin-gonic/gin to version 1.8.2 or later"
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 1,
+    "medium": 1,
+    "low": 0
+  }
+}

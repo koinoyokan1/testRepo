@@ -1,0 +1,11 @@
+{
+  "path": "go.mod",
+  "package": "github.com/gin-gonic/gin",
+  "current": "1.8.0",
+  "fixed": "1.9.1",
+  "cve": "CVE-2023-29401",
+  "severity": "HIGH",
+  "description": "Directory traversal vulnerability in gin-gonic/gin allows attackers to access files outside the intended directory",
+  "cvss_score": 7.5,
+  "published_date": "2023-06-08"
+}
