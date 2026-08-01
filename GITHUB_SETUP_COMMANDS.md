@@ -55,29 +55,7 @@ Check that these files are present:
 - ✅ `blackduck_report.json`
 - ✅ All documentation files
 
-## Step 5: Set Up Renovate (Choose One Option)
-
-### Option A: Renovate GitHub App (Easiest)
-
-1. **Install the app**:
-   ```
-   Browser: https://github.com/apps/renovate
-   Click: "Install" or "Configure"
-   Select: "koinoyokan1/testRepo"
-   Click: "Install & Authorize"
-   ```
-
-2. **Wait for Renovate**:
-   - Renovate will detect `renovate.json` automatically
-   - First run happens within minutes
-   - PRs will be created automatically
-
-3. **Check for PRs**:
-   ```
-   Browser: https://github.com/koinoyokan1/testRepo/pulls
-   ```
-
-### Option B: Self-Hosted Renovate (More Control)
+## Step 5: Set Up Self-Hosted Renovate
 
 1. **Create GitHub Personal Access Token**:
    ```
@@ -253,7 +231,7 @@ https://github.com/koinoyokan1/testRepo
 ## Success Criteria
 
 ✅ All files committed and pushed to GitHub
-✅ Renovate installed (GitHub App or token configured)
+✅ RENOVATE_TOKEN configured as repository secret
 ✅ GitHub Actions enabled and running
 ✅ PRs created with CVE fixes
 ✅ PRs have correct labels and descriptions

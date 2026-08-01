@@ -19,19 +19,7 @@ Black Duck Scan → JSON Reports → Renovate Rules → Separate PRs (1 per fix)
 
 ## Setup Steps
 
-### 1. Enable Renovate on GitHub
-
-You have **two options** for running Renovate:
-
-#### Option A: Renovate GitHub App (Recommended for simplicity)
-
-1. Go to https://github.com/apps/renovate
-2. Click "Install" or "Configure"
-3. Select your repository: `koinoyokan1/testRepo`
-4. Grant the required permissions
-5. Renovate will automatically detect `renovate.json` and start creating PRs
-
-#### Option B: Self-hosted Renovate (Recommended for Black Duck integration)
+### 1. Enable Self-Hosted Renovate on GitHub
 
 1. **Create a GitHub Personal Access Token (PAT)**:
    - Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)

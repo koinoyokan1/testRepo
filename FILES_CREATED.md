@@ -90,8 +90,7 @@ This document lists all files created for the Renovate and Black Duck integratio
 
 ### `RENOVATE_SETUP.md`
 - Complete Renovate setup guide
-- Step-by-step instructions
-- Two setup options: GitHub App vs Self-hosted
+- Step-by-step instructions for self-hosted setup
 - Configuration details
 - Troubleshooting guide
 - Customization instructions

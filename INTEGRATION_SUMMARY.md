@@ -113,15 +113,7 @@ A complete integration between **Black Duck vulnerability scanning** and **Renov
 
 ## 🔧 Setup Instructions
 
-### Quick Setup (5 minutes)
-
-1. **Install Renovate GitHub App**:
-   - Go to: https://github.com/apps/renovate
-   - Click "Install"
-   - Select: `koinoyokan1/testRepo`
-   - Done! PRs will be created automatically
-
-### Alternative: Self-Hosted Setup
+### Self-Hosted Setup (5 minutes)
 
 1. **Create GitHub Token** with `repo` and `workflow` scopes
 2. **Add as secret**: `RENOVATE_TOKEN` in repository settings
@@ -203,7 +195,7 @@ curl http://localhost:8080/ping
 ## ✅ Success Checklist
 
 - [ ] All files committed and pushed to GitHub
-- [ ] Renovate installed (App or token configured)
+- [ ] RENOVATE_TOKEN configured as repository secret
 - [ ] GitHub Actions enabled
 - [ ] Validation script passes: `./validate_setup.sh`
 - [ ] Workflows running successfully

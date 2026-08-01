@@ -7,17 +7,7 @@
 
 ## Setup (5 minutes)
 
-### Step 1: Choose Renovate Installation Method
-
-#### Option A: Renovate GitHub App (Recommended)
-
-1. Go to https://github.com/apps/renovate
-2. Click **"Install"**
-3. Select **"koinoyokan1/testRepo"**
-4. Click **"Install & Authorize"**
-5. ✅ Done! Renovate will start creating PRs automatically
-
-#### Option B: Self-Hosted Renovate
+### Step 1: Self-Hosted Renovate Setup
 
 1. **Create GitHub Token**:
    ```
@@ -55,17 +45,13 @@ Check that these files exist in your repo:
 
 ### Step 3: Trigger First Run
 
-**If using GitHub App:**
-- Renovate runs automatically every hour
-- Or wait for the next scheduled run
-
-**If using self-hosted:**
-
 1. Go to Actions tab: https://github.com/koinoyokan1/testRepo/actions
 2. Select "Renovate" workflow
 3. Click "Run workflow"
 4. Select branch: `main`
 5. Click "Run workflow"
+
+Alternatively, Renovate runs automatically every hour on schedule.
 
 ### Step 4: Review PRs
 
@@ -166,13 +152,9 @@ This PR was created based on Black Duck security scan findings.
    - View "Renovate" workflow logs
    - Look for errors
 
-2. **Verify token** (if using self-hosted):
+2. **Verify token**:
    - Check that `RENOVATE_TOKEN` secret exists
    - Token must have `repo` and `workflow` scopes
-
-3. **Check Renovate dashboard**:
-   - If using GitHub App, check the Renovate dashboard
-   - Look for error messages
 
 ### PRs Not Separated?
 

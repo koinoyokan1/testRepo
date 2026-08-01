@@ -11,13 +11,7 @@ This repository simulates a Go project with known vulnerabilities detected by Bl
 
 ## 🚀 Quick Start
 
-### Option 1: Use Renovate GitHub App (Easiest)
-
-1. Install Renovate: https://github.com/apps/renovate
-2. Select this repository
-3. Renovate will automatically create PRs for each CVE
-
-### Option 2: Self-Hosted Renovate
+### Self-Hosted Renovate Setup
 
 See [RENOVATE_SETUP.md](RENOVATE_SETUP.md) for detailed setup instructions.
 
