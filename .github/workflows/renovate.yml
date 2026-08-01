@@ -22,7 +22,6 @@ on:
     paths:
       - '.github/workflows/renovate.yml'
       - 'renovate.json'
-      - 'blackduck.json'
       - 'blackduck_report.json'
 
 permissions:
@@ -42,9 +41,9 @@ jobs:
         run: |
           echo "Processing Black Duck vulnerability reports..."
 
-          # Check if Black Duck reports exist
-          if [ -f "blackduck.json" ] || [ -f "blackduck_report.json" ]; then
-            echo "Found Black Duck vulnerability reports"
+          # Check if Black Duck report exists
+          if [ -f "blackduck_report.json" ]; then
+            echo "Found Black Duck vulnerability report"
 
             # Generate dynamic Renovate rules
             python3 generate_renovate_rules.py
@@ -118,7 +117,7 @@ jobs:
               cp renovate.json renovate-merged.json
             fi
           else
-            echo "No Black Duck reports found, using base renovate.json"
+            echo "No Black Duck report found, using base renovate.json"
             cp renovate.json renovate-merged.json
           fi
 

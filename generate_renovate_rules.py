@@ -65,16 +65,6 @@ def generate_package_rule_from_vuln(vuln, index):
     return rule
 
 
-def process_simple_format(filename="blackduck.json"):
-    """Process simple blackduck.json format"""
-    try:
-        with open(filename) as f:
-            vuln = json.load(f)
-        return [generate_package_rule_from_vuln(vuln, 0)]
-    except FileNotFoundError:
-        return []
-
-
 def process_report_format(filename="blackduck_report.json"):
     """Process full report format"""
     try:
@@ -92,23 +82,14 @@ def process_report_format(filename="blackduck_report.json"):
 
 def main():
     print("Generating Renovate package rules from Black Duck findings...")
-    
-    # Collect all rules
-    all_rules = []
-    
-    # Process both formats
-    simple_rules = process_simple_format()
-    report_rules = process_report_format()
-    
-    # Use report rules if available, otherwise use simple
-    if report_rules:
-        all_rules = report_rules
-        print(f"✓ Processed {len(report_rules)} vulnerabilities from blackduck_report.json")
-    elif simple_rules:
-        all_rules = simple_rules
-        print(f"✓ Processed {len(simple_rules)} vulnerability from blackduck.json")
+
+    # Process report format
+    all_rules = process_report_format()
+
+    if all_rules:
+        print(f"✓ Processed {len(all_rules)} vulnerabilities from blackduck_report.json")
     else:
-        print("✗ No Black Duck reports found!")
+        print("✗ No Black Duck report found or no vulnerabilities detected!")
         sys.exit(1)
     
     # Generate Renovate config fragment

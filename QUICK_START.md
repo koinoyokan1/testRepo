@@ -37,7 +37,6 @@ Check that these files exist in your repo:
 ✅ .github/workflows/blackduck-integration.yml
 
 # Black Duck simulation files
-✅ blackduck.json
 ✅ blackduck_report.json
 ✅ simulate_blackduck.py
 ✅ generate_renovate_rules.py

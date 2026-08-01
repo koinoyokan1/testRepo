@@ -44,12 +44,12 @@ Black Duck Scan → JSON Reports → Renovate Rules → Separate PRs (1 per fix)
 
 Ensure these files exist in your repository:
 
-- ✅ `renovate.json` - Main Renovate configuration
+- ✅ `renovate.json` - Base Renovate configuration
 - ✅ `.github/workflows/renovate.yml` - Renovate workflow
 - ✅ `.github/workflows/blackduck-integration.yml` - Black Duck integration
-- ✅ `blackduck.json` - Simple vulnerability format
-- ✅ `blackduck_report.json` - Full scan report
+- ✅ `blackduck_report.json` - Black Duck vulnerability scan report
 - ✅ `generate_renovate_rules.py` - Dynamic rule generator
+- ✅ `simulate_blackduck.py` - Black Duck scan simulator
 
 ### 3. How It Works
 

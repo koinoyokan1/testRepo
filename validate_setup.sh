@@ -58,7 +58,6 @@ validate_json() {
 echo "1. Checking required files..."
 echo "------------------------------"
 check_file "renovate.json"
-check_file "blackduck.json"
 check_file "blackduck_report.json"
 check_file "simulate_blackduck.py"
 check_file "generate_renovate_rules.py"
@@ -79,7 +78,6 @@ echo ""
 echo "3. Validating JSON files..."
 echo "---------------------------"
 validate_json "renovate.json"
-validate_json "blackduck.json"
 validate_json "blackduck_report.json"
 echo ""
 
@@ -111,7 +109,7 @@ echo ""
 
 echo "6. Testing Black Duck simulation..."
 echo "------------------------------------"
-if python3 simulate_blackduck.py --simple > /dev/null 2>&1; then
+if python3 simulate_blackduck.py > /dev/null 2>&1; then
     echo -e "${GREEN}✓${NC} Black Duck simulation works"
 else
     echo -e "${RED}✗${NC} Black Duck simulation failed"

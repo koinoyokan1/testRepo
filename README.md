@@ -27,25 +27,30 @@ The project uses Gin v1.8.0, which has the following simulated CVEs:
    - Denial of service through malformed requests
    - Fixed in: v1.8.2, v1.9.0
 
-## Black Duck Output Files
+## Black Duck Output File
 
-### 1. `blackduck.json`
-Simple format with single vulnerability:
+### `blackduck_report.json`
+Full scan report format with multiple vulnerabilities and summary statistics.
+
+Example structure:
 ```json
 {
-  "path": "go.mod",
-  "package": "github.com/gin-gonic/gin",
-  "current": "1.8.0",
-  "fixed": "1.9.1",
-  "cve": "CVE-2023-29401",
-  "severity": "HIGH",
-  "description": "...",
-  "cvss_score": 7.5
+  "scan_date": "2024-08-01T19:23:00Z",
+  "project_name": "example.com/oldversion",
+  "total_vulnerabilities": 2,
+  "vulnerabilities": [
+    {
+      "component": "github.com/gin-gonic/gin",
+      "version": "1.8.0",
+      "vulnerability_id": "CVE-2023-29401",
+      "severity": "HIGH",
+      "cvss_score": 7.5,
+      "recommended_version": "1.9.1",
+      "remediation": "Update to version 1.9.1 or later"
+    }
+  ]
 }
 ```
-
-### 2. `blackduck_report.json`
-Full scan report format with multiple vulnerabilities and summary statistics.
 
 ## Usage
 
@@ -64,14 +69,8 @@ curl http://localhost:8080/hello/World
 
 ### Simulate Black Duck Scan
 ```bash
-# View both vulnerability formats
+# View vulnerability report
 python3 simulate_blackduck.py
-
-# View only simple format
-python3 simulate_blackduck.py --simple
-
-# View only full report
-python3 simulate_blackduck.py --report
 ```
 
 ### Fix Vulnerabilities
@@ -87,8 +86,8 @@ This project is configured to automatically create PRs for vulnerability fixes:
 
 ### How It Works
 
-1. **Black Duck findings** are stored in JSON files (`blackduck.json`, `blackduck_report.json`)
-2. **On every run**, Renovate workflow dynamically generates rules from Black Duck reports
+1. **Black Duck findings** are stored in `blackduck_report.json`
+2. **On every run**, Renovate workflow dynamically generates rules from the Black Duck report
 3. **Renovate** uses the generated rules and creates **separate PRs** for each CVE found
 4. **GitHub Actions** orchestrates the automation (runs hourly)
 
@@ -106,10 +105,11 @@ Based on current vulnerabilities, Renovate will create:
 
 ### Configuration Files
 
-- `renovate.json` - Main Renovate configuration
+- `renovate.json` - Base Renovate configuration
+- `blackduck_report.json` - Black Duck vulnerability scan report
 - `.github/workflows/renovate.yml` - Renovate automation workflow
 - `.github/workflows/blackduck-integration.yml` - Black Duck integration workflow
-- `generate_renovate_rules.py` - Dynamic rule generator
+- `generate_renovate_rules.py` - Dynamic rule generator from Black Duck findings
 
 ### Generate Renovate Rules
 
@@ -124,6 +124,5 @@ This creates `renovate-blackduck-generated.json` with package rules for each vul
 ## 📚 Documentation
 
 - [RENOVATE_SETUP.md](RENOVATE_SETUP.md) - Complete setup guide
-- [renovate.json](renovate.json) - Renovate configuration
-- [blackduck.json](blackduck.json) - Simple vulnerability format
-- [blackduck_report.json](blackduck_report.json) - Full scan report
+- [renovate.json](renovate.json) - Base Renovate configuration
+- [blackduck_report.json](blackduck_report.json) - Black Duck scan report
