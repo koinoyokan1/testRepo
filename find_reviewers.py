@@ -25,73 +25,109 @@ def load_component_ownership(filepath: str = "component_ownership.json") -> dict
         return json.load(f)
 
 
+def find_all_go_modules(root_dir: str = ".") -> List[str]:
+    """
+    Find all go.mod files in the repository (including nested modules).
+    Returns list of directories containing go.mod files.
+    """
+    modules = []
+
+    try:
+        # Find all go.mod files
+        result = subprocess.run(
+            ["find", root_dir, "-name", "go.mod", "-type", "f"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+
+        for go_mod_path in result.stdout.strip().split('\n'):
+            if go_mod_path:
+                # Get directory containing go.mod
+                module_dir = os.path.dirname(go_mod_path)
+                modules.append(module_dir if module_dir else ".")
+
+    except subprocess.CalledProcessError:
+        # Fallback to just current directory
+        modules = ["."]
+
+    return modules
+
+
 def find_modules_importing_package(package_name: str) -> Dict[str, List[str]]:
     """
     Find all Go modules/packages that import the given package.
     Uses 'go list' for accurate dependency analysis.
-    
+    Scans all go.mod files in the repository (handles nested modules).
+
     Returns:
         Dict mapping module paths to list of files that import the package
     """
     result = defaultdict(list)
-    
-    try:
-        # Method 1: Use 'go list' to find all packages in the repo
-        list_result = subprocess.run(
-            ["go", "list", "-json", "./..."],
-            capture_output=True,
-            text=True,
-            check=True,
-            cwd="."
-        )
 
-        # Parse JSON output - go list -json outputs newline-delimited JSON objects
-        # We need to parse them as a stream
-        packages = []
-        json_buffer = ""
-        brace_count = 0
+    # Find all Go modules in the repository
+    all_modules = find_all_go_modules()
+    print(f"Found {len(all_modules)} Go module(s): {all_modules}")
 
-        for char in list_result.stdout:
-            json_buffer += char
-            if char == '{':
-                brace_count += 1
-            elif char == '}':
-                brace_count -= 1
-                if brace_count == 0 and json_buffer.strip():
-                    # Complete JSON object
-                    try:
-                        pkg = json.loads(json_buffer.strip())
-                        packages.append(pkg)
-                    except json.JSONDecodeError as e:
-                        print(f"Warning: Failed to parse JSON: {e}")
-                    json_buffer = ""
-        
-        # For each package, check if it imports our target package
-        for pkg in packages:
-            imports = pkg.get('Imports', [])
-            deps = pkg.get('Deps', [])
-            go_files = pkg.get('GoFiles', [])
-            pkg_dir = pkg.get('Dir', '')
-            
-            # Check direct imports
-            if package_name in imports:
-                # This package directly imports our target
-                for go_file in go_files:
-                    file_path = os.path.join(pkg_dir, go_file)
-                    result[pkg.get('ImportPath', '')].append(file_path)
-            
-            # Optionally check transitive dependencies
-            # if package_name in deps:
-            #     # This package transitively depends on our target
-            
-    except subprocess.CalledProcessError as e:
-        print(f"Error: 'go list' failed: {e}")
-        print("Please ensure 'go' is installed and go.mod exists")
-        raise
-    except FileNotFoundError:
-        print("Error: 'go' command not found")
-        print("Please install Go: https://go.dev/doc/install")
-        raise
+    # Scan each module separately
+    for module_dir in all_modules:
+        try:
+            # Use 'go list' to find all packages in this module
+            list_result = subprocess.run(
+                ["go", "list", "-json", "./..."],
+                capture_output=True,
+                text=True,
+                check=True,
+                cwd=module_dir
+            )
+
+            # Parse JSON output - go list -json outputs newline-delimited JSON objects
+            # We need to parse them as a stream
+            packages = []
+            json_buffer = ""
+            brace_count = 0
+
+            for char in list_result.stdout:
+                json_buffer += char
+                if char == '{':
+                    brace_count += 1
+                elif char == '}':
+                    brace_count -= 1
+                    if brace_count == 0 and json_buffer.strip():
+                        # Complete JSON object
+                        try:
+                            pkg = json.loads(json_buffer.strip())
+                            packages.append(pkg)
+                        except json.JSONDecodeError as e:
+                            print(f"Warning: Failed to parse JSON in {module_dir}: {e}")
+                        json_buffer = ""
+
+            # For each package, check if it imports our target package
+            for pkg in packages:
+                imports = pkg.get('Imports', [])
+                deps = pkg.get('Deps', [])
+                go_files = pkg.get('GoFiles', [])
+                pkg_dir = pkg.get('Dir', '')
+
+                # Check direct imports
+                if package_name in imports:
+                    # This package directly imports our target
+                    for go_file in go_files:
+                        file_path = os.path.join(pkg_dir, go_file)
+                        result[pkg.get('ImportPath', '')].append(file_path)
+
+                # Optionally check transitive dependencies
+                # if package_name in deps:
+                #     # This package transitively depends on our target
+
+        except subprocess.CalledProcessError as e:
+            print(f"Warning: 'go list' failed for module {module_dir}: {e}")
+            # Continue to next module
+            continue
+        except FileNotFoundError:
+            print("Error: 'go' command not found")
+            print("Please install Go: https://go.dev/doc/install")
+            raise
     
     return dict(result)
 

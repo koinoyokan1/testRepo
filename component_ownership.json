@@ -82,6 +82,36 @@
         "primary": ["paul@company.com"],
         "secondary": ["quinn@company.com"]
       }
+    },
+    {
+      "name": "Contrib Plugin A",
+      "directories": [
+        "contrib/plugin-a"
+      ],
+      "owners": {
+        "primary": ["rachel@company.com"],
+        "secondary": ["steve@company.com"]
+      }
+    },
+    {
+      "name": "Contrib Plugin B",
+      "directories": [
+        "contrib/plugin-b"
+      ],
+      "owners": {
+        "primary": ["tina@company.com"],
+        "secondary": ["uma@company.com"]
+      }
+    },
+    {
+      "name": "Contrib Shared Library",
+      "directories": [
+        "contrib/shared-lib"
+      ],
+      "owners": {
+        "primary": ["victor@company.com"],
+        "secondary": ["wendy@company.com"]
+      }
     }
   ],
   "default_reviewers": {
