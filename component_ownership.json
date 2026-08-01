@@ -1,0 +1,91 @@
+{
+  "components": [
+    {
+      "name": "API Gateway",
+      "directories": [
+        "services/api-gateway",
+        "cmd/api-gateway"
+      ],
+      "owners": {
+        "primary": ["alice@company.com"],
+        "secondary": ["bob@company.com", "charlie@company.com"]
+      }
+    },
+    {
+      "name": "Authentication Service",
+      "directories": [
+        "services/auth",
+        "pkg/auth",
+        "internal/auth"
+      ],
+      "owners": {
+        "primary": ["david@company.com"],
+        "secondary": ["eve@company.com"]
+      }
+    },
+    {
+      "name": "User Management",
+      "directories": [
+        "services/users",
+        "pkg/users",
+        "internal/users"
+      ],
+      "owners": {
+        "primary": ["frank@company.com", "grace@company.com"],
+        "secondary": ["henry@company.com"]
+      }
+    },
+    {
+      "name": "Payment Processing",
+      "directories": [
+        "services/payment",
+        "pkg/payment",
+        "internal/payment"
+      ],
+      "owners": {
+        "primary": ["iris@company.com"],
+        "secondary": ["jack@company.com"]
+      }
+    },
+    {
+      "name": "Web Frontend",
+      "directories": [
+        "web/frontend",
+        "web/components",
+        "web/pages"
+      ],
+      "owners": {
+        "primary": ["karen@company.com"],
+        "secondary": ["leo@company.com", "mary@company.com"]
+      }
+    },
+    {
+      "name": "Shared Utilities",
+      "directories": [
+        "pkg/utils",
+        "pkg/common",
+        "internal/shared"
+      ],
+      "owners": {
+        "primary": ["nancy@company.com"],
+        "secondary": ["oliver@company.com"]
+      }
+    },
+    {
+      "name": "Data Layer",
+      "directories": [
+        "pkg/database",
+        "pkg/models",
+        "internal/repository"
+      ],
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
+      }
+    }
+  ],
+  "default_reviewers": {
+    "primary": ["techleads@company.com"],
+    "secondary": ["architects@company.com"]
+  }
+}

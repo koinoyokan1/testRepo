@@ -48,6 +48,9 @@ jobs:
             # Generate dynamic Renovate rules
             python3 generate_renovate_rules.py
 
+            # Generate reviewer assignments based on component ownership
+            python3 add_renovate_reviewers.py
+
             # Merge generated rules with base renovate.json
             if [ -f "renovate-blackduck-generated.json" ]; then
               echo "Successfully generated renovate-blackduck-generated.json"
@@ -94,7 +97,7 @@ jobs:
           }
           EOF
 
-              # Merge package rules from generated config into merged config
+              # Merge package rules from generated configs into merged config
               python3 << 'PYTHON'
           import json
 
@@ -102,18 +105,46 @@ jobs:
           with open('renovate-merged.json') as f:
               merged = json.load(f)
 
-          # Read generated rules
+          # Read generated Black Duck rules
           with open('renovate-blackduck-generated.json') as f:
-              generated = json.load(f)
+              blackduck_rules = json.load(f)
 
-          # Add generated package rules
-          merged['packageRules'] = generated.get('packageRules', [])
+          # Read generated reviewer assignments
+          reviewer_rules = {}
+          try:
+              with open('renovate-reviewers.json') as f:
+                  reviewer_config = json.load(f)
+                  # Create a map of package name to reviewer rule
+                  for rule in reviewer_config.get('packageRules', []):
+                      for pkg in rule.get('matchPackageNames', []):
+                          reviewer_rules[pkg] = rule
+          except FileNotFoundError:
+              print("⚠ No reviewer config found, skipping reviewer assignment")
+
+          # Merge Black Duck rules with reviewer assignments
+          final_rules = []
+          for bd_rule in blackduck_rules.get('packageRules', []):
+              # Get package name from rule
+              pkg_names = bd_rule.get('matchPackageNames', [])
+
+              # Merge with reviewer rule if exists
+              for pkg_name in pkg_names:
+                  if pkg_name in reviewer_rules:
+                      rev_rule = reviewer_rules[pkg_name]
+                      # Merge reviewers and labels
+                      bd_rule['reviewers'] = rev_rule.get('reviewers', [])
+                      bd_rule['addLabels'] = bd_rule.get('labels', []) + rev_rule.get('addLabels', [])
+
+              final_rules.append(bd_rule)
+
+          # Add merged package rules
+          merged['packageRules'].extend(final_rules)
 
           # Write merged config
           with open('renovate-merged.json', 'w') as f:
               json.dump(merged, f, indent=2)
 
-          print("✓ Merged Black Duck rules into Renovate configuration")
+          print("✓ Merged Black Duck rules and reviewer assignments into Renovate configuration")
           print(f"✓ Total package rules: {len(merged['packageRules'])}")
           PYTHON
 
