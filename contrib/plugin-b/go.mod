@@ -2,7 +2,7 @@ module example.com/contrib/plugin-b
 
 go 1.20
 
-require github.com/gin-gonic/gin v1.9.0
+require github.com/gin-gonic/gin v1.12.0
 
 require (
 	github.com/bytedance/sonic v1.8.0 // indirect
