@@ -14,7 +14,6 @@
   "commitMessagePrefix": "fix(deps):",
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
-  "prTitle": "fix(deps): update {{depName}} to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
   "prBodyTemplate": "This PR updates **{{depName}}** from `{{currentValue}}` to `{{newValue}}`.\n\n### Black Duck Security Finding\n\n{{#if vulnerabilitySeverity}}- **Severity**: {{vulnerabilitySeverity}}\n{{/if}}{{#if vulnerabilityCount}}- **Vulnerabilities Fixed**: {{vulnerabilityCount}}\n{{/if}}\n### Changes\n\n{{#if displayPending}}- [ ] <!-- rebase-check -->If you want to rebase/retry this PR, check this box\n{{/if}}\n---\n\n{{body}}",
   "labels": [
     "dependencies",
@@ -29,8 +28,8 @@
       "matchPackageNames": ["github.com/gin-gonic/gin"],
       "groupName": null,
       "separateMinorPatch": false,
-      "commitMessageTopic": "github.com/gin-gonic/gin",
-      "prTitle": "fix(security): update gin to {{newVersion}} to fix CVE-2023-29401 (HIGH)",
+      "commitMessageTopic": "gin",
+      "commitMessageSuffix": "to fix CVE-2023-29401 (HIGH)",
       "prBodyNotes": [
         "### 🔒 Security Update - Black Duck Finding",
         "",
