@@ -256,17 +256,6 @@
         "./services/admin-dashboard",
         "./services/web-frontend"
       ],
-      "files_by_component": {
-        "Analytics Plugin": [
-          "./contrib/analytics-plugin/src/index.ts"
-        ],
-        "Admin Dashboard": [
-          "./services/admin-dashboard/src/server.ts"
-        ],
-        "Web Frontend": [
-          "./services/web-frontend/src/index.ts"
-        ]
-      },
       "components": {
         "Analytics Plugin": {
           "name": "Analytics Plugin",
@@ -311,6 +300,50 @@
           }
         }
       },
+      "components_affected": [
+        {
+          "name": "Analytics Plugin",
+          "files": [
+            "./contrib/analytics-plugin/src/index.ts"
+          ],
+          "owners": {
+            "primary": [
+              "blake@company.com"
+            ],
+            "secondary": [
+              "clara@company.com"
+            ]
+          }
+        },
+        {
+          "name": "Admin Dashboard",
+          "files": [
+            "./services/admin-dashboard/src/server.ts"
+          ],
+          "owners": {
+            "primary": [
+              "zoe@company.com"
+            ],
+            "secondary": [
+              "adam@company.com"
+            ]
+          }
+        },
+        {
+          "name": "Web Frontend",
+          "files": [
+            "./services/web-frontend/src/index.ts"
+          ],
+          "owners": {
+            "primary": [
+              "xavier@company.com"
+            ],
+            "secondary": [
+              "yvonne@company.com"
+            ]
+          }
+        }
+      ],
       "reviewers": [
         "adam@company.com",
         "blake@company.com",
@@ -326,14 +359,6 @@
         "./contrib/analytics-plugin",
         "./services/admin-dashboard"
       ],
-      "files_by_component": {
-        "Analytics Plugin": [
-          "./contrib/analytics-plugin/src/index.ts"
-        ],
-        "Admin Dashboard": [
-          "./services/admin-dashboard/src/server.ts"
-        ]
-      },
       "components": {
         "Analytics Plugin": {
           "name": "Analytics Plugin",
@@ -364,6 +389,36 @@
           }
         }
       },
+      "components_affected": [
+        {
+          "name": "Analytics Plugin",
+          "files": [
+            "./contrib/analytics-plugin/src/index.ts"
+          ],
+          "owners": {
+            "primary": [
+              "blake@company.com"
+            ],
+            "secondary": [
+              "clara@company.com"
+            ]
+          }
+        },
+        {
+          "name": "Admin Dashboard",
+          "files": [
+            "./services/admin-dashboard/src/server.ts"
+          ],
+          "owners": {
+            "primary": [
+              "zoe@company.com"
+            ],
+            "secondary": [
+              "adam@company.com"
+            ]
+          }
+        }
+      ],
       "reviewers": [
         "adam@company.com",
         "blake@company.com",

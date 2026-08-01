@@ -19,10 +19,10 @@ import sys
 def process_full_report():
     """Process the detailed blackduck_report.json format"""
     print("=" * 60)
-    print("FULL BLACK DUCK SCAN REPORT (blackduck_report.json)")
+    print("FULL BLACK DUCK SCAN REPORT (security-tooling/blackduck_report.json)")
     print("=" * 60)
 
-    with open("blackduck_report.json") as f:
+    with open("security-tooling/blackduck_report.json") as f:
         report = json.load(f)
 
     print(f"Project: {report['project_name']}")

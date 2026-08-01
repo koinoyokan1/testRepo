@@ -50,7 +50,7 @@ jobs:
         with:
           name: blackduck-report
           path: |
-            blackduck_report.json
+            security-tooling/blackduck_report.json
             blackduck_scan_output.txt
 
       - name: Generate Renovate Config from Black Duck

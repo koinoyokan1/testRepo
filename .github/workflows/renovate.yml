@@ -42,18 +42,18 @@ jobs:
           echo "Processing Black Duck vulnerability reports..."
 
           # Check if Black Duck report exists
-          if [ -f "blackduck_report.json" ]; then
+          if [ -f "security-tooling/blackduck_report.json" ]; then
             echo "Found Black Duck vulnerability report"
 
             # Generate dynamic Renovate rules
-            python3 generate_renovate_rules.py
+            python3 security-tooling/generate_renovate_rules.py
 
             # Generate reviewer assignments based on component ownership
-            python3 add_renovate_reviewers.py
+            python3 security-tooling/manage_reviewers.py generate-renovate
 
             # Merge generated rules with base renovate.json
-            if [ -f "renovate-blackduck-generated.json" ]; then
-              echo "Successfully generated renovate-blackduck-generated.json"
+            if [ -f "security-tooling/generated/renovate-blackduck-generated.json" ]; then
+              echo "Successfully generated security-tooling/generated/renovate-blackduck-generated.json"
 
               # Create a merged config that extends both base and generated rules
               cat > renovate-merged.json << 'EOF'
@@ -106,13 +106,13 @@ jobs:
               merged = json.load(f)
 
           # Read generated Black Duck rules
-          with open('renovate-blackduck-generated.json') as f:
+          with open('security-tooling/generated/renovate-blackduck-generated.json') as f:
               blackduck_rules = json.load(f)
 
           # Read generated reviewer assignments
           reviewer_rules = {}
           try:
-              with open('renovate-reviewers.json') as f:
+              with open('security-tooling/generated/renovate-reviewers.json') as f:
                   reviewer_config = json.load(f)
                   # Create a map of package name to reviewer rule
                   for rule in reviewer_config.get('packageRules', []):

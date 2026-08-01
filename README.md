@@ -1,6 +1,12 @@
-# Black Duck + Renovate Integration - Multi-Ecosystem
+# Sample Multi-Ecosystem Monorepo
 
-This repository demonstrates automated vulnerability remediation using **Black Duck** security scanning and **Renovate** dependency updates, with intelligent **component-based reviewer assignment** across **multiple ecosystems** (Go + npm/TypeScript).
+This repository contains a sample multi-ecosystem monorepo (Go + npm/TypeScript) with security tooling for automated vulnerability remediation.
+
+## Security Tooling
+
+The `security-tooling/` directory contains automated vulnerability remediation using **Black Duck** security scanning and **Renovate** dependency updates, with intelligent **component-based reviewer assignment**.
+
+**See [security-tooling/README.md](security-tooling/README.md) for complete security tooling documentation.**
 
 ## Project Overview
 
@@ -44,9 +50,9 @@ This repository demonstrates automated vulnerability remediation using **Black D
 
 ### 1. Review Component Ownership
 
-See [COMPONENT_OWNERSHIP.md](COMPONENT_OWNERSHIP.md) for the ownership system.
+See the [Component Ownership System](security-tooling/DOCUMENTATION.md#component-ownership-system) section for details.
 
-Edit `component_ownership.json` to map your directories to teams:
+Edit `security-tooling/component_ownership.json` to map your directories to teams:
 ```json
 {
   "name": "API Gateway",
@@ -62,17 +68,17 @@ Edit `component_ownership.json` to map your directories to teams:
 
 **For Go packages:**
 ```bash
-python3 find_reviewers.py github.com/gin-gonic/gin
+python3 security-tooling/manage_reviewers.py analyze --go github.com/gin-gonic/gin
 ```
 
 **For npm packages:**
 ```bash
-python3 find_npm_reviewers.py axios
+python3 security-tooling/manage_reviewers.py analyze --npm axios
 ```
 
 **For all vulnerabilities (unified):**
 ```bash
-python3 find_all_reviewers.py
+python3 security-tooling/manage_reviewers.py process-report
 ```
 
 Output:
@@ -195,44 +201,45 @@ Based on current vulnerabilities, Renovate will create:
   - Fixes denial of service vulnerability
   - Labels: `security`, `medium-priority`, `blackduck`
 
-### Configuration Files
+### Security Tooling
 
-- `component_ownership.json` - **Component to owner mapping (11 components)**
-- `renovate.json` - Base Renovate configuration (enables gomod + npm)
-- `blackduck_report.json` - Black Duck vulnerability scan report (5 CVEs)
-- `.github/workflows/renovate.yml` - Renovate automation workflow
+All security-related tooling is in the `security-tooling/` directory:
 
-### Analysis Tools
+- **Configuration Files**: `component_ownership.json`, `renovate.json`, `blackduck_report.json`
+- **Analysis Tools**: `manage_reviewers.py`, `generate_renovate_rules.py`, `npm_reviewer_utils.py`
+- **Workflows**: `.github/workflows/` (renovate.yml, blackduck-integration.yml)
 
-- `find_reviewers.py` - Go dependency analyzer (uses `go list`)
-- `find_npm_reviewers.py` - npm dependency analyzer (uses grep for imports)
-- `find_all_reviewers.py` - **Unified multi-ecosystem analyzer**
-- `generate_renovate_rules.py` - Dynamic rule generator from Black Duck findings
-- `add_renovate_reviewers.py` - Renovate reviewer config generator
+### Running Security Tools
 
-### Test Locally
+From the repository root:
 
 ```bash
+# Generate Renovate rules from Black Duck findings
+python3 security-tooling/generate_renovate_rules.py
+
 # Analyze all vulnerabilities (Go + npm)
-python3 find_all_reviewers.py
+python3 security-tooling/manage_reviewers.py process-report
 
-# Generate Renovate rules
-python3 generate_renovate_rules.py
+# Generate reviewer assignments
+python3 security-tooling/manage_reviewers.py generate-renovate
 
-# Test specific ecosystem
-python3 find_reviewers.py github.com/gin-gonic/gin  # Go
-python3 find_npm_reviewers.py axios                  # npm
+# Analyze specific packages
+python3 security-tooling/manage_reviewers.py analyze --go github.com/gin-gonic/gin
+python3 security-tooling/manage_reviewers.py analyze --npm axios
 ```
 
 ## 📚 Documentation
 
-### Comprehensive Guides
+### Security Tooling Documentation
 
-- **[MULTI_ECOSYSTEM_SUMMARY.md](MULTI_ECOSYSTEM_SUMMARY.md)** - Complete multi-ecosystem guide (Go + npm)
-- **[TYPESCRIPT_SUPPORT.md](TYPESCRIPT_SUPPORT.md)** - TypeScript/npm integration details
-- **[NESTED_MODULES.md](NESTED_MODULES.md)** - Go nested modules support
-- **[COMPONENT_OWNERSHIP.md](COMPONENT_OWNERSHIP.md)** - Component ownership system
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture diagrams
+- **[security-tooling/README.md](security-tooling/README.md)** - Quick start guide for security tools
+- **[security-tooling/DOCUMENTATION.md](security-tooling/DOCUMENTATION.md)** - Complete documentation covering:
+  - Multi-ecosystem support (Go + npm)
+  - System architecture and design
+  - Component ownership system
+  - Nested Go modules support
+  - TypeScript/npm integration
+  - Automated reviewer assignment
 
 ### Configuration Files
 

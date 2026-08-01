@@ -1,0 +1,67 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Auto-generated reviewer assignments based on component ownership",
+  "packageRules": [
+    {
+      "description": "Auto-assign reviewers for github.com/gin-gonic/gin (affects 8 components)",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/gin-gonic/gin"
+      ],
+      "reviewers": [
+        "alice@company.com",
+        "architects@company.com",
+        "bob@company.com",
+        "charlie@company.com",
+        "david@company.com"
+      ],
+      "addLabels": [
+        "component:api-gateway",
+        "component:authentication-service",
+        "component:contrib-plugin-a"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for axios (affects 3 components)",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "axios"
+      ],
+      "reviewers": [
+        "adam@company.com",
+        "blake@company.com",
+        "clara@company.com",
+        "xavier@company.com",
+        "yvonne@company.com"
+      ],
+      "addLabels": [
+        "component:analytics-plugin",
+        "component:admin-dashboard",
+        "component:web-frontend"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for lodash (affects 2 components)",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "lodash"
+      ],
+      "reviewers": [
+        "adam@company.com",
+        "blake@company.com",
+        "clara@company.com",
+        "zoe@company.com"
+      ],
+      "addLabels": [
+        "component:analytics-plugin",
+        "component:admin-dashboard"
+      ]
+    }
+  ]
+}
