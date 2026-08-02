@@ -10,7 +10,8 @@ security-tooling/
 │   ├── renovate-blackduck-generated.json
 │   ├── renovate-reviewers.json
 │   └── reviewer_analysis.json
-├── blackduck_report.json      # Input: Black Duck vulnerability scan report
+├── mockBlackDuck/
+│   └── blackduck_report.json  # Input: Black Duck vulnerability scan report (mock data)
 ├── component_ownership.json    # Config: Component to owner mapping
 ├── renovate.json              # Config: Base Renovate configuration
 ├── generate_renovate_rules.py # Script: Generate Renovate rules from Black Duck
@@ -53,7 +54,7 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 ### Configuration Files
 - **`component_ownership.json`** - Maps directories to team owners
 - **`renovate.json`** - Base Renovate configuration
-- **`blackduck_report.json`** - Black Duck vulnerability scan results (code + containers)
+- **`mockBlackDuck/blackduck_report.json`** - Black Duck vulnerability scan results (mock data for testing)
 - **`../image_versions.json`** - Container image versions (prebuilt + custom)
 
 ### GitHub Workflows (in `../.github/workflows/`)
@@ -74,7 +75,7 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 
 ## 🔄 Workflow
 
-1. **Black Duck Scan** → Generates `blackduck_report.json`
+1. **Black Duck Scan** → Generates `mockBlackDuck/blackduck_report.json`
 2. **Generate Rules** → `generate_renovate_rules.py` creates Renovate package rules
 3. **Find Reviewers** → `manage_reviewers.py` analyzes affected components and assigns reviewers
 4. **Renovate PRs** → Automated PRs are created with correct reviewers assigned

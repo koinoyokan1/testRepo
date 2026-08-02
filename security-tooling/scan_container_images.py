@@ -44,7 +44,7 @@ def load_docker_compose(filepath="docker-compose.yml"):
         return None
 
 
-def load_blackduck_report(filepath="security-tooling/blackduck_report.json"):
+def load_blackduck_report(filepath="security-tooling/mockBlackDuck/blackduck_report.json"):
     """Load Black Duck vulnerability report"""
     with open(filepath, 'r') as f:
         return json.load(f)

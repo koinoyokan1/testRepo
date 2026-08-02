@@ -22,7 +22,7 @@ on:
     paths:
       - '.github/workflows/renovate.yml'
       - 'renovate.json'
-      - 'security-tooling/blackduck_report.json'
+      - 'security-tooling/mockBlackDuck/blackduck_report.json'
       - 'security-tooling/renovate.json'
       - 'security-tooling/generate_*.py'
       - 'security-tooling/detect_*.py'
@@ -64,7 +64,7 @@ jobs:
           echo "Processing Black Duck vulnerability reports..."
 
           # Check if Black Duck report exists
-          if [ -f "security-tooling/blackduck_report.json" ]; then
+          if [ -f "security-tooling/mockBlackDuck/blackduck_report.json" ]; then
             echo "Found Black Duck vulnerability report"
 
             # Generate dynamic Renovate rules for packages (go/npm)

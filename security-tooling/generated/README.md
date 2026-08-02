@@ -37,6 +37,6 @@ python3 security-tooling/manage_reviewers.py generate-renovate
 
 ## Notes
 
-- These files are generated from the `security-tooling/blackduck_report.json` and `security-tooling/component_ownership.json` configuration files
+- These files are generated from the `security-tooling/mockBlackDuck/blackduck_report.json` and `security-tooling/component_ownership.json` configuration files
 - Do not commit these files if they contain sensitive information
 - The files are automatically regenerated in the CI/CD pipeline

@@ -101,7 +101,7 @@ def main():
     print()
     
     # Load Black Duck report
-    report_file = "security-tooling/blackduck_report.json"
+    report_file = "security-tooling/mockBlackDuck/blackduck_report.json"
     try:
         with open(report_file, 'r') as f:
             report = json.load(f)

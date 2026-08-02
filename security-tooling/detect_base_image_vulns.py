@@ -15,7 +15,7 @@ import os
 import re
 
 
-def load_blackduck_report(filepath="security-tooling/blackduck_report.json"):
+def load_blackduck_report(filepath="security-tooling/mockBlackDuck/blackduck_report.json"):
     """Load Black Duck vulnerability report"""
     with open(filepath, 'r') as f:
         return json.load(f)

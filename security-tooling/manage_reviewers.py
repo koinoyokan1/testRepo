@@ -11,10 +11,10 @@ Usage:
     python3 manage_reviewers.py analyze --npm axios
 
     # Process entire Black Duck report
-    python3 manage_reviewers.py process-report [blackduck_report.json]
+    python3 manage_reviewers.py process-report [security-tooling/mockBlackDuck/blackduck_report.json]
 
     # Generate Renovate reviewer configuration
-    python3 manage_reviewers.py generate-renovate [blackduck_report.json]
+    python3 manage_reviewers.py generate-renovate [security-tooling/mockBlackDuck/blackduck_report.json]
 """
 
 import json
@@ -300,7 +300,7 @@ def find_reviewers_for_vulnerability(vuln: dict) -> dict:
         return {}
 
 
-def process_blackduck_report(report_file: str = "blackduck_report.json") -> dict:
+def process_blackduck_report(report_file: str = "security-tooling/mockBlackDuck/blackduck_report.json") -> dict:
     """
     Process entire Black Duck report and find reviewers for all vulnerabilities.
 
@@ -404,7 +404,7 @@ def print_summary(summary: dict):
 
 
 def generate_renovate_reviewers_config(
-    blackduck_report_file: str = "security-tooling/blackduck_report.json",
+    blackduck_report_file: str = "security-tooling/mockBlackDuck/blackduck_report.json",
     ownership_file: str = "security-tooling/component_ownership.json",
     output_file: str = "security-tooling/generated/renovate-reviewers.json"
 ):
@@ -513,14 +513,14 @@ def main():
 
     # Process Black Duck report
     process_parser = subparsers.add_parser('process-report', help='Process entire Black Duck report')
-    process_parser.add_argument('report_file', nargs='?', default='security-tooling/blackduck_report.json',
-                               help='Black Duck report file (default: security-tooling/blackduck_report.json)')
+    process_parser.add_argument('report_file', nargs='?', default='security-tooling/mockBlackDuck/blackduck_report.json',
+                               help='Black Duck report file (default: security-tooling/mockBlackDuck/blackduck_report.json)')
 
     # Generate Renovate config
     renovate_parser = subparsers.add_parser('generate-renovate',
                                             help='Generate Renovate reviewer configuration')
-    renovate_parser.add_argument('report_file', nargs='?', default='security-tooling/blackduck_report.json',
-                                help='Black Duck report file (default: security-tooling/blackduck_report.json)')
+    renovate_parser.add_argument('report_file', nargs='?', default='security-tooling/mockBlackDuck/blackduck_report.json',
+                                help='Black Duck report file (default: security-tooling/mockBlackDuck/blackduck_report.json)')
     renovate_parser.add_argument('--output', default='security-tooling/generated/renovate-reviewers.json',
                                 help='Output file (default: security-tooling/generated/renovate-reviewers.json)')
 

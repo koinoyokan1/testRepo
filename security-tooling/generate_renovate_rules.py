@@ -130,7 +130,7 @@ def generate_package_rule_from_vuln(vuln, index):
     return rule
 
 
-def process_report_format(filename="security-tooling/blackduck_report.json"):
+def process_report_format(filename="security-tooling/mockBlackDuck/blackduck_report.json"):
     """Process full report format, filtering out unfixable vulnerabilities and OS-level packages"""
     try:
         with open(filename) as f:
@@ -185,7 +185,7 @@ def main():
     all_rules = process_report_format()
 
     if all_rules:
-        print(f"✓ Processed {len(all_rules)} vulnerabilities from blackduck_report.json")
+        print(f"✓ Processed {len(all_rules)} vulnerabilities from mockBlackDuck/blackduck_report.json")
     else:
         print("✗ No Black Duck report found or no vulnerabilities detected!")
         sys.exit(1)

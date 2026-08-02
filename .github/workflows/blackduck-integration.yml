@@ -50,16 +50,16 @@ jobs:
         with:
           name: blackduck-report
           path: |
-            security-tooling/blackduck_report.json
+            security-tooling/mockBlackDuck/blackduck_report.json
             blackduck_scan_output.txt
 
       - name: Generate Renovate Config from Black Duck
         if: steps.scan.outputs.vulnerabilities_found == 'true'
         run: |
           echo "Generating dynamic Renovate configuration from Black Duck findings..."
-          
+
           # This could be enhanced to dynamically update renovate.json
-          # based on blackduck_report.json findings
+          # based on mockBlackDuck/blackduck_report.json findings
           
           cat << 'EOF' > renovate-blackduck.json5
           {
