@@ -15,9 +15,9 @@ import os
 
 
 def email_to_github_username(email):
-    """Convert email to GitHub username by stripping @company.com"""
-    if '@company.com' in email:
-        return email.replace('@company.com', '')
+    """Convert email to GitHub username by extracting the part before @"""
+    if '@' in email:
+        return email.split('@')[0]
     return email
 
 
