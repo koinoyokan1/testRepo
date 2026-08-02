@@ -193,9 +193,9 @@ def main():
                      "Base Image Rules with Reviewers"):
         return 1
     
-    # Step 5: Generate reviewer assignments
+    # Step 5: Generate reviewer assignments (Go/npm only)
     print(f"\n{'='*70}")
-    print("Running: Reviewer Assignments")
+    print("Running: Reviewer Assignments (Go/npm only)")
     print("Script: security-tooling/manage_reviewers.py generate-renovate")
     print('='*70)
 
@@ -227,7 +227,7 @@ def main():
     print("  - security-tooling/generated/renovate-container-image-rules.json")
     print("  - security-tooling/generated/renovate-dockerfile-rules.json")
     print("  - security-tooling/generated/renovate-base-image-rules.json")
-    print("  - security-tooling/generated/renovate-reviewers.json (if available)")
+    print("  - security-tooling/generated/renovate-go-npm-reviewers.json (Go/npm only)")
     print("  - renovate-merged.json ⭐")
     print()
     

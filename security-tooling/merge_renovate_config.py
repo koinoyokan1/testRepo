@@ -79,8 +79,8 @@ def main():
     )
     
     reviewer_config = load_json_file(
-        'security-tooling/generated/renovate-reviewers.json',
-        'reviewer assignments',
+        'security-tooling/generated/renovate-go-npm-reviewers.json',
+        'reviewer assignments (Go/npm only)',
         required=False
     )
     

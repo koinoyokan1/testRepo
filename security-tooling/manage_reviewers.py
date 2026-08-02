@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
-Unified reviewer management for both Go and npm dependencies.
+Reviewer management for Go and npm dependencies ONLY.
 Determines which teams should review based on Black Duck findings and generates Renovate configuration.
+
+Note: This only handles Go and npm packages. Alpine packages and container images
+      get their reviewers from generate_dockerfile_rules.py and generate_base_image_rules.py.
 
 Usage:
     # Analyze a single Go package
@@ -13,7 +16,7 @@ Usage:
     # Process entire Black Duck report
     python3 manage_reviewers.py process-report [security-tooling/mockBlackDuck/blackduck_report.json]
 
-    # Generate Renovate reviewer configuration
+    # Generate Renovate reviewer configuration (Go and npm only)
     python3 manage_reviewers.py generate-renovate [security-tooling/mockBlackDuck/blackduck_report.json]
 """
 
@@ -181,11 +184,15 @@ def print_summary(summary: dict):
 def generate_renovate_reviewers_config(
     blackduck_report_file: str = "security-tooling/mockBlackDuck/blackduck_report.json",
     ownership_file: str = "security-tooling/component_ownership.json",
-    output_file: str = "security-tooling/generated/renovate-reviewers.json"
+    output_file: str = "security-tooling/generated/renovate-go-npm-reviewers.json"
 ):
     """
-    Generate Renovate reviewer configuration based on Black Duck findings
-    and component ownership.
+    Generate Renovate reviewer configuration for Go and npm packages only.
+
+    Note: Alpine and container images are handled by their respective generators:
+      - generate_dockerfile_rules.py (alpine packages)
+      - generate_base_image_rules.py (prebuilt container images)
+      - generate_container_image_rules.py (custom container images)
     """
     # Load Black Duck report
     with open(blackduck_report_file, 'r') as f:
@@ -194,12 +201,16 @@ def generate_renovate_reviewers_config(
     # Load component ownership
     ownership_config = load_component_ownership(ownership_file)
 
-    # Track unique packages from vulnerabilities
+    # Track unique packages from vulnerabilities (Go and npm only)
+    # Note: Alpine and container images get reviewers from their respective generators
     packages_affected = {}
     for vuln in blackduck_report.get('vulnerabilities', []):
         component = vuln['component']
         ecosystem = vuln.get('ecosystem', 'go')
-        packages_affected[component] = ecosystem
+
+        # Only process Go and npm packages
+        if ecosystem in ['go', 'npm']:
+            packages_affected[component] = ecosystem
 
     # Generate reviewer rules for each package
     package_rules = []
@@ -210,8 +221,11 @@ def generate_renovate_reviewers_config(
         # Get reviewers for this package
         if ecosystem == 'npm':
             result = analyze_npm_package_reviewers(package, ownership_config)
-        else:  # go
+        elif ecosystem == 'go':
             result = analyze_go_package_reviewers(package, ownership_config)
+        else:
+            # Should never reach here due to filter above, but be defensive
+            continue
 
         if result and result.get('reviewers'):
             reviewers = result['reviewers']
@@ -292,8 +306,8 @@ def main():
                                             help='Generate Renovate reviewer configuration')
     renovate_parser.add_argument('report_file', nargs='?', default='security-tooling/mockBlackDuck/blackduck_report.json',
                                 help='Black Duck report file (default: security-tooling/mockBlackDuck/blackduck_report.json)')
-    renovate_parser.add_argument('--output', default='security-tooling/generated/renovate-reviewers.json',
-                                help='Output file (default: security-tooling/generated/renovate-reviewers.json)')
+    renovate_parser.add_argument('--output', default='security-tooling/generated/renovate-go-npm-reviewers.json',
+                                help='Output file (default: security-tooling/generated/renovate-go-npm-reviewers.json)')
 
     args = parser.parse_args()
 

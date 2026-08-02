@@ -180,6 +180,17 @@
         "",
         "**Remediation**: Update github.com/sirupsen/logrus to exactly version 1.9.3 as recommended by Black Duck.",
         "",
+        "",
+        "---",
+        "",
+        "### \ud83d\udc65 Component Owners",
+        "",
+        "- @alice",
+        "- @bob",
+        "- @charlie",
+        "- @david",
+        "",
+        "**Affected Components**: core-services",
         "This PR was created based on Black Duck security scan findings."
       ],
       "labels": [
@@ -188,6 +199,20 @@
         "blackduck",
         "cve-2026-11111",
         "go"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie",
+        "david"
+      ],
+      "addLabels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "cve-2026-11111",
+        "go",
+        "component:core-services"
       ]
     },
     {
@@ -219,6 +244,17 @@
         "",
         "**Remediation**: Update github.com/gorilla/mux to exactly version 1.8.1 as recommended by Black Duck.",
         "",
+        "",
+        "---",
+        "",
+        "### \ud83d\udc65 Component Owners",
+        "",
+        "- @alice",
+        "- @bob",
+        "- @charlie",
+        "- @david",
+        "",
+        "**Affected Components**: core-services",
         "This PR was created based on Black Duck security scan findings."
       ],
       "labels": [
@@ -227,6 +263,20 @@
         "blackduck",
         "cve-2026-22222",
         "go"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie",
+        "david"
+      ],
+      "addLabels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "cve-2026-22222",
+        "go",
+        "component:core-services"
       ]
     },
     {
@@ -258,6 +308,18 @@
         "",
         "**Remediation**: Update axios to exactly version 1.6.7 as recommended by Black Duck.",
         "",
+        "",
+        "---",
+        "",
+        "### \ud83d\udc65 Component Owners",
+        "",
+        "- @adam",
+        "- @blake",
+        "- @clara",
+        "- @xavier",
+        "- @yvonne",
+        "",
+        "**Affected Components**: analytics-plugin, admin-dashboard, web-frontend",
         "This PR was created based on Black Duck security scan findings."
       ],
       "labels": [
@@ -266,6 +328,23 @@
         "blackduck",
         "cve-2026-33333",
         "npm"
+      ],
+      "reviewers": [
+        "adam",
+        "blake",
+        "clara",
+        "xavier",
+        "yvonne"
+      ],
+      "addLabels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "cve-2026-33333",
+        "npm",
+        "component:analytics-plugin",
+        "component:admin-dashboard",
+        "component:web-frontend"
       ]
     },
     {
@@ -297,6 +376,18 @@
         "",
         "**Remediation**: Update lodash to exactly version 4.17.21 as recommended by Black Duck.",
         "",
+        "",
+        "---",
+        "",
+        "### \ud83d\udc65 Component Owners",
+        "",
+        "- @adam",
+        "- @blake",
+        "- @clara",
+        "- @xavier",
+        "- @yvonne",
+        "",
+        "**Affected Components**: analytics-plugin, admin-dashboard, web-frontend",
         "This PR was created based on Black Duck security scan findings."
       ],
       "labels": [
@@ -305,6 +396,23 @@
         "blackduck",
         "cve-2026-44444",
         "npm"
+      ],
+      "reviewers": [
+        "adam",
+        "blake",
+        "clara",
+        "xavier",
+        "yvonne"
+      ],
+      "addLabels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "cve-2026-44444",
+        "npm",
+        "component:analytics-plugin",
+        "component:admin-dashboard",
+        "component:web-frontend"
       ]
     },
     {
