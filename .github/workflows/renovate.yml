@@ -192,6 +192,28 @@ jobs:
                       bd_rule['reviewers'] = rev_rule.get('reviewers', [])
                       bd_rule['addLabels'] = bd_rule.get('labels', []) + rev_rule.get('addLabels', [])
 
+                      # Add component owners to PR body notes
+                      if 'prBodyNotes' in bd_rule and rev_rule.get('reviewers'):
+                          owners_section = [
+                              "",
+                              "---",
+                              "",
+                              "### 👥 Component Owners",
+                              ""
+                          ]
+                          for reviewer in rev_rule.get('reviewers', []):
+                              owners_section.append(f"- @{reviewer.replace('@company.com', '')}")
+
+                          # Add component labels info
+                          if rev_rule.get('addLabels'):
+                              components = [lbl.replace('component:', '') for lbl in rev_rule.get('addLabels', []) if lbl.startswith('component:')]
+                              if components:
+                                  owners_section.append("")
+                                  owners_section.append(f"**Affected Components**: {', '.join(components)}")
+
+                          # Insert before the "This PR was created..." line
+                          bd_rule['prBodyNotes'] = bd_rule['prBodyNotes'][:-1] + owners_section + [bd_rule['prBodyNotes'][-1]]
+
               final_rules.append(bd_rule)
 
           # Add container image rules (these already have reviewers from scan_container_images.py)
