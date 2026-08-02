@@ -52,7 +52,7 @@
         "red_version": "1.0.5"
     },
     "red/telemetry": {
-        "origin_image": "otel/opentelemetry-collector-contrib:0.153.0",
+        "origin_image": "otel/opentelemetry-collector-contrib:0.157.0",
         "red_version": "1.1.1"
     },
     "red/nodeexp": {
