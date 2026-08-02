@@ -11,11 +11,11 @@
         "github.com/gin-gonic/gin"
       ],
       "reviewers": [
-        "alice@company.com",
-        "architects@company.com",
-        "bob@company.com",
-        "charlie@company.com",
-        "david@company.com"
+        "alice",
+        "architects",
+        "bob",
+        "charlie",
+        "david"
       ],
       "addLabels": [
         "component:api-gateway",
@@ -32,11 +32,11 @@
         "axios"
       ],
       "reviewers": [
-        "adam@company.com",
-        "blake@company.com",
-        "clara@company.com",
-        "xavier@company.com",
-        "yvonne@company.com"
+        "adam",
+        "blake",
+        "clara",
+        "xavier",
+        "yvonne"
       ],
       "addLabels": [
         "component:analytics-plugin",
@@ -53,14 +53,332 @@
         "lodash"
       ],
       "reviewers": [
-        "adam@company.com",
-        "blake@company.com",
-        "clara@company.com",
-        "zoe@company.com"
+        "adam",
+        "blake",
+        "clara",
+        "zoe"
       ],
       "addLabels": [
         "component:analytics-plugin",
         "component:admin-dashboard"
+      ]
+    },
+    {
+      "description": "Default reviewers for nginx",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for postgres",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "postgres"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for redis",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "redis"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for node",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for golang",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "golang"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for ghcr.io/company/api-gateway",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/company/api-gateway"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for ghcr.io/company/web-frontend",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/company/web-frontend"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for openssl",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "openssl"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for curl",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "curl"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for libssl3",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "libssl3"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for libcrypto3",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "libcrypto3"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for zlib",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "zlib"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for github.com/vulnerable/package",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/vulnerable/package"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for github.com/gorilla/mux",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/gorilla/mux"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for github.com/sirupsen/logrus",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/sirupsen/logrus"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for moment",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "moment"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for express (affects 2 components)",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "express"
+      ],
+      "reviewers": [
+        "adam",
+        "xavier",
+        "yvonne",
+        "zoe"
+      ],
+      "addLabels": [
+        "component:admin-dashboard",
+        "component:web-frontend"
+      ]
+    },
+    {
+      "description": "Default reviewers for mysql",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "mysql"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for memcached",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "memcached"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for git",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "git"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for ca-certificates",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "ca-certificates"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for musl",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "musl"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for busybox",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "busybox"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for alpine-baselayout",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "alpine-baselayout"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
       ]
     }
   ]

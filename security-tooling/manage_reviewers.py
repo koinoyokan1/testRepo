@@ -29,6 +29,17 @@ from npm_reviewer_utils import analyze_npm_package_reviewers
 
 
 # ============================================================================
+# Email to GitHub Username Conversion
+# ============================================================================
+
+def email_to_github_username(email: str) -> str:
+    """Convert email to GitHub username by extracting the part before @"""
+    if '@' in email:
+        return email.split('@')[0]
+    return email
+
+
+# ============================================================================
 # Component Ownership
 # ============================================================================
 
@@ -438,11 +449,14 @@ def generate_renovate_reviewers_config(
             print(f"  ✓ Found {len(reviewers)} reviewers")
             print(f"  ✓ Affects {len(components)} components")
 
+            # Convert email addresses to GitHub usernames
+            github_reviewers = [email_to_github_username(r) for r in reviewers]
+
             rule = {
                 "description": f"Auto-assign reviewers for {package} (affects {len(components)} components)",
                 "matchDatasources": [ecosystem],
                 "matchPackageNames": [package],
-                "reviewers": reviewers[:5],  # Limit to 5 reviewers max
+                "reviewers": github_reviewers[:5],  # Limit to 5 reviewers max
                 "addLabels": [
                     f"component:{comp['name'].lower().replace(' ', '-')}"
                     for comp in components[:3]  # Add first 3 component labels
@@ -458,11 +472,14 @@ def generate_renovate_reviewers_config(
             )
 
             if all_defaults:
+                # Convert email addresses to GitHub usernames
+                github_defaults = [email_to_github_username(r) for r in all_defaults]
+
                 rule = {
                     "description": f"Default reviewers for {package}",
                     "matchDatasources": [ecosystem],
                     "matchPackageNames": [package],
-                    "reviewers": all_defaults[:5]
+                    "reviewers": github_defaults[:5]
                 }
                 package_rules.append(rule)
 
