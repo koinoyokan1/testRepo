@@ -56,7 +56,7 @@
         "red_version": "1.1.1"
     },
     "red/nodeexp": {
-        "origin_image": "prom/node-exporter:v1.11.1",
+        "origin_image": "prom/node-exporter:v1.12.1",
         "red_version": "1.0.1"
     },
     "red/alertmanager": {
