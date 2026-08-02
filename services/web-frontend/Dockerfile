@@ -1,6 +1,6 @@
 # Base image - VULNERABLE: CVE-2022-21824 (HIGH)
 # Recommended: node:20.10.0-alpine
-FROM node:16.14.0-alpine
+FROM node:20.20.2-alpine
 
 # Security: Upgrade base image OS packages to fix vulnerabilities
 # Fixes: CVE-2024-44444, CVE-2024-55555
