@@ -1,6 +1,18 @@
 {
   "components": [
     {
+      "name": "Core Services",
+      "directories": [
+        ".",
+        "cmd",
+        "pkg"
+      ],
+      "owners": {
+        "primary": ["alice@company.com", "david@company.com"],
+        "secondary": ["bob@company.com", "charlie@company.com"]
+      }
+    },
+    {
       "name": "API Gateway",
       "directories": [
         "services/api-gateway",
@@ -255,6 +267,18 @@
       "owners": {
         "primary": ["techleads@company.com"],
         "secondary": ["architects@company.com"]
+      }
+    },
+    "rabbitmq": {
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
+      }
+    },
+    "elasticsearch": {
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
       }
     }
   }

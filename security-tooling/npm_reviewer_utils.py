@@ -157,8 +157,9 @@ def analyze_npm_package_reviewers(package_name: str, ownership_config: dict) -> 
     component_set = {}
 
     for package_dir, files in packages_affected.items():
-        for file_path in files:
-            component = find_component_for_npm_file(file_path, components)
+        # If no import files found, use the package directory itself to find component
+        if not files:
+            component = find_component_for_npm_file(package_dir, components)
 
             if component:
                 component_name = component['name']
@@ -169,8 +170,24 @@ def analyze_npm_package_reviewers(package_name: str, ownership_config: dict) -> 
                     'owners': default_reviewers
                 }
 
-            files_by_component[component_name].append(file_path)
+            files_by_component[component_name].append(package_dir)
             component_set[component_name] = component
+        else:
+            # Process each import file
+            for file_path in files:
+                component = find_component_for_npm_file(file_path, components)
+
+                if component:
+                    component_name = component['name']
+                else:
+                    component_name = "Default"
+                    component = {
+                        'name': 'Default',
+                        'owners': default_reviewers
+                    }
+
+                files_by_component[component_name].append(file_path)
+                component_set[component_name] = component
 
     # Collect all reviewers
     all_reviewers = set()

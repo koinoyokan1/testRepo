@@ -201,6 +201,62 @@
       "semanticCommitScope": "security"
     },
     {
+      "description": "Container base image: rabbitmq (rabbitmq)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "rabbitmq"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-rabbitmq",
+      "prTitle": "Container base image upgrade: update rabbitmq ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:rabbitmq"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: elasticsearch (elasticsearch)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "elasticsearch"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-elasticsearch",
+      "prTitle": "Container base image upgrade: update elasticsearch ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:elasticsearch"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
       "description": "Container base image: red/config (quay.io/coreos/etcd)",
       "matchManagers": [
         "regex"
