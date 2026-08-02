@@ -85,6 +85,9 @@ jobs:
             # Generate reviewer assignments based on component ownership
             python3 security-tooling/manage_reviewers.py generate-renovate
 
+            # Generate package rules for container base images with reviewers
+            python3 security-tooling/generate_base_image_rules.py
+
             # Merge generated rules with base renovate.json
             if [ -f "security-tooling/generated/renovate-blackduck-generated.json" ]; then
               echo "Successfully generated security-tooling/generated/renovate-blackduck-generated.json"
@@ -166,6 +169,15 @@ jobs:
           except FileNotFoundError:
               print("⚠ No base image upgrade rules found, skipping")
 
+          # Read generated container base image rules (with reviewers)
+          base_image_rules = {}
+          try:
+              with open('security-tooling/generated/renovate-base-image-rules.json') as f:
+                  base_image_rules = json.load(f)
+                  print(f"✓ Found {len(base_image_rules.get('packageRules', []))} base image rules with reviewers")
+          except FileNotFoundError:
+              print("⚠ No base image rules found, skipping")
+
           # Read generated reviewer assignments
           reviewer_rules = {}
           try:
@@ -219,11 +231,14 @@ jobs:
           # Add container image rules (these already have reviewers from scan_container_images.py)
           final_rules.extend(container_rules.get('packageRules', []))
 
-          # Add Dockerfile OS-level package rules
+          # Add Dockerfile OS-level package rules (these already have reviewers from generate_dockerfile_rules.py)
           final_rules.extend(dockerfile_rules.get('packageRules', []))
 
-          # Add base image upgrade package rules
+          # Add base image upgrade package rules (these already have reviewers from generate_upgrade_regex.py)
           final_rules.extend(base_image_upgrade_rules.get('packageRules', []))
+
+          # Add container base image rules with reviewers
+          final_rules.extend(base_image_rules.get('packageRules', []))
 
           # Merge Dockerfile regex managers into base config
           if dockerfile_rules.get('regexManagers'):

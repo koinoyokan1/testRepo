@@ -62,21 +62,5 @@
       "packageNameTemplate": "rhel/{{{depName}}}"
     }
   ],
-  "packageRules": [
-    {
-      "description": "Enable all Docker image updates dynamically from image_map.json",
-      "matchManagers": ["regex"],
-      "matchFileNames": ["image_map.json"],
-      "enabled": true,
-      "groupName": "container-images",
-      "prTitle": "Container base image upgrade: {{depName}} to {{newVersion}}",
-      "labels": [
-        "dependencies",
-        "security",
-        "container-image"
-      ],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "security"
-    }
-  ]
+  "packageRules": []
 }

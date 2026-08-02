@@ -12,6 +12,74 @@ Usage:
 import json
 import sys
 import os
+import re
+from pathlib import Path
+
+
+def load_component_ownership(filepath="security-tooling/component_ownership.json"):
+    """Load component ownership configuration"""
+    try:
+        with open(filepath, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"⚠️  Warning: {filepath} not found, reviewers will not be assigned")
+        return {"components": []}
+
+
+def find_component_for_dockerfile(dockerfile_path, ownership_config):
+    """
+    Map a Dockerfile path to its component using path patterns.
+
+    Args:
+        dockerfile_path: Path to Dockerfile (e.g., "services/api-gateway/Dockerfile")
+        ownership_config: Component ownership configuration dict
+
+    Returns:
+        Component dict with name and owners, or None if no match
+    """
+    # Normalize the path
+    path = Path(dockerfile_path)
+    dockerfile_dir = str(path.parent)
+
+    # Try to match against component path patterns
+    for component in ownership_config.get('components', []):
+        for pattern in component.get('path_patterns', []):
+            # Simple glob-style matching
+            pattern_str = str(pattern).replace('**', '.*').replace('*', '[^/]*')
+            pattern_str = '^' + pattern_str + '$'
+
+            if re.match(pattern_str, dockerfile_dir) or re.match(pattern_str, dockerfile_path):
+                return component
+
+    return None
+
+
+def get_reviewers_for_dockerfile(dockerfile_path, ownership_config):
+    """
+    Get reviewers for a Dockerfile based on component ownership.
+
+    Returns:
+        Dict with reviewers list and component labels
+    """
+    component = find_component_for_dockerfile(dockerfile_path, ownership_config)
+
+    if not component:
+        return {"reviewers": [], "labels": []}
+
+    # Collect primary and secondary owners
+    owners = component.get('owners', {})
+    reviewers = list(set(
+        owners.get('primary', []) +
+        owners.get('secondary', [])
+    ))
+
+    # Create component label
+    component_label = f"component:{component['name']}"
+
+    return {
+        "reviewers": sorted(reviewers),
+        "labels": [component_label]
+    }
 
 
 def load_patches():
@@ -95,16 +163,21 @@ def generate_regex_manager(patch_info):
     return regex_managers
 
 
-def generate_package_rules(patch_info):
+def generate_package_rules(patch_info, ownership_config=None):
     """Generate Renovate package rules for base image upgrades"""
     filepath = patch_info['filepath']
     vulns = patch_info['vulns']
-    
+
     if not vulns:
         return []
-    
+
     ecosystem = vulns[0].get('ecosystem', 'alpine')
     package_rules = []
+
+    # Get reviewers for this Dockerfile
+    reviewer_info = {"reviewers": [], "labels": []}
+    if ownership_config:
+        reviewer_info = get_reviewers_for_dockerfile(filepath, ownership_config)
     
     for vuln in vulns:
         component = vuln.get('component', '')
@@ -158,7 +231,8 @@ def generate_package_rules(patch_info):
                 "base-image-upgrade",
                 ecosystem,
                 cve.lower()
-            ]
+            ] + reviewer_info.get("labels", []),
+            "reviewers": reviewer_info.get("reviewers", [])
         }
         
         package_rules.append(package_rule)
@@ -178,24 +252,27 @@ def main():
     except FileNotFoundError:
         print("❌ Error: Run patch_base_image_dockerfiles.py first!")
         return 1
-    
+
+    # Load component ownership configuration
+    ownership_config = load_component_ownership()
+
     if not patches:
         print("✅ No patches found - nothing to generate!")
         return 0
-    
+
     print(f"Found {len(patches)} patched Dockerfile(s)")
     print()
-    
+
     # Generate regex managers and package rules
     all_regex_managers = []
     all_package_rules = []
-    
+
     for patch in patches:
         filepath = patch['filepath']
         print(f"📄 {filepath}")
-        
+
         regex_managers = generate_regex_manager(patch)
-        package_rules = generate_package_rules(patch)
+        package_rules = generate_package_rules(patch, ownership_config)
         
         print(f"   Generated {len(regex_managers)} regex manager(s)")
         print(f"   Generated {len(package_rules)} package rule(s)")

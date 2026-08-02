@@ -13,6 +13,73 @@ import json
 import sys
 import os
 import re
+from pathlib import Path
+
+
+def load_component_ownership(filepath="security-tooling/component_ownership.json"):
+    """Load component ownership configuration"""
+    try:
+        with open(filepath, 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print(f"⚠️  Warning: {filepath} not found, reviewers will not be assigned")
+        return {"components": []}
+
+
+def find_component_for_dockerfile(dockerfile_path, ownership_config):
+    """
+    Map a Dockerfile path to its component using path patterns.
+
+    Args:
+        dockerfile_path: Path to Dockerfile (e.g., "services/api-gateway/Dockerfile")
+        ownership_config: Component ownership configuration dict
+
+    Returns:
+        Component dict with name and owners, or None if no match
+    """
+    # Normalize the path
+    path = Path(dockerfile_path)
+    dockerfile_dir = str(path.parent)
+
+    # Try to match against component path patterns
+    for component in ownership_config.get('components', []):
+        for pattern in component.get('path_patterns', []):
+            # Simple glob-style matching
+            pattern_str = str(pattern).replace('**', '.*').replace('*', '[^/]*')
+            pattern_str = '^' + pattern_str + '$'
+
+            if re.match(pattern_str, dockerfile_dir) or re.match(pattern_str, dockerfile_path):
+                return component
+
+    return None
+
+
+def get_reviewers_for_dockerfile(dockerfile_path, ownership_config):
+    """
+    Get reviewers for a Dockerfile based on component ownership.
+
+    Returns:
+        Dict with reviewers list and component labels
+    """
+    component = find_component_for_dockerfile(dockerfile_path, ownership_config)
+
+    if not component:
+        return {"reviewers": [], "labels": []}
+
+    # Collect primary and secondary owners
+    owners = component.get('owners', {})
+    reviewers = list(set(
+        owners.get('primary', []) +
+        owners.get('secondary', [])
+    ))
+
+    # Create component label
+    component_label = f"component:{component['name']}"
+
+    return {
+        "reviewers": sorted(reviewers),
+        "labels": [component_label]
+    }
 
 
 def is_fixable(vuln):
@@ -49,7 +116,7 @@ def get_package_manager(ecosystem):
     return package_managers.get(ecosystem, 'apk')
 
 
-def generate_dockerfile_rule(vuln):
+def generate_dockerfile_rule(vuln, ownership_config=None):
     """Generate a Renovate regex manager rule for a Dockerfile package"""
     component = vuln.get('component', 'unknown')
     current_version = vuln.get('version', 'unknown')
@@ -61,6 +128,11 @@ def generate_dockerfile_rule(vuln):
     ecosystem = vuln.get('ecosystem', 'alpine')
     file_path = vuln.get('file_path', 'Dockerfile')
     package_manager = vuln.get('package_manager', get_package_manager(ecosystem))
+
+    # Get reviewers for this Dockerfile
+    reviewer_info = {"reviewers": [], "labels": []}
+    if ownership_config:
+        reviewer_info = get_reviewers_for_dockerfile(file_path, ownership_config)
     
     # Extract just the filename (not full path) for matchFileNames
     # e.g., "services/api-gateway/Dockerfile" -> "Dockerfile"
@@ -132,7 +204,8 @@ def generate_dockerfile_rule(vuln):
             "dockerfile",
             ecosystem,
             cve.lower()
-        ]
+        ] + reviewer_info.get("labels", []),
+        "reviewers": reviewer_info.get("reviewers", [])
     }
     
     return {"regexManager": rule, "packageRule": package_rule}
@@ -152,6 +225,9 @@ def main():
     except FileNotFoundError:
         print(f"❌ Error: {report_file} not found")
         sys.exit(1)
+
+    # Load component ownership configuration
+    ownership_config = load_component_ownership()
 
     vulnerabilities = report.get('vulnerabilities', [])
 
@@ -180,7 +256,7 @@ def main():
 
         print(f"{idx}. {cve} - {component} ({ecosystem}) in {file_path}")
 
-        rules = generate_dockerfile_rule(vuln)
+        rules = generate_dockerfile_rule(vuln, ownership_config)
         regex_managers.append(rules['regexManager'])
         package_rules.append(rules['packageRule'])
 

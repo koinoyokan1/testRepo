@@ -147,5 +147,115 @@
   "default_reviewers": {
     "primary": ["techleads@company.com"],
     "secondary": ["architects@company.com"]
+  },
+  "base_images": {
+    "nginx": {
+      "owners": {
+        "primary": ["alice@company.com"],
+        "secondary": ["bob@company.com"]
+      }
+    },
+    "postgres": {
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
+      }
+    },
+    "redis": {
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
+      }
+    },
+    "node": {
+      "owners": {
+        "primary": ["karen@company.com", "xavier@company.com"],
+        "secondary": ["leo@company.com"]
+      }
+    },
+    "golang": {
+      "owners": {
+        "primary": ["alice@company.com", "david@company.com"],
+        "secondary": ["bob@company.com"]
+      }
+    },
+    "mysql": {
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
+      }
+    },
+    "memcached": {
+      "owners": {
+        "primary": ["paul@company.com"],
+        "secondary": ["quinn@company.com"]
+      }
+    },
+    "red/config": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/healthdb": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/message": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/proxy": {
+      "owners": {
+        "primary": ["alice@company.com"],
+        "secondary": ["bob@company.com"]
+      }
+    },
+    "red/images": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/nameserver": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/telemetry": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/nodeexp": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/alertmanager": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/metricsdb": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    },
+    "red/alertagent": {
+      "owners": {
+        "primary": ["techleads@company.com"],
+        "secondary": ["architects@company.com"]
+      }
+    }
   }
 }

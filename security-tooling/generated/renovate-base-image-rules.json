@@ -1,0 +1,512 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Auto-generated package rules for container base images with reviewers",
+  "packageRules": [
+    {
+      "description": "Container base image: nginx (nginx)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-nginx",
+      "prTitle": "Container base image upgrade: update nginx ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:nginx"
+      ],
+      "reviewers": [
+        "alice@company.com",
+        "bob@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: postgres (postgres)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "postgres"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-postgres",
+      "prTitle": "Container base image upgrade: update postgres ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:postgres"
+      ],
+      "reviewers": [
+        "paul@company.com",
+        "quinn@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: redis (redis)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "redis"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-redis",
+      "prTitle": "Container base image upgrade: update redis ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:redis"
+      ],
+      "reviewers": [
+        "paul@company.com",
+        "quinn@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: node (node)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-node",
+      "prTitle": "Container base image upgrade: update node ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:node"
+      ],
+      "reviewers": [
+        "karen@company.com",
+        "leo@company.com",
+        "xavier@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: golang (golang)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "golang"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-golang",
+      "prTitle": "Container base image upgrade: update golang ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:golang"
+      ],
+      "reviewers": [
+        "alice@company.com",
+        "bob@company.com",
+        "david@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: mysql (mysql)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "mysql"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-mysql",
+      "prTitle": "Container base image upgrade: update mysql ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:mysql"
+      ],
+      "reviewers": [
+        "paul@company.com",
+        "quinn@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: memcached (memcached)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "memcached"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-memcached",
+      "prTitle": "Container base image upgrade: update memcached ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:memcached"
+      ],
+      "reviewers": [
+        "paul@company.com",
+        "quinn@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/config (quay.io/coreos/etcd)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "quay.io/coreos/etcd"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-config",
+      "prTitle": "Container base image upgrade: update red/config ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-config"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/healthdb (mongo)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "mongo"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-healthdb",
+      "prTitle": "Container base image upgrade: update red/healthdb ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-healthdb"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/message (nats)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "nats"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-message",
+      "prTitle": "Container base image upgrade: update red/message ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-message"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/proxy (nginx)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-proxy",
+      "prTitle": "Container base image upgrade: update red/proxy ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-proxy"
+      ],
+      "reviewers": [
+        "alice@company.com",
+        "bob@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/images (registry)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "registry"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-images",
+      "prTitle": "Container base image upgrade: update red/images ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-images"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/nameserver (red/3rdparty/coredns)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "red/3rdparty/coredns"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-nameserver",
+      "prTitle": "Container base image upgrade: update red/nameserver ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-nameserver"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/telemetry (otel/opentelemetry-collector-contrib)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "otel/opentelemetry-collector-contrib"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-telemetry",
+      "prTitle": "Container base image upgrade: update red/telemetry ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-telemetry"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/nodeexp (prom/node-exporter)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "prom/node-exporter"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-nodeexp",
+      "prTitle": "Container base image upgrade: update red/nodeexp ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-nodeexp"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/alertmanager (prom/alertmanager)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "prom/alertmanager"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-alertmanager",
+      "prTitle": "Container base image upgrade: update red/alertmanager ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-alertmanager"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/metricsdb (victoriametrics/victoria-metrics)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "victoriametrics/victoria-metrics"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-metricsdb",
+      "prTitle": "Container base image upgrade: update red/metricsdb ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-metricsdb"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/alertagent (victoriametrics/vmalert)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "victoriametrics/vmalert"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-alertagent",
+      "prTitle": "Container base image upgrade: update red/alertagent ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-alertagent"
+      ],
+      "reviewers": [
+        "architects@company.com",
+        "techleads@company.com"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    }
+  ]
+}
