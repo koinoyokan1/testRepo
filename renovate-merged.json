@@ -1,0 +1,1154 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "description": "Renovate configuration for Black Duck vulnerability remediation",
+  "enabledManagers": [
+    "gomod",
+    "npm",
+    "docker-compose",
+    "dockerfile",
+    "regex"
+  ],
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "branchConcurrentLimit": 0,
+  "separateMinorPatch": true,
+  "separateMultipleMajor": true,
+  "rangeStrategy": "update-lockfile",
+  "semanticCommits": "enabled",
+  "commitMessagePrefix": "fix(deps):",
+  "commitMessageTopic": "{{depName}}",
+  "commitMessageExtra": "to {{#if isMajor}}v{{{newMajor}}}{{else}}{{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}{{/if}}",
+  "labels": [
+    "dependencies",
+    "security"
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": false
+  },
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "^image_map\\.json$"
+      ],
+      "matchStrings": [
+        "\"origin_image\":\\s*\"(?<depName>[^:]+):(?<currentValue>[^\"]+)\""
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    },
+    {
+      "description": "Extract OS-level package versions from Dockerfiles (apk add)",
+      "fileMatch": [
+        "(^|/)Dockerfile$",
+        "(^|/)Dockerfile\\.[^/]*$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+(?:add|--no-cache\\s+add)\\s+.*?(?<depName>[a-z0-9-]+)=(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine/{{{depName}}}"
+    },
+    {
+      "description": "Extract OS-level package versions from Dockerfiles (apt-get install)",
+      "fileMatch": [
+        "(^|/)Dockerfile$",
+        "(^|/)Dockerfile\\.[^/]*$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apt-get\\s+install\\s+.*?(?<depName>[a-z0-9-]+)=(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "debian/{{{depName}}}"
+    },
+    {
+      "description": "Extract OS-level package versions from Dockerfiles (yum install)",
+      "fileMatch": [
+        "(^|/)Dockerfile$",
+        "(^|/)Dockerfile\\.[^/]*$"
+      ],
+      "matchStrings": [
+        "RUN\\s+yum\\s+install\\s+.*?(?<depName>[a-z0-9-]+)-(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "rhel/{{{depName}}}"
+    },
+    {
+      "description": "Black Duck - CVE-2026-55555 (HIGH) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/web-frontend\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?curl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "curl",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:curl",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2026-66666 (CRITICAL) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/auth\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?git=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "git",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:git",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2026-77777 (CRITICAL) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/api-gateway\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?openssl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "openssl",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:openssl",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2026-88888 (HIGH) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/auth\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?musl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "musl",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:musl",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Disable all updates by default - only Black Duck findings will be enabled",
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchManagers": [
+        "gomod",
+        "npm"
+      ],
+      "enabled": false
+    },
+    {
+      "description": "Black Duck - CVE-2026-11111 (HIGH) - go",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/sirupsen/logrus"
+      ],
+      "allowedVersions": "1.9.3",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/go/logrus/cve-2026-11111",
+      "commitMessageTopic": "github.com/sirupsen/logrus",
+      "prTitle": "Go package upgrade: update logrus to v1.9.3 to fix CVE-2026-11111 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (GO)",
+        "",
+        "**Vulnerability**: CVE-2026-11111",
+        "**Severity**: HIGH (CVSS 8.2)",
+        "**Ecosystem**: go",
+        "**Current Version**: 1.8.1",
+        "**Fixed Version**: 1.9.3 (minimum safe version)",
+        "**Version Constraint**: 1.9.3",
+        "",
+        "**Description**: Log injection vulnerability in logrus allowing arbitrary code execution",
+        "",
+        "**Remediation**: Update github.com/sirupsen/logrus to exactly version 1.9.3 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "cve-2026-11111",
+        "go"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-22222 (MEDIUM) - go",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/gorilla/mux"
+      ],
+      "allowedVersions": "1.8.1",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/go/mux/cve-2026-22222",
+      "commitMessageTopic": "github.com/gorilla/mux",
+      "prTitle": "Go package upgrade: update mux to v1.8.1 to fix CVE-2026-22222 (MEDIUM)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (GO)",
+        "",
+        "**Vulnerability**: CVE-2026-22222",
+        "**Severity**: MEDIUM (CVSS 6.8)",
+        "**Ecosystem**: go",
+        "**Current Version**: 1.8.0",
+        "**Fixed Version**: 1.8.1 (minimum safe version)",
+        "**Version Constraint**: 1.8.1",
+        "",
+        "**Description**: Path traversal vulnerability in gorilla/mux router",
+        "",
+        "**Remediation**: Update github.com/gorilla/mux to exactly version 1.8.1 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "cve-2026-22222",
+        "go"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-33333 (CRITICAL) - npm",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "axios"
+      ],
+      "allowedVersions": "1.6.7",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/npm/axios/cve-2026-33333",
+      "commitMessageTopic": "axios",
+      "prTitle": "npm package upgrade: update axios to v1.6.7 to fix CVE-2026-33333 (CRITICAL)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (NPM)",
+        "",
+        "**Vulnerability**: CVE-2026-33333",
+        "**Severity**: CRITICAL (CVSS 9.1)",
+        "**Ecosystem**: npm",
+        "**Current Version**: 0.21.1",
+        "**Fixed Version**: 1.6.7 (minimum safe version)",
+        "**Version Constraint**: 1.6.7",
+        "",
+        "**Description**: Server-Side Request Forgery (SSRF) in axios HTTP client",
+        "",
+        "**Remediation**: Update axios to exactly version 1.6.7 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "cve-2026-33333",
+        "npm"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-44444 (HIGH) - npm",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "lodash"
+      ],
+      "allowedVersions": "4.17.21",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/npm/lodash/cve-2026-44444",
+      "commitMessageTopic": "lodash",
+      "prTitle": "npm package upgrade: update lodash to v4.17.21 to fix CVE-2026-44444 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (NPM)",
+        "",
+        "**Vulnerability**: CVE-2026-44444",
+        "**Severity**: HIGH (CVSS 7.4)",
+        "**Ecosystem**: npm",
+        "**Current Version**: 4.17.20",
+        "**Fixed Version**: 4.17.21 (minimum safe version)",
+        "**Version Constraint**: 4.17.21",
+        "",
+        "**Description**: Prototype pollution in lodash utility library",
+        "",
+        "**Remediation**: Update lodash to exactly version 4.17.21 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "cve-2026-44444",
+        "npm"
+      ]
+    },
+    {
+      "description": "Black Duck - ghcr.io/company/api-gateway CVE-2026-API-001 (LOW) - Custom Image",
+      "matchFileNames": [
+        "services/api-gateway/Dockerfile",
+        "docker-compose.yml"
+      ],
+      "enabled": true,
+      "branchName": "blackduck/custom-image/ghcr-io-company-api-gateway/cve-2026-api-001",
+      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/api-gateway to fix CVE-2026-API-001 in base image",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Custom Container Image",
+        "",
+        "**Image**: ghcr.io/company/api-gateway",
+        "**Base Image**: golang:1.19.0-alpine",
+        "**Recommended Base**: Update to golang:v2.4.0",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "",
+        "**Vulnerabilities in Base Image:**",
+        "",
+        "#### CVE-2026-API-001 (CRITICAL)",
+        "- **CVSS Score**: 9.3",
+        "- **Description**: SQL injection in API Gateway query parameter handling",
+        "",
+        "**Remediation Steps**:",
+        "",
+        "1. Update the FROM statement in `services/api-gateway/Dockerfile`",
+        "2. Change base image to: `golang:v2.4.0`",
+        "3. Rebuild the container image",
+        "4. Update the image reference in `docker-compose.yml`",
+        "",
+        "---",
+        "",
+        "**Files to Update**: `services/api-gateway/Dockerfile`, `docker-compose.yml`",
+        "",
+        "This PR was created based on Black Duck container image scan findings."
+      ],
+      "labels": [
+        "security",
+        "low-priority",
+        "blackduck",
+        "container-image",
+        "custom-image",
+        "cve-2026-api-001"
+      ],
+      "reviewers": [
+        "alice"
+      ]
+    },
+    {
+      "description": "Black Duck - ghcr.io/company/user-service CVE-2026-USER-001 (HIGH) - Custom Image",
+      "matchFileNames": [
+        "services/users/Dockerfile",
+        "docker-compose.yml"
+      ],
+      "enabled": true,
+      "branchName": "blackduck/custom-image/ghcr-io-company-user-service/cve-2026-user-001",
+      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/user-service to fix CVE-2026-USER-001 in base image",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Custom Container Image",
+        "",
+        "**Image**: ghcr.io/company/user-service",
+        "**Base Image**: golang:1.19.0-alpine",
+        "**Recommended Base**: Update to golang:v1.9.0",
+        "**Dockerfile**: services/users/Dockerfile",
+        "",
+        "**Vulnerabilities in Base Image:**",
+        "",
+        "#### CVE-2026-USER-001 (HIGH)",
+        "- **CVSS Score**: 7.9",
+        "- **Description**: Privilege escalation in user-service role management",
+        "",
+        "**Remediation Steps**:",
+        "",
+        "1. Update the FROM statement in `services/users/Dockerfile`",
+        "2. Change base image to: `golang:v1.9.0`",
+        "3. Rebuild the container image",
+        "4. Update the image reference in `docker-compose.yml`",
+        "",
+        "---",
+        "",
+        "**Files to Update**: `services/users/Dockerfile`, `docker-compose.yml`",
+        "",
+        "This PR was created based on Black Duck container image scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "container-image",
+        "custom-image",
+        "cve-2026-user-001"
+      ],
+      "reviewers": [
+        "frank"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-55555 (HIGH) - curl in services/web-frontend/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:curl"
+      ],
+      "matchFileNames": [
+        "services/web-frontend/Dockerfile"
+      ],
+      "allowedVersions": "8.7.1-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/web-frontend/curl/cve-2026-55555",
+      "prTitle": "OS package upgrade (explicit): update curl to 8.7.1-r0 in services/web-frontend/Dockerfile to fix CVE-2026-55555 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-55555",
+        "**Severity**: HIGH (CVSS 8.6)",
+        "**Package Manager**: apk",
+        "**Package**: curl",
+        "**Current Version**: 8.0.1-r0",
+        "**Fixed Version**: 8.7.1-r0 (exact version from Black Duck)",
+        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "",
+        "**Description**: Heap buffer overflow in curl URL parsing",
+        "",
+        "**Remediation**: Update curl to exactly version 8.7.1-r0 in the Dockerfile RUN command as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-55555",
+        "component:Web Frontend"
+      ],
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-66666 (CRITICAL) - git in services/auth/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:git"
+      ],
+      "matchFileNames": [
+        "services/auth/Dockerfile"
+      ],
+      "allowedVersions": "2.43.0-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/auth/git/cve-2026-66666",
+      "prTitle": "OS package upgrade (explicit): update git to 2.43.0-r0 in services/auth/Dockerfile to fix CVE-2026-66666 (CRITICAL)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-66666",
+        "**Severity**: CRITICAL (CVSS 9.8)",
+        "**Package Manager**: apk",
+        "**Package**: git",
+        "**Current Version**: 2.38.1-r0",
+        "**Fixed Version**: 2.43.0-r0 (exact version from Black Duck)",
+        "**Dockerfile**: services/auth/Dockerfile",
+        "",
+        "**Description**: Remote code execution in git clone operation",
+        "",
+        "**Remediation**: Update git to exactly version 2.43.0-r0 in the Dockerfile RUN command as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-66666",
+        "component:Authentication Service"
+      ],
+      "reviewers": [
+        "david",
+        "eve"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-77777 (CRITICAL) - openssl in services/api-gateway/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:openssl"
+      ],
+      "matchFileNames": [
+        "services/api-gateway/Dockerfile"
+      ],
+      "allowedVersions": "3.1.5-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/api-gateway/openssl/cve-2026-77777",
+      "prTitle": "OS package upgrade (explicit): update openssl to 3.1.5-r0 in services/api-gateway/Dockerfile to fix CVE-2026-77777 (CRITICAL)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-77777",
+        "**Severity**: CRITICAL (CVSS 9.8)",
+        "**Package Manager**: apk",
+        "**Package**: openssl",
+        "**Current Version**: 3.1.0-r4",
+        "**Fixed Version**: 3.1.5-r0 (exact version from Black Duck)",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "",
+        "**Description**: Critical vulnerability in OpenSSL certificate validation",
+        "",
+        "**Remediation**: Update openssl to exactly version 3.1.5-r0 in the Dockerfile RUN command as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-77777",
+        "component:API Gateway"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-88888 (HIGH) - musl in services/auth/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:musl"
+      ],
+      "matchFileNames": [
+        "services/auth/Dockerfile"
+      ],
+      "allowedVersions": "1.2.4-r2",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/auth/musl/cve-2026-88888",
+      "prTitle": "OS package upgrade (explicit): update musl to 1.2.4-r2 in services/auth/Dockerfile to fix CVE-2026-88888 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-88888",
+        "**Severity**: HIGH (CVSS 8.1)",
+        "**Package Manager**: apk",
+        "**Package**: musl",
+        "**Current Version**: 1.2.3-r4",
+        "**Fixed Version**: 1.2.4-r2 (exact version from Black Duck)",
+        "**Dockerfile**: services/auth/Dockerfile",
+        "",
+        "**Description**: Buffer overflow in musl libc string functions",
+        "",
+        "**Remediation**: Update musl to exactly version 1.2.4-r2 in the Dockerfile RUN command as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-88888",
+        "component:Authentication Service"
+      ],
+      "reviewers": [
+        "david",
+        "eve"
+      ]
+    },
+    {
+      "description": "Container base image: nginx (nginx)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-nginx",
+      "prTitle": "Container base image upgrade: update nginx ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:nginx"
+      ],
+      "reviewers": [
+        "alice",
+        "bob"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: postgres (postgres)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "postgres"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-postgres",
+      "prTitle": "Container base image upgrade: update postgres ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:postgres"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: redis (redis)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "redis"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-redis",
+      "prTitle": "Container base image upgrade: update redis ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:redis"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: node (node)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-node",
+      "prTitle": "Container base image upgrade: update node ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:node"
+      ],
+      "reviewers": [
+        "karen",
+        "leo",
+        "xavier"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: golang (golang)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "golang"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-golang",
+      "prTitle": "Container base image upgrade: update golang ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:golang"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "david"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: mysql (mysql)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "mysql"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-mysql",
+      "prTitle": "Container base image upgrade: update mysql ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:mysql"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: memcached (memcached)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "memcached"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-memcached",
+      "prTitle": "Container base image upgrade: update memcached ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:memcached"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: rabbitmq (rabbitmq)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "rabbitmq"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-rabbitmq",
+      "prTitle": "Container base image upgrade: update rabbitmq ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:rabbitmq"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: elasticsearch (elasticsearch)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "elasticsearch"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-elasticsearch",
+      "prTitle": "Container base image upgrade: update elasticsearch ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:elasticsearch"
+      ],
+      "reviewers": [
+        "paul",
+        "quinn"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/config (quay.io/coreos/etcd)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "quay.io/coreos/etcd"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-config",
+      "prTitle": "Container base image upgrade: update red/config ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-config"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/healthdb (mongo)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "mongo"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-healthdb",
+      "prTitle": "Container base image upgrade: update red/healthdb ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-healthdb"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/message (nats)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "nats"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-message",
+      "prTitle": "Container base image upgrade: update red/message ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-message"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/proxy (nginx)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-proxy",
+      "prTitle": "Container base image upgrade: update red/proxy ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-proxy"
+      ],
+      "reviewers": [
+        "alice",
+        "bob"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/images (registry)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "registry"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-images",
+      "prTitle": "Container base image upgrade: update red/images ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-images"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/nameserver (red/3rdparty/coredns)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "red/3rdparty/coredns"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-nameserver",
+      "prTitle": "Container base image upgrade: update red/nameserver ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-nameserver"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/telemetry (otel/opentelemetry-collector-contrib)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "otel/opentelemetry-collector-contrib"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-telemetry",
+      "prTitle": "Container base image upgrade: update red/telemetry ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-telemetry"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/nodeexp (prom/node-exporter)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "prom/node-exporter"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-nodeexp",
+      "prTitle": "Container base image upgrade: update red/nodeexp ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-nodeexp"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/alertmanager (prom/alertmanager)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "prom/alertmanager"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-alertmanager",
+      "prTitle": "Container base image upgrade: update red/alertmanager ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-alertmanager"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/metricsdb (victoriametrics/victoria-metrics)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "victoriametrics/victoria-metrics"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-metricsdb",
+      "prTitle": "Container base image upgrade: update red/metricsdb ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-metricsdb"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    },
+    {
+      "description": "Container base image: red/alertagent (victoriametrics/vmalert)",
+      "matchManagers": [
+        "regex"
+      ],
+      "matchFileNames": [
+        "image_map.json"
+      ],
+      "matchPackageNames": [
+        "victoriametrics/vmalert"
+      ],
+      "enabled": true,
+      "groupName": "container-base-image-red-alertagent",
+      "prTitle": "Container base image upgrade: update red/alertagent ({{depName}}) to {{newVersion}}",
+      "labels": [
+        "dependencies",
+        "security",
+        "container-image",
+        "prebuilt",
+        "image:red-alertagent"
+      ],
+      "reviewers": [
+        "architects",
+        "techleads"
+      ],
+      "semanticCommitType": "fix",
+      "semanticCommitScope": "security"
+    }
+  ]
+}
