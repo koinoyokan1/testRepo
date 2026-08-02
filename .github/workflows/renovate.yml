@@ -275,6 +275,13 @@ jobs:
           print(f"  - Dockerfile OS-level rules: {len(dockerfile_rules.get('packageRules', []))}")
           print(f"  - Base image upgrade rules: {len(base_image_upgrade_rules.get('packageRules', []))}")
           print(f"✓ Total regex managers: {len(merged.get('regexManagers', []))}")
+
+          # Print full merged config for debugging
+          print("\n" + "="*80)
+          print("RENOVATE MERGED CONFIGURATION (renovate-merged.json)")
+          print("="*80)
+          print(json.dumps(merged, indent=2))
+          print("="*80 + "\n")
           PYTHON
 
               echo "Using merged configuration with dynamic Black Duck rules"
