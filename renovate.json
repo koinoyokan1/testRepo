@@ -64,12 +64,6 @@
   ],
   "packageRules": [
     {
-      "description": "Disable all updates by default - only Black Duck findings will be enabled",
-      "matchPackagePatterns": ["*"],
-      "matchManagers": ["gomod", "npm"],
-      "enabled": false
-    },
-    {
       "description": "Enable all Docker image updates dynamically from image_map.json",
       "matchManagers": ["regex"],
       "matchFileNames": ["image_map.json"],
