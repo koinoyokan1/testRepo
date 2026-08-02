@@ -31,3 +31,4 @@ blackduck_scan_output.txt
 __pycache__/
 *.py[cod]
 *$py.class
+renovate-merged.json
