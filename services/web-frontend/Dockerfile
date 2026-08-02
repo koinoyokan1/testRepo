@@ -2,9 +2,9 @@
 # Recommended: node:20.10.0-alpine
 FROM node:16.14.0-alpine
 
-# TYPE 4: Base image OS package upgrades (VULNERABLE - will be fixed by Renovate)
-# CVE-2024-33333 (HIGH) - zlib 1.2.12-r3 -> 1.3.1-r0
-RUN apk upgrade --no-cache zlib=1.2.12-r3
+# TYPE 3: Explicit OS package installations (VULNERABLE - will be fixed by Renovate)
+# CVE-2026-55555 (HIGH) - curl 8.0.1-r0 -> 8.7.1-r0
+RUN apk --no-cache add ca-certificates curl=8.0.1-r0
 
 WORKDIR /app
 

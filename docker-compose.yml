@@ -10,7 +10,7 @@ services:
       - "443:443"
     # Used by: services/web-frontend, services/admin-dashboard
     # Owner: platform-team@company.com
-    # CVE: CVE-2021-23017 (HIGH) - Fix: 1.25.3
+    # CVE: CVE-2026-NGINX-001 (HIGH) - Fix: 1.25.4
 
   postgres:
     image: postgres:13.2
@@ -21,7 +21,7 @@ services:
       - "5432:5432"
     # Used by: services/auth, services/users, services/payment
     # Owner: database-team@company.com
-    # CVE: CVE-2021-32027 (HIGH) - Fix: 15.5
+    # CVE: CVE-2026-PG-001 (CRITICAL) - Fix: 16.2
 
   redis:
     image: redis:6.0.9
@@ -30,7 +30,6 @@ services:
       - "6379:6379"
     # Used by: services/api-gateway, services/auth
     # Owner: platform-team@company.com
-    # CVE: CVE-2021-32672 (MEDIUM) - Fix: 7.2.3
 
   # Custom built services
   api-gateway:
@@ -43,7 +42,7 @@ services:
       - "8080:8080"
     # Base: golang:1.19.0-alpine
     # Owner: alice@company.com
-    # CVE: CVE-2022-41716 (HIGH) - Rebuild with golang:1.21.5-alpine
+    # CVE: CVE-2026-API-001 (CRITICAL) - Fix: v2.4.0
 
   auth-service:
     image: ghcr.io/company/auth-service:v1.5.2
@@ -55,7 +54,6 @@ services:
       - "8081:8081"
     # Base: golang:1.19.0-alpine
     # Owner: david@company.com
-    # CVE: CVE-2024-AUTH-001 (HIGH) - Fix: v1.6.0
 
   user-service:
     image: ghcr.io/company/user-service:v1.8.0
@@ -67,6 +65,7 @@ services:
       - "8082:8082"
     # Base: golang:1.19.0-alpine
     # Owner: frank@company.com
+    # CVE: CVE-2026-USER-001 (HIGH) - Fix: v1.9.0
 
   web-frontend:
     image: ghcr.io/company/web-frontend:v3.2.0
@@ -78,7 +77,6 @@ services:
       - "3000:3000"
     # Base: node:16.14.0-alpine
     # Owner: xavier@company.com
-    # CVE: CVE-2022-21824 (HIGH) - Rebuild with node:20.10.0-alpine
 
   admin-dashboard:
     image: ghcr.io/company/admin-dashboard:v2.1.5
@@ -90,4 +88,3 @@ services:
       - "3001:3000"
     # Base: node:16.14.0-alpine
     # Owner: zoe@company.com
-    # CVE: CVE-2024-ADMIN-001 (MEDIUM) - Fix: v2.2.0

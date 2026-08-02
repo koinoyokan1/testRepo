@@ -13,9 +13,13 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o auth-service .
 
 FROM alpine:latest
 
+# TYPE 4: Base image OS package upgrades (VULNERABLE - will be fixed by Renovate)
+# CVE-2026-88888 (HIGH) - musl 1.2.3-r4 -> 1.2.4-r2
+RUN apk upgrade --no-cache musl=1.2.3-r4
+
 # TYPE 3: Explicit OS package installations (VULNERABLE - will be fixed by Renovate)
-# CVE-2024-44444 (MEDIUM) - ncurses-terminfo-base 6.3-r0 -> 6.4-r0
-RUN apk --no-cache add ca-certificates ncurses-terminfo-base=6.3-r0
+# CVE-2026-66666 (CRITICAL) - git 2.38.1-r0 -> 2.43.0-r0
+RUN apk --no-cache add ca-certificates git=2.38.1-r0
 
 WORKDIR /root/
 

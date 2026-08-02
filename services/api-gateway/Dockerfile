@@ -18,12 +18,8 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-gateway .
 FROM alpine:latest
 
 # TYPE 4: Base image OS package upgrades (VULNERABLE - will be fixed by Renovate)
-# CVE-2024-22222 (MEDIUM) - libcrypto3 3.1.0-r0 -> 3.1.4-r0
-RUN apk upgrade --no-cache libcrypto3=3.1.0-r0
-
-# TYPE 3: Explicit OS package installations (VULNERABLE - will be fixed by Renovate)
-# CVE-2024-55555 (HIGH) - bash 5.2.15-r0 -> 5.2.21-r0
-RUN apk --no-cache add ca-certificates bash=5.2.15-r0
+# CVE-2026-77777 (CRITICAL) - openssl 3.1.0-r4 -> 3.1.5-r0
+RUN apk upgrade --no-cache openssl=3.1.0-r4
 
 WORKDIR /root/
 
