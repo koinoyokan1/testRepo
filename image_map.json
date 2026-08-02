@@ -68,7 +68,7 @@
         "red_version": "1.2.1"
     },
     "red/alertagent": {
-        "origin_image": "victoriametrics/vmalert:v1.144.0",
+        "origin_image": "victoriametrics/vmalert:v1.148.0",
         "red_version": "1.2.1"
     }
 }
