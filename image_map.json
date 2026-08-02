@@ -8,7 +8,7 @@
         "purpose": "Primary database"
     },
     "redis": {
-        "origin_image": "redis:6.0.9",
+        "origin_image": "redis:6.0.20",
         "purpose": "Cache and session store"
     },
     "node": {
