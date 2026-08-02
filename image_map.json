@@ -4,7 +4,7 @@
         "purpose": "Web server and reverse proxy"
     },
     "postgres": {
-        "origin_image": "postgres:13.2",
+        "origin_image": "postgres:18.4",
         "purpose": "Primary database"
     },
     "redis": {
@@ -12,7 +12,7 @@
         "purpose": "Cache and session store"
     },
     "node": {
-        "origin_image": "node:16.14.0-alpine",
+        "origin_image": "node:18.20.8-alpine",
         "purpose": "Base image for Node.js services"
     },
     "golang": {
