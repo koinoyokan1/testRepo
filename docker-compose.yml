@@ -24,7 +24,7 @@ services:
     # CVE: CVE-2021-32027 (HIGH) - Fix: 15.5
 
   redis:
-    image: redis:6.0.9
+    image: redis:7.4.10
     container_name: redis-cache
     ports:
       - "6379:6379"
