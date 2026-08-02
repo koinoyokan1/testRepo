@@ -16,6 +16,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-gateway .
 
 # Final stage
 FROM alpine:latest
+# Security: Upgrade base image OS packages to fix vulnerabilities
+# Fixes: CVE-2023-UNFIXED, CVE-2024-66666
+RUN apk upgrade --no-cache busybox=1.36.1-r0
+
 RUN apk --no-cache add ca-certificates openssl=3.0.7-r0 curl=7.88.0-r0
 WORKDIR /root/
 

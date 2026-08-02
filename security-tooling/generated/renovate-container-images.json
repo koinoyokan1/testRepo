@@ -9,7 +9,7 @@
         "docker-compose.yml"
       ],
       "enabled": true,
-      "prTitle": "fix(security): rebuild ghcr.io/company/api-gateway to fix CVE-2022-41716 in base image",
+      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/api-gateway to fix CVE-2022-41716 in base image",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Custom Container Image",
         "",
@@ -56,7 +56,7 @@
         "docker-compose.yml"
       ],
       "enabled": true,
-      "prTitle": "fix(security): rebuild ghcr.io/company/web-frontend to fix CVE-2022-21824 in base image",
+      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/web-frontend to fix CVE-2022-21824 in base image",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Custom Container Image",
         "",

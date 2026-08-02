@@ -75,9 +75,12 @@ def generate_regex_manager(patch_info):
         else:
             continue
         
+        # Escape forward slashes for regex
+        escaped_filepath = filepath.replace('/', '\\/')
+
         regex_manager = {
             "description": f"Black Duck - {cve} ({severity}) - Base image {ecosystem} package",
-            "fileMatch": [f"^{filepath.replace('/', '\\/')}$"],
+            "fileMatch": [f"^{escaped_filepath}$"],
             "matchStrings": [match_pattern],
             "depNameTemplate": component,
             "datasourceTemplate": "repology",

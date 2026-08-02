@@ -2,6 +2,10 @@
 # Recommended: node:20.10.0-alpine
 FROM node:16.14.0-alpine
 
+# Security: Upgrade base image OS packages to fix vulnerabilities
+# Fixes: CVE-2024-44444, CVE-2024-55555
+RUN apk upgrade --no-cache ca-certificates=20240705-r0 musl=1.2.5-r0
+
 WORKDIR /app
 
 # Copy package files

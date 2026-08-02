@@ -1,0 +1,228 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Auto-generated regex managers for base image OS package upgrades",
+  "regexManagers": [
+    {
+      "description": "Black Duck - CVE-2024-66666 (MEDIUM) - Base image alpine package",
+      "fileMatch": [
+        "^services\\/api-gateway\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?busybox=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "busybox",
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine/busybox",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2024-44444 (MEDIUM) - Base image alpine package",
+      "fileMatch": [
+        "^services\\/web-frontend\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?ca-certificates=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "ca-certificates",
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine/ca-certificates",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2024-55555 (HIGH) - Base image alpine package",
+      "fileMatch": [
+        "^services\\/web-frontend\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?musl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "musl",
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine/musl",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2024-77777 (LOW) - Base image alpine package",
+      "fileMatch": [
+        "^services\\/auth\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?alpine-baselayout=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "alpine-baselayout",
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine/alpine-baselayout",
+      "enabled": true
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Black Duck - CVE-2024-66666 (MEDIUM) - Base image busybox",
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "alpine/busybox"
+      ],
+      "matchFileNames": [
+        "services/api-gateway/Dockerfile"
+      ],
+      "allowedVersions": ">=1.36.1-r0",
+      "enabled": true,
+      "prTitle": "OS package upgrade (base image): upgrade busybox to 1.36.1-r0 in services/api-gateway/Dockerfile to fix CVE-2024-66666",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2024-66666",
+        "**Severity**: MEDIUM (CVSS 6.0)",
+        "**Package**: busybox (from base image)",
+        "**Current Version**: 1.35.0-r17",
+        "**Fixed Version**: 1.36.1-r0",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "",
+        "**Description**: Command injection in busybox utilities",
+        "",
+        "**Note**: This package comes from the base image and is being upgraded",
+        "via `RUN apk/apt/yum upgrade` to fix security vulnerabilities without",
+        "requiring a full base image version change.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "base-image-upgrade",
+        "alpine",
+        "cve-2024-66666"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2024-44444 (MEDIUM) - Base image ca-certificates",
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "alpine/ca-certificates"
+      ],
+      "matchFileNames": [
+        "services/web-frontend/Dockerfile"
+      ],
+      "allowedVersions": ">=20240705-r0",
+      "enabled": true,
+      "prTitle": "OS package upgrade (base image): upgrade ca-certificates to 20240705-r0 in services/web-frontend/Dockerfile to fix CVE-2024-44444",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2024-44444",
+        "**Severity**: MEDIUM (CVSS 5.8)",
+        "**Package**: ca-certificates (from base image)",
+        "**Current Version**: 20220614-r0",
+        "**Fixed Version**: 20240705-r0",
+        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "",
+        "**Description**: Expired root certificates in ca-certificates package",
+        "",
+        "**Note**: This package comes from the base image and is being upgraded",
+        "via `RUN apk/apt/yum upgrade` to fix security vulnerabilities without",
+        "requiring a full base image version change.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "base-image-upgrade",
+        "alpine",
+        "cve-2024-44444"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2024-55555 (HIGH) - Base image musl",
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "alpine/musl"
+      ],
+      "matchFileNames": [
+        "services/web-frontend/Dockerfile"
+      ],
+      "allowedVersions": ">=1.2.5-r0",
+      "enabled": true,
+      "prTitle": "OS package upgrade (base image): upgrade musl to 1.2.5-r0 in services/web-frontend/Dockerfile to fix CVE-2024-55555",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2024-55555",
+        "**Severity**: HIGH (CVSS 7.9)",
+        "**Package**: musl (from base image)",
+        "**Current Version**: 1.2.3-r0",
+        "**Fixed Version**: 1.2.5-r0",
+        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "",
+        "**Description**: Buffer overflow in musl libc library",
+        "",
+        "**Note**: This package comes from the base image and is being upgraded",
+        "via `RUN apk/apt/yum upgrade` to fix security vulnerabilities without",
+        "requiring a full base image version change.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "base-image-upgrade",
+        "alpine",
+        "cve-2024-55555"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2024-77777 (LOW) - Base image alpine-baselayout",
+      "matchDatasources": [
+        "repology"
+      ],
+      "matchPackageNames": [
+        "alpine/alpine-baselayout"
+      ],
+      "matchFileNames": [
+        "services/auth/Dockerfile"
+      ],
+      "allowedVersions": ">=3.4.3-r0",
+      "enabled": true,
+      "prTitle": "OS package upgrade (base image): upgrade alpine-baselayout to 3.4.3-r0 in services/auth/Dockerfile to fix CVE-2024-77777",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2024-77777",
+        "**Severity**: LOW (CVSS 3.5)",
+        "**Package**: alpine-baselayout (from base image)",
+        "**Current Version**: 3.4.0-r0",
+        "**Fixed Version**: 3.4.3-r0",
+        "**Dockerfile**: services/auth/Dockerfile",
+        "",
+        "**Description**: Path traversal in alpine base configuration",
+        "",
+        "**Note**: This package comes from the base image and is being upgraded",
+        "via `RUN apk/apt/yum upgrade` to fix security vulnerabilities without",
+        "requiring a full base image version change.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "low-priority",
+        "blackduck",
+        "base-image-upgrade",
+        "alpine",
+        "cve-2024-77777"
+      ]
+    }
+  ]
+}
