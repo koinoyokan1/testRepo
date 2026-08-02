@@ -1,336 +1,152 @@
 {
   "base_image_vulns": [
     {
+      "_comment": "TYPE 4: OS Base Image - NEW package zlib",
       "component": "zlib",
-      "version": "1.2.11",
-      "vulnerability_id": "CVE-2023-UNFIXED",
-      "severity": "CRITICAL",
-      "cvss_score": 9.8,
-      "description": "Critical memory corruption vulnerability in zlib compression library with no available fix",
-      "published_date": "2023-06-01",
-      "fixed_versions": [],
-      "file_path": "services/api-gateway/Dockerfile",
-      "remediation": "No fix currently available. Monitor vendor announcements for updates.",
-      "ecosystem": "alpine",
-      "package_manager": "apk"
-    },
-    {
-      "component": "ca-certificates",
-      "version": "20220614-r0",
-      "vulnerability_id": "CVE-2024-44444",
-      "severity": "MEDIUM",
-      "cvss_score": 5.8,
-      "description": "Expired root certificates in ca-certificates package",
-      "published_date": "2024-07-10",
-      "fixed_versions": [
-        "20240705-r0"
-      ],
-      "recommended_version": "20240705-r0",
-      "file_path": "services/web-frontend/Dockerfile",
-      "remediation": "Update ca-certificates to version 20240705-r0 or later",
-      "ecosystem": "alpine",
-      "package_manager": "apk"
-    },
-    {
-      "component": "musl",
-      "version": "1.2.3-r0",
-      "vulnerability_id": "CVE-2024-55555",
+      "version": "1.2.12-r3",
+      "vulnerability_id": "CVE-2024-33333",
       "severity": "HIGH",
-      "cvss_score": 7.9,
-      "description": "Buffer overflow in musl libc library",
-      "published_date": "2024-08-01",
+      "cvss_score": 7.5,
+      "description": "Memory corruption in zlib compression library",
+      "published_date": "2024-08-05",
       "fixed_versions": [
-        "1.2.5-r0"
+        "1.3.1-r0"
       ],
-      "recommended_version": "1.2.5-r0",
+      "recommended_version": "1.3.1-r0",
       "file_path": "services/web-frontend/Dockerfile",
-      "remediation": "Update musl to version 1.2.5-r0 or later",
+      "remediation": "Update zlib to version 1.3.1-r0 or later",
       "ecosystem": "alpine",
       "package_manager": "apk"
     },
     {
-      "component": "busybox",
-      "version": "1.35.0-r17",
-      "vulnerability_id": "CVE-2024-66666",
+      "_comment": "TYPE 4: OS Base Image - NEW package libcrypto3",
+      "component": "libcrypto3",
+      "version": "3.1.0-r0",
+      "vulnerability_id": "CVE-2024-22222",
       "severity": "MEDIUM",
-      "cvss_score": 6.0,
-      "description": "Command injection in busybox utilities",
+      "cvss_score": 6.5,
+      "description": "Timing attack vulnerability in OpenSSL libcrypto",
       "published_date": "2024-07-20",
       "fixed_versions": [
-        "1.36.1-r0"
+        "3.1.4-r0"
       ],
-      "recommended_version": "1.36.1-r0",
+      "recommended_version": "3.1.4-r0",
       "file_path": "services/api-gateway/Dockerfile",
-      "remediation": "Update busybox to version 1.36.1-r0 or later",
-      "ecosystem": "alpine",
-      "package_manager": "apk"
-    },
-    {
-      "component": "alpine-baselayout",
-      "version": "3.4.0-r0",
-      "vulnerability_id": "CVE-2024-77777",
-      "severity": "LOW",
-      "cvss_score": 3.5,
-      "description": "Path traversal in alpine base configuration",
-      "published_date": "2024-06-15",
-      "fixed_versions": [
-        "3.4.3-r0"
-      ],
-      "recommended_version": "3.4.3-r0",
-      "file_path": "services/auth/Dockerfile",
-      "remediation": "Update alpine-baselayout to version 3.4.3-r0 or later",
+      "remediation": "Update libcrypto3 to version 3.1.4-r0 or later",
       "ecosystem": "alpine",
       "package_manager": "apk"
     }
   ],
   "explicit_install_vulns": [
     {
-      "component": "openssl",
-      "version": "3.0.7-r0",
-      "vulnerability_id": "CVE-2023-0464",
+      "_comment": "TYPE 3: OS Explicit - NEW package bash",
+      "component": "bash",
+      "version": "5.2.15-r0",
+      "vulnerability_id": "CVE-2024-55555",
       "severity": "HIGH",
-      "cvss_score": 7.5,
-      "description": "Excessive Resource Consumption Verifying X.509 Policy Constraints in OpenSSL",
-      "published_date": "2023-03-22",
+      "cvss_score": 8.1,
+      "description": "Command injection vulnerability in bash shell",
+      "published_date": "2024-07-01",
       "fixed_versions": [
-        "3.0.9-r0",
-        "3.1.1-r0"
+        "5.2.21-r0"
       ],
-      "recommended_version": "3.0.9-r0",
+      "recommended_version": "5.2.21-r0",
       "file_path": "services/api-gateway/Dockerfile",
-      "remediation": "Update openssl to version 3.0.9-r0 or later",
+      "remediation": "Update bash to version 5.2.21-r0 or later",
       "ecosystem": "alpine",
       "package_manager": "apk"
     },
     {
-      "component": "curl",
-      "version": "7.88.0-r0",
-      "vulnerability_id": "CVE-2023-28321",
+      "_comment": "TYPE 3: OS Explicit - NEW package ncurses-terminfo-base",
+      "component": "ncurses-terminfo-base",
+      "version": "6.3-r0",
+      "vulnerability_id": "CVE-2024-44444",
       "severity": "MEDIUM",
-      "cvss_score": 5.9,
-      "description": "IDN wildcard match in curl may lead to certificate validation bypass",
-      "published_date": "2023-05-17",
+      "cvss_score": 6.0,
+      "description": "Buffer overflow in ncurses terminfo library",
+      "published_date": "2024-06-15",
       "fixed_versions": [
-        "8.1.0-r0"
+        "6.4-r0"
       ],
-      "recommended_version": "8.1.0-r0",
-      "file_path": "services/api-gateway/Dockerfile",
-      "remediation": "Update curl to version 8.1.0-r0 or later",
-      "ecosystem": "alpine",
-      "package_manager": "apk"
-    },
-    {
-      "component": "libssl3",
-      "version": "3.0.8-r0",
-      "vulnerability_id": "CVE-2023-2650",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "description": "Possible DoS translating ASN.1 object identifiers in OpenSSL libssl",
-      "published_date": "2023-05-30",
-      "fixed_versions": [
-        "3.0.9-r1"
-      ],
-      "recommended_version": "3.0.9-r1",
-      "file_path": "services/web-frontend/Dockerfile",
-      "remediation": "Update libssl3 to version 3.0.9-r1 or later",
-      "ecosystem": "alpine",
-      "package_manager": "apk"
-    },
-    {
-      "component": "libcrypto3",
-      "version": "3.0.8-r0",
-      "vulnerability_id": "CVE-2023-2650",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "description": "Possible DoS translating ASN.1 object identifiers in OpenSSL libcrypto",
-      "published_date": "2023-05-30",
-      "fixed_versions": [
-        "3.0.9-r1"
-      ],
-      "recommended_version": "3.0.9-r1",
-      "file_path": "services/web-frontend/Dockerfile",
-      "remediation": "Update libcrypto3 to version 3.0.9-r1 or later",
-      "ecosystem": "alpine",
-      "package_manager": "apk"
-    },
-    {
-      "component": "git",
-      "version": "2.38.1-r0",
-      "vulnerability_id": "CVE-2024-33333",
-      "severity": "HIGH",
-      "cvss_score": 8.0,
-      "description": "Remote code execution in git client",
-      "published_date": "2024-06-01",
-      "fixed_versions": [
-        "2.43.0-r0"
-      ],
-      "recommended_version": "2.43.0-r0",
+      "recommended_version": "6.4-r0",
       "file_path": "services/auth/Dockerfile",
-      "remediation": "Update git to version 2.43.0-r0 or later",
+      "remediation": "Update ncurses-terminfo-base to version 6.4-r0 or later",
       "ecosystem": "alpine",
       "package_manager": "apk"
     }
   ],
   "container_vulns": [
     {
-      "component": "nginx",
-      "version": "1.21.0",
-      "vulnerability_id": "CVE-2021-23017",
+      "_comment": "TYPE 5: Custom Image - auth-service",
+      "component": "ghcr.io/company/auth-service",
+      "version": "v1.5.2",
+      "vulnerability_id": "CVE-2024-AUTH-001",
       "severity": "HIGH",
-      "cvss_score": 8.1,
-      "description": "Off-by-one error in nginx resolver allows attackers to cause a denial of service or execute arbitrary code",
-      "published_date": "2021-05-25",
+      "cvss_score": 8.0,
+      "description": "Authentication bypass in auth-service due to outdated JWT library",
+      "published_date": "2024-08-01",
       "fixed_versions": [
-        "1.21.1",
-        "1.22.0"
+        "v1.6.0"
       ],
-      "recommended_version": "1.25.3",
-      "file_path": "image_versions.json",
-      "remediation": "Update nginx to version 1.21.1 or later, preferably 1.25.3 for latest security patches",
-      "ecosystem": "container",
-      "image_type": "prebuilt"
-    },
-    {
-      "component": "postgres",
-      "version": "13.2",
-      "vulnerability_id": "CVE-2021-32027",
-      "severity": "HIGH",
-      "cvss_score": 8.8,
-      "description": "Buffer overflow in PostgreSQL allows authenticated users to execute arbitrary code",
-      "published_date": "2021-05-13",
-      "fixed_versions": [
-        "13.3",
-        "14.0"
-      ],
-      "recommended_version": "15.5",
-      "file_path": "image_versions.json",
-      "remediation": "Update postgres to version 13.3 or later, preferably 15.5 for latest features and security",
-      "ecosystem": "container",
-      "image_type": "prebuilt"
-    },
-    {
-      "component": "redis",
-      "version": "6.0.9",
-      "vulnerability_id": "CVE-2021-32672",
-      "severity": "MEDIUM",
-      "cvss_score": 6.5,
-      "description": "Integer overflow in Redis STRALGO command allows denial of service",
-      "published_date": "2021-10-04",
-      "fixed_versions": [
-        "6.0.16",
-        "6.2.6"
-      ],
-      "recommended_version": "7.2.3",
-      "file_path": "image_versions.json",
-      "remediation": "Update redis to version 6.0.16 or later, preferably 7.2.3 for latest improvements",
-      "ecosystem": "container",
-      "image_type": "prebuilt"
-    },
-    {
-      "component": "node",
-      "version": "16.14.0-alpine",
-      "vulnerability_id": "CVE-2022-21824",
-      "severity": "HIGH",
-      "cvss_score": 8.2,
-      "description": "Prototype pollution in Node.js allows remote attackers to execute arbitrary code",
-      "published_date": "2022-02-10",
-      "fixed_versions": [
-        "16.14.1",
-        "17.5.0"
-      ],
-      "recommended_version": "20.10.0-alpine",
-      "file_path": "image_versions.json",
-      "remediation": "Update node to version 16.14.1 or later, preferably LTS version 20.10.0-alpine",
-      "ecosystem": "container",
-      "image_type": "prebuilt"
-    },
-    {
-      "component": "golang",
-      "version": "1.19.0-alpine",
-      "vulnerability_id": "CVE-2022-41716",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "description": "Unsanitized NUL in environment variables in syscalls in Go allows code execution",
-      "published_date": "2022-11-01",
-      "fixed_versions": [
-        "1.19.3",
-        "1.20.0"
-      ],
-      "recommended_version": "1.21.5-alpine",
-      "file_path": "image_versions.json",
-      "remediation": "Update golang to version 1.19.3 or later, preferably 1.21.5-alpine for latest features",
-      "ecosystem": "container",
-      "image_type": "prebuilt"
-    },
-    {
-      "component": "ghcr.io/company/api-gateway",
-      "version": "v2.3.1",
-      "vulnerability_id": "CVE-2022-41716",
-      "severity": "HIGH",
-      "cvss_score": 7.5,
-      "description": "Inherited from base image golang:1.19.0-alpine - Unsanitized NUL in environment variables",
-      "published_date": "2022-11-01",
-      "fixed_versions": [
-        "v2.3.2",
-        "v2.4.0"
-      ],
-      "recommended_version": "v2.4.1",
-      "file_path": "image_versions.json",
-      "remediation": "Rebuild with updated golang base image (1.21.5-alpine) and update to v2.4.1",
+      "recommended_version": "v1.6.0",
+      "file_path": "docker-compose.yml",
+      "remediation": "Rebuild auth-service with updated dependencies and update to v1.6.0",
       "ecosystem": "container",
       "image_type": "custom",
       "base_image": "golang:1.19.0-alpine"
     },
     {
-      "component": "ghcr.io/company/web-frontend",
-      "version": "v3.2.0",
-      "vulnerability_id": "CVE-2022-21824",
-      "severity": "HIGH",
-      "cvss_score": 8.2,
-      "description": "Inherited from base image node:16.14.0-alpine - Prototype pollution vulnerability",
-      "published_date": "2022-02-10",
+      "_comment": "TYPE 5: Custom Image - admin-dashboard",
+      "component": "ghcr.io/company/admin-dashboard",
+      "version": "v2.1.5",
+      "vulnerability_id": "CVE-2024-ADMIN-001",
+      "severity": "MEDIUM",
+      "cvss_score": 6.8,
+      "description": "XSS vulnerability in admin-dashboard UI components",
+      "published_date": "2024-07-25",
       "fixed_versions": [
-        "v3.2.1",
-        "v3.3.0"
+        "v2.2.0"
       ],
-      "recommended_version": "v3.3.2",
-      "file_path": "image_versions.json",
-      "remediation": "Rebuild with updated node base image (20.10.0-alpine) and update to v3.3.2",
+      "recommended_version": "v2.2.0",
+      "file_path": "docker-compose.yml",
+      "remediation": "Rebuild admin-dashboard with patched frontend libraries and update to v2.2.0",
       "ecosystem": "container",
       "image_type": "custom",
       "base_image": "node:16.14.0-alpine"
     },
     {
-      "component": "mysql",
-      "version": "8.0.0",
-      "vulnerability_id": "CVE-2024-11111",
+      "_comment": "TYPE 6: Prebuilt Image - rabbitmq",
+      "component": "rabbitmq",
+      "version": "3.11.0",
+      "vulnerability_id": "CVE-2024-RABBIT-001",
       "severity": "HIGH",
       "cvss_score": 8.5,
-      "description": "SQL injection vulnerability in MySQL server",
-      "published_date": "2024-04-10",
+      "description": "Remote code execution in RabbitMQ management plugin",
+      "published_date": "2024-08-10",
       "fixed_versions": [
-        "8.0.36"
+        "3.13.0"
       ],
-      "recommended_version": "8.0.36",
+      "recommended_version": "3.13.0",
       "file_path": "image_map.json",
-      "remediation": "Update mysql to version 8.0.36 or later",
+      "remediation": "Update rabbitmq to version 3.13.0 or later",
       "ecosystem": "container",
       "image_type": "prebuilt"
     },
     {
-      "component": "memcached",
-      "version": "1.6.0",
-      "vulnerability_id": "CVE-2024-22222",
+      "_comment": "TYPE 6: Prebuilt Image - elasticsearch",
+      "component": "elasticsearch",
+      "version": "7.17.0",
+      "vulnerability_id": "CVE-2024-ELASTIC-001",
       "severity": "MEDIUM",
-      "cvss_score": 6.2,
-      "description": "Memory leak in memcached allows denial of service",
-      "published_date": "2024-05-15",
+      "cvss_score": 6.5,
+      "description": "Information disclosure in Elasticsearch query API",
+      "published_date": "2024-07-30",
       "fixed_versions": [
-        "1.6.23"
+        "8.14.0"
       ],
-      "recommended_version": "1.6.23",
+      "recommended_version": "8.14.0",
       "file_path": "image_map.json",
-      "remediation": "Update memcached to version 1.6.23 or later",
+      "remediation": "Update elasticsearch to version 8.14.0 or later",
       "ecosystem": "container",
       "image_type": "prebuilt"
     }

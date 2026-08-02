@@ -42,6 +42,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Or your project's required Node version
+
+      # ADDED STEP: Installs PyYAML and any other needed script dependencies
+      - name: Install Python dependencies
+        run: |
+          pip install PyYAML --break-system-packages
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable' # Automatically installs the latest stable Go version
+
+
       - name: Generate Renovate rules from Black Duck findings
         id: blackduck
         run: |
@@ -316,8 +332,8 @@ jobs:
             echo "No Black Duck report found, using base renovate.json"
             cp renovate.json renovate-merged.json
           fi
-
       - name: Self-hosted Renovate
+        if: ${{ !env.ACT }}
         uses: renovatebot/github-action@v40.3.2
         with:
           configurationFile: renovate-merged.json

@@ -3,54 +3,54 @@
   "description": "Auto-generated Dockerfile OS-level package rules from Black Duck",
   "regexManagers": [
     {
-      "description": "Black Duck - CVE-2023-0464 (HIGH) - alpine package in Dockerfile",
+      "description": "Black Duck - CVE-2024-55555 (HIGH) - alpine package in Dockerfile",
       "fileMatch": [
         "^services\\/api-gateway\\/Dockerfile$"
       ],
       "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?openssl=(?<currentValue>[^\\s]+)"
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?bash=(?<currentValue>[^\\s]+)"
       ],
-      "depNameTemplate": "openssl",
+      "depNameTemplate": "bash",
       "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:openssl",
+      "packageNameTemplate": "alpine:bash",
       "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
-      "description": "Black Duck - CVE-2023-28321 (MEDIUM) - alpine package in Dockerfile",
+      "description": "Black Duck - CVE-2024-44444 (MEDIUM) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/auth\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?ncurses-terminfo-base=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "ncurses-terminfo-base",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:ncurses-terminfo-base",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2024-33333 (HIGH) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/web-frontend\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?zlib=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "zlib",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:zlib",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2024-22222 (MEDIUM) - alpine package in Dockerfile",
       "fileMatch": [
         "^services\\/api-gateway\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?curl=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "curl",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:curl",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2023-2650 (MEDIUM) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/web-frontend\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?libssl3=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "libssl3",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:libssl3",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2023-2650 (MEDIUM) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/web-frontend\\/Dockerfile$"
       ],
       "matchStrings": [
         "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?libcrypto3=(?<currentValue>[^\\s]+)"
@@ -61,391 +61,38 @@
       "packageNameTemplate": "alpine:libcrypto3",
       "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2024-33333 (HIGH) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/auth\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?git=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "git",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:git",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2024-44444 (MEDIUM) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/web-frontend\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?ca-certificates=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "ca-certificates",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:ca-certificates",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2024-55555 (HIGH) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/web-frontend\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?musl=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "musl",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:musl",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2024-66666 (MEDIUM) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/api-gateway\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?busybox=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "busybox",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:busybox",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
-    },
-    {
-      "description": "Black Duck - CVE-2024-77777 (LOW) - alpine package in Dockerfile",
-      "fileMatch": [
-        "^services\\/auth\\/Dockerfile$"
-      ],
-      "matchStrings": [
-        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?alpine-baselayout=(?<currentValue>[^\\s]+)"
-      ],
-      "depNameTemplate": "alpine-baselayout",
-      "datasourceTemplate": "repology-repology",
-      "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine:alpine-baselayout",
-      "extractVersionTemplate": "^(?<version>.+)$",
-      "enabled": true
     }
   ],
   "packageRules": [
     {
-      "description": "Black Duck - CVE-2023-0464 (HIGH) - openssl in services/api-gateway/Dockerfile",
+      "description": "Black Duck - CVE-2024-55555 (HIGH) - bash in services/api-gateway/Dockerfile",
       "matchDatasources": [
         "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine:openssl"
+        "alpine:bash"
       ],
       "matchFileNames": [
         "services/api-gateway/Dockerfile"
       ],
-      "allowedVersions": ">=3.0.9-r0",
+      "allowedVersions": ">=5.2.21-r0",
       "enabled": true,
-      "branchName": "blackduck/dockerfile/api-gateway/openssl/cve-2023-0464",
-      "prTitle": "OS package upgrade (explicit): update openssl to 3.0.9-r0 in services/api-gateway/Dockerfile to fix CVE-2023-0464 (HIGH)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2023-0464",
-        "**Severity**: HIGH (CVSS 7.5)",
-        "**Package Manager**: apk",
-        "**Package**: openssl",
-        "**Current Version**: 3.0.7-r0",
-        "**Fixed Version**: 3.0.9-r0 (minimum safe version)",
-        "**Dockerfile**: services/api-gateway/Dockerfile",
-        "",
-        "**Description**: Excessive Resource Consumption Verifying X.509 Policy Constraints in OpenSSL",
-        "",
-        "**Remediation**: Update openssl to version 3.0.9-r0 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2023-0464",
-        "component:API Gateway"
-      ],
-      "reviewers": [
-        "alice",
-        "bob",
-        "charlie"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2023-28321 (MEDIUM) - curl in services/api-gateway/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:curl"
-      ],
-      "matchFileNames": [
-        "services/api-gateway/Dockerfile"
-      ],
-      "allowedVersions": ">=8.1.0-r0",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/api-gateway/curl/cve-2023-28321",
-      "prTitle": "OS package upgrade (explicit): update curl to 8.1.0-r0 in services/api-gateway/Dockerfile to fix CVE-2023-28321 (MEDIUM)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2023-28321",
-        "**Severity**: MEDIUM (CVSS 5.9)",
-        "**Package Manager**: apk",
-        "**Package**: curl",
-        "**Current Version**: 7.88.0-r0",
-        "**Fixed Version**: 8.1.0-r0 (minimum safe version)",
-        "**Dockerfile**: services/api-gateway/Dockerfile",
-        "",
-        "**Description**: IDN wildcard match in curl may lead to certificate validation bypass",
-        "",
-        "**Remediation**: Update curl to version 8.1.0-r0 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "medium-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2023-28321",
-        "component:API Gateway"
-      ],
-      "reviewers": [
-        "alice",
-        "bob",
-        "charlie"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2023-2650 (MEDIUM) - libssl3 in services/web-frontend/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:libssl3"
-      ],
-      "matchFileNames": [
-        "services/web-frontend/Dockerfile"
-      ],
-      "allowedVersions": ">=3.0.9-r1",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/web-frontend/libssl3/cve-2023-2650",
-      "prTitle": "OS package upgrade (explicit): update libssl3 to 3.0.9-r1 in services/web-frontend/Dockerfile to fix CVE-2023-2650 (MEDIUM)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2023-2650",
-        "**Severity**: MEDIUM (CVSS 6.5)",
-        "**Package Manager**: apk",
-        "**Package**: libssl3",
-        "**Current Version**: 3.0.8-r0",
-        "**Fixed Version**: 3.0.9-r1 (minimum safe version)",
-        "**Dockerfile**: services/web-frontend/Dockerfile",
-        "",
-        "**Description**: Possible DoS translating ASN.1 object identifiers in OpenSSL libssl",
-        "",
-        "**Remediation**: Update libssl3 to version 3.0.9-r1 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "medium-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2023-2650",
-        "component:Web Frontend"
-      ],
-      "reviewers": [
-        "xavier",
-        "yvonne"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2023-2650 (MEDIUM) - libcrypto3 in services/web-frontend/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:libcrypto3"
-      ],
-      "matchFileNames": [
-        "services/web-frontend/Dockerfile"
-      ],
-      "allowedVersions": ">=3.0.9-r1",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/web-frontend/libcrypto3/cve-2023-2650",
-      "prTitle": "OS package upgrade (explicit): update libcrypto3 to 3.0.9-r1 in services/web-frontend/Dockerfile to fix CVE-2023-2650 (MEDIUM)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2023-2650",
-        "**Severity**: MEDIUM (CVSS 6.5)",
-        "**Package Manager**: apk",
-        "**Package**: libcrypto3",
-        "**Current Version**: 3.0.8-r0",
-        "**Fixed Version**: 3.0.9-r1 (minimum safe version)",
-        "**Dockerfile**: services/web-frontend/Dockerfile",
-        "",
-        "**Description**: Possible DoS translating ASN.1 object identifiers in OpenSSL libcrypto",
-        "",
-        "**Remediation**: Update libcrypto3 to version 3.0.9-r1 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "medium-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2023-2650",
-        "component:Web Frontend"
-      ],
-      "reviewers": [
-        "xavier",
-        "yvonne"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2024-33333 (HIGH) - git in services/auth/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:git"
-      ],
-      "matchFileNames": [
-        "services/auth/Dockerfile"
-      ],
-      "allowedVersions": ">=2.43.0-r0",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/auth/git/cve-2024-33333",
-      "prTitle": "OS package upgrade (explicit): update git to 2.43.0-r0 in services/auth/Dockerfile to fix CVE-2024-33333 (HIGH)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2024-33333",
-        "**Severity**: HIGH (CVSS 8.0)",
-        "**Package Manager**: apk",
-        "**Package**: git",
-        "**Current Version**: 2.38.1-r0",
-        "**Fixed Version**: 2.43.0-r0 (minimum safe version)",
-        "**Dockerfile**: services/auth/Dockerfile",
-        "",
-        "**Description**: Remote code execution in git client",
-        "",
-        "**Remediation**: Update git to version 2.43.0-r0 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2024-33333",
-        "component:Authentication Service"
-      ],
-      "reviewers": [
-        "david",
-        "eve"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2024-44444 (MEDIUM) - ca-certificates in services/web-frontend/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:ca-certificates"
-      ],
-      "matchFileNames": [
-        "services/web-frontend/Dockerfile"
-      ],
-      "allowedVersions": ">=20240705-r0",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/web-frontend/ca-certificates/cve-2024-44444",
-      "prTitle": "OS package upgrade (explicit): update ca-certificates to 20240705-r0 in services/web-frontend/Dockerfile to fix CVE-2024-44444 (MEDIUM)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2024-44444",
-        "**Severity**: MEDIUM (CVSS 5.8)",
-        "**Package Manager**: apk",
-        "**Package**: ca-certificates",
-        "**Current Version**: 20220614-r0",
-        "**Fixed Version**: 20240705-r0 (minimum safe version)",
-        "**Dockerfile**: services/web-frontend/Dockerfile",
-        "",
-        "**Description**: Expired root certificates in ca-certificates package",
-        "",
-        "**Remediation**: Update ca-certificates to version 20240705-r0 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "medium-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2024-44444",
-        "component:Web Frontend"
-      ],
-      "reviewers": [
-        "xavier",
-        "yvonne"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2024-55555 (HIGH) - musl in services/web-frontend/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:musl"
-      ],
-      "matchFileNames": [
-        "services/web-frontend/Dockerfile"
-      ],
-      "allowedVersions": ">=1.2.5-r0",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/web-frontend/musl/cve-2024-55555",
-      "prTitle": "OS package upgrade (explicit): update musl to 1.2.5-r0 in services/web-frontend/Dockerfile to fix CVE-2024-55555 (HIGH)",
+      "branchName": "blackduck/dockerfile/api-gateway/bash/cve-2024-55555",
+      "prTitle": "OS package upgrade (explicit): update bash to 5.2.21-r0 in services/api-gateway/Dockerfile to fix CVE-2024-55555 (HIGH)",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
         "",
         "**Vulnerability**: CVE-2024-55555",
-        "**Severity**: HIGH (CVSS 7.9)",
+        "**Severity**: HIGH (CVSS 8.1)",
         "**Package Manager**: apk",
-        "**Package**: musl",
-        "**Current Version**: 1.2.3-r0",
-        "**Fixed Version**: 1.2.5-r0 (minimum safe version)",
-        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "**Package**: bash",
+        "**Current Version**: 5.2.15-r0",
+        "**Fixed Version**: 5.2.21-r0 (minimum safe version)",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
         "",
-        "**Description**: Buffer overflow in musl libc library",
+        "**Description**: Command injection vulnerability in bash shell",
         "",
-        "**Remediation**: Update musl to version 1.2.5-r0 in the Dockerfile RUN command.",
+        "**Remediation**: Update bash to version 5.2.21-r0 in the Dockerfile RUN command.",
         "",
         "This PR was created based on Black Duck security scan findings."
       ],
@@ -456,52 +103,6 @@
         "dockerfile",
         "alpine",
         "cve-2024-55555",
-        "component:Web Frontend"
-      ],
-      "reviewers": [
-        "xavier",
-        "yvonne"
-      ]
-    },
-    {
-      "description": "Black Duck - CVE-2024-66666 (MEDIUM) - busybox in services/api-gateway/Dockerfile",
-      "matchDatasources": [
-        "repology-repology"
-      ],
-      "matchPackageNames": [
-        "alpine:busybox"
-      ],
-      "matchFileNames": [
-        "services/api-gateway/Dockerfile"
-      ],
-      "allowedVersions": ">=1.36.1-r0",
-      "enabled": true,
-      "branchName": "blackduck/dockerfile/api-gateway/busybox/cve-2024-66666",
-      "prTitle": "OS package upgrade (explicit): update busybox to 1.36.1-r0 in services/api-gateway/Dockerfile to fix CVE-2024-66666 (MEDIUM)",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
-        "",
-        "**Vulnerability**: CVE-2024-66666",
-        "**Severity**: MEDIUM (CVSS 6.0)",
-        "**Package Manager**: apk",
-        "**Package**: busybox",
-        "**Current Version**: 1.35.0-r17",
-        "**Fixed Version**: 1.36.1-r0 (minimum safe version)",
-        "**Dockerfile**: services/api-gateway/Dockerfile",
-        "",
-        "**Description**: Command injection in busybox utilities",
-        "",
-        "**Remediation**: Update busybox to version 1.36.1-r0 in the Dockerfile RUN command.",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "medium-priority",
-        "blackduck",
-        "dockerfile",
-        "alpine",
-        "cve-2024-66666",
         "component:API Gateway"
       ],
       "reviewers": [
@@ -511,49 +112,142 @@
       ]
     },
     {
-      "description": "Black Duck - CVE-2024-77777 (LOW) - alpine-baselayout in services/auth/Dockerfile",
+      "description": "Black Duck - CVE-2024-44444 (MEDIUM) - ncurses-terminfo-base in services/auth/Dockerfile",
       "matchDatasources": [
         "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine:alpine-baselayout"
+        "alpine:ncurses-terminfo-base"
       ],
       "matchFileNames": [
         "services/auth/Dockerfile"
       ],
-      "allowedVersions": ">=3.4.3-r0",
+      "allowedVersions": ">=6.4-r0",
       "enabled": true,
-      "branchName": "blackduck/dockerfile/auth/alpine-baselayout/cve-2024-77777",
-      "prTitle": "OS package upgrade (explicit): update alpine-baselayout to 3.4.3-r0 in services/auth/Dockerfile to fix CVE-2024-77777 (LOW)",
+      "branchName": "blackduck/dockerfile/auth/ncurses-terminfo-base/cve-2024-44444",
+      "prTitle": "OS package upgrade (explicit): update ncurses-terminfo-base to 6.4-r0 in services/auth/Dockerfile to fix CVE-2024-44444 (MEDIUM)",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
         "",
-        "**Vulnerability**: CVE-2024-77777",
-        "**Severity**: LOW (CVSS 3.5)",
+        "**Vulnerability**: CVE-2024-44444",
+        "**Severity**: MEDIUM (CVSS 6.0)",
         "**Package Manager**: apk",
-        "**Package**: alpine-baselayout",
-        "**Current Version**: 3.4.0-r0",
-        "**Fixed Version**: 3.4.3-r0 (minimum safe version)",
+        "**Package**: ncurses-terminfo-base",
+        "**Current Version**: 6.3-r0",
+        "**Fixed Version**: 6.4-r0 (minimum safe version)",
         "**Dockerfile**: services/auth/Dockerfile",
         "",
-        "**Description**: Path traversal in alpine base configuration",
+        "**Description**: Buffer overflow in ncurses terminfo library",
         "",
-        "**Remediation**: Update alpine-baselayout to version 3.4.3-r0 in the Dockerfile RUN command.",
+        "**Remediation**: Update ncurses-terminfo-base to version 6.4-r0 in the Dockerfile RUN command.",
         "",
         "This PR was created based on Black Duck security scan findings."
       ],
       "labels": [
         "security",
-        "low-priority",
+        "medium-priority",
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2024-77777",
+        "cve-2024-44444",
         "component:Authentication Service"
       ],
       "reviewers": [
         "david",
         "eve"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2024-33333 (HIGH) - zlib in services/web-frontend/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:zlib"
+      ],
+      "matchFileNames": [
+        "services/web-frontend/Dockerfile"
+      ],
+      "allowedVersions": ">=1.3.1-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/web-frontend/zlib/cve-2024-33333",
+      "prTitle": "OS package upgrade (explicit): update zlib to 1.3.1-r0 in services/web-frontend/Dockerfile to fix CVE-2024-33333 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2024-33333",
+        "**Severity**: HIGH (CVSS 7.5)",
+        "**Package Manager**: apk",
+        "**Package**: zlib",
+        "**Current Version**: 1.2.12-r3",
+        "**Fixed Version**: 1.3.1-r0 (minimum safe version)",
+        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "",
+        "**Description**: Memory corruption in zlib compression library",
+        "",
+        "**Remediation**: Update zlib to version 1.3.1-r0 in the Dockerfile RUN command.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2024-33333",
+        "component:Web Frontend"
+      ],
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2024-22222 (MEDIUM) - libcrypto3 in services/api-gateway/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:libcrypto3"
+      ],
+      "matchFileNames": [
+        "services/api-gateway/Dockerfile"
+      ],
+      "allowedVersions": ">=3.1.4-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/api-gateway/libcrypto3/cve-2024-22222",
+      "prTitle": "OS package upgrade (explicit): update libcrypto3 to 3.1.4-r0 in services/api-gateway/Dockerfile to fix CVE-2024-22222 (MEDIUM)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2024-22222",
+        "**Severity**: MEDIUM (CVSS 6.5)",
+        "**Package Manager**: apk",
+        "**Package**: libcrypto3",
+        "**Current Version**: 3.1.0-r0",
+        "**Fixed Version**: 3.1.4-r0 (minimum safe version)",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "",
+        "**Description**: Timing attack vulnerability in OpenSSL libcrypto",
+        "",
+        "**Remediation**: Update libcrypto3 to version 3.1.4-r0 in the Dockerfile RUN command.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2024-22222",
+        "component:API Gateway"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
       ]
     }
   ]

@@ -3,38 +3,38 @@
   "description": "Auto-generated custom container image rules from Black Duck",
   "packageRules": [
     {
-      "description": "Black Duck - ghcr.io/company/api-gateway CVE-2022-41716 (HIGH) - Custom Image",
+      "description": "Black Duck - ghcr.io/company/auth-service CVE-2024-AUTH-001 (HIGH) - Custom Image",
       "matchFileNames": [
-        "services/api-gateway/Dockerfile",
+        "services/auth/Dockerfile",
         "docker-compose.yml"
       ],
       "enabled": true,
-      "branchName": "blackduck/custom-image/ghcr-io-company-api-gateway/cve-2022-41716",
-      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/api-gateway to fix CVE-2022-41716 in base image",
+      "branchName": "blackduck/custom-image/ghcr-io-company-auth-service/cve-2024-auth-001",
+      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/auth-service to fix CVE-2024-AUTH-001 in base image",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Custom Container Image",
         "",
-        "**Image**: ghcr.io/company/api-gateway",
+        "**Image**: ghcr.io/company/auth-service",
         "**Base Image**: golang:1.19.0-alpine",
-        "**Recommended Base**: Update to golang:v2.4.1",
-        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "**Recommended Base**: Update to golang:v1.6.0",
+        "**Dockerfile**: services/auth/Dockerfile",
         "",
         "**Vulnerabilities in Base Image:**",
         "",
-        "#### CVE-2022-41716 (HIGH)",
-        "- **CVSS Score**: 7.5",
-        "- **Description**: Inherited from base image golang:1.19.0-alpine - Unsanitized NUL in environment variables",
+        "#### CVE-2024-AUTH-001 (HIGH)",
+        "- **CVSS Score**: 8.0",
+        "- **Description**: Authentication bypass in auth-service due to outdated JWT library",
         "",
         "**Remediation Steps**:",
         "",
-        "1. Update the FROM statement in `services/api-gateway/Dockerfile`",
-        "2. Change base image to: `golang:v2.4.1`",
+        "1. Update the FROM statement in `services/auth/Dockerfile`",
+        "2. Change base image to: `golang:v1.6.0`",
         "3. Rebuild the container image",
         "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**Files to Update**: `services/api-gateway/Dockerfile`, `docker-compose.yml`",
+        "**Files to Update**: `services/auth/Dockerfile`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
       ],
@@ -44,58 +44,58 @@
         "blackduck",
         "container-image",
         "custom-image",
-        "cve-2022-41716"
+        "cve-2024-auth-001"
       ],
       "reviewers": [
-        "alice"
+        "david"
       ]
     },
     {
-      "description": "Black Duck - ghcr.io/company/web-frontend CVE-2022-21824 (HIGH) - Custom Image",
+      "description": "Black Duck - ghcr.io/company/admin-dashboard CVE-2024-ADMIN-001 (MEDIUM) - Custom Image",
       "matchFileNames": [
-        "services/web-frontend/Dockerfile",
+        "services/admin-dashboard/Dockerfile",
         "docker-compose.yml"
       ],
       "enabled": true,
-      "branchName": "blackduck/custom-image/ghcr-io-company-web-frontend/cve-2022-21824",
-      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/web-frontend to fix CVE-2022-21824 in base image",
+      "branchName": "blackduck/custom-image/ghcr-io-company-admin-dashboard/cve-2024-admin-001",
+      "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/admin-dashboard to fix CVE-2024-ADMIN-001 in base image",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Custom Container Image",
         "",
-        "**Image**: ghcr.io/company/web-frontend",
+        "**Image**: ghcr.io/company/admin-dashboard",
         "**Base Image**: node:16.14.0-alpine",
-        "**Recommended Base**: Update to node:v3.3.2",
-        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "**Recommended Base**: Update to node:v2.2.0",
+        "**Dockerfile**: services/admin-dashboard/Dockerfile",
         "",
         "**Vulnerabilities in Base Image:**",
         "",
-        "#### CVE-2022-21824 (HIGH)",
-        "- **CVSS Score**: 8.2",
-        "- **Description**: Inherited from base image node:16.14.0-alpine - Prototype pollution vulnerability",
+        "#### CVE-2024-ADMIN-001 (MEDIUM)",
+        "- **CVSS Score**: 6.8",
+        "- **Description**: XSS vulnerability in admin-dashboard UI components",
         "",
         "**Remediation Steps**:",
         "",
-        "1. Update the FROM statement in `services/web-frontend/Dockerfile`",
-        "2. Change base image to: `node:v3.3.2`",
+        "1. Update the FROM statement in `services/admin-dashboard/Dockerfile`",
+        "2. Change base image to: `node:v2.2.0`",
         "3. Rebuild the container image",
         "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**Files to Update**: `services/web-frontend/Dockerfile`, `docker-compose.yml`",
+        "**Files to Update**: `services/admin-dashboard/Dockerfile`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
       ],
       "labels": [
         "security",
-        "high-priority",
+        "medium-priority",
         "blackduck",
         "container-image",
         "custom-image",
-        "cve-2022-21824"
+        "cve-2024-admin-001"
       ],
       "reviewers": [
-        "xavier"
+        "zoe"
       ]
     }
   ]

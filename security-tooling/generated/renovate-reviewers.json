@@ -3,164 +3,80 @@
   "description": "Auto-generated reviewer assignments based on component ownership",
   "packageRules": [
     {
-      "description": "Auto-assign reviewers for github.com/gin-gonic/gin (affects 8 components)",
+      "description": "Auto-assign reviewers for github.com/google/uuid (affects 1 components)",
       "matchDatasources": [
         "go"
       ],
       "matchPackageNames": [
-        "github.com/gin-gonic/gin"
+        "github.com/google/uuid"
       ],
       "reviewers": [
         "alice",
-        "architects",
         "bob",
         "charlie",
         "david"
       ],
       "addLabels": [
-        "component:api-gateway",
-        "component:authentication-service",
-        "component:contrib-plugin-a"
+        "component:core-services"
       ]
     },
     {
-      "description": "Auto-assign reviewers for axios (affects 3 components)",
+      "description": "Auto-assign reviewers for gopkg.in/yaml.v2 (affects 1 components)",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "gopkg.in/yaml.v2"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie",
+        "david"
+      ],
+      "addLabels": [
+        "component:core-services"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for validator (affects 1 components)",
       "matchDatasources": [
         "npm"
       ],
       "matchPackageNames": [
-        "axios"
+        "validator"
       ],
       "reviewers": [
-        "adam",
-        "blake",
-        "clara",
         "xavier",
         "yvonne"
       ],
       "addLabels": [
-        "component:analytics-plugin",
-        "component:admin-dashboard",
         "component:web-frontend"
       ]
     },
     {
-      "description": "Auto-assign reviewers for lodash (affects 2 components)",
+      "description": "Auto-assign reviewers for qs (affects 1 components)",
       "matchDatasources": [
         "npm"
       ],
       "matchPackageNames": [
-        "lodash"
+        "qs"
       ],
       "reviewers": [
         "adam",
-        "blake",
-        "clara",
         "zoe"
       ],
       "addLabels": [
-        "component:analytics-plugin",
         "component:admin-dashboard"
       ]
     },
     {
-      "description": "Default reviewers for nginx",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "nginx"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for postgres",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "postgres"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for redis",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "redis"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for node",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "node"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for golang",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "golang"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for ghcr.io/company/api-gateway",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "ghcr.io/company/api-gateway"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for ghcr.io/company/web-frontend",
-      "matchDatasources": [
-        "container"
-      ],
-      "matchPackageNames": [
-        "ghcr.io/company/web-frontend"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for openssl",
+      "description": "Default reviewers for bash",
       "matchDatasources": [
         "alpine"
       ],
       "matchPackageNames": [
-        "openssl"
+        "bash"
       ],
       "reviewers": [
         "techleads",
@@ -168,38 +84,12 @@
       ]
     },
     {
-      "description": "Default reviewers for curl",
+      "description": "Default reviewers for ncurses-terminfo-base",
       "matchDatasources": [
         "alpine"
       ],
       "matchPackageNames": [
-        "curl"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for libssl3",
-      "matchDatasources": [
-        "alpine"
-      ],
-      "matchPackageNames": [
-        "libssl3"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for libcrypto3",
-      "matchDatasources": [
-        "alpine"
-      ],
-      "matchPackageNames": [
-        "libcrypto3"
+        "ncurses-terminfo-base"
       ],
       "reviewers": [
         "techleads",
@@ -220,12 +110,12 @@
       ]
     },
     {
-      "description": "Default reviewers for github.com/vulnerable/package",
+      "description": "Default reviewers for libcrypto3",
       "matchDatasources": [
-        "go"
+        "alpine"
       ],
       "matchPackageNames": [
-        "github.com/vulnerable/package"
+        "libcrypto3"
       ],
       "reviewers": [
         "techleads",
@@ -233,70 +123,12 @@
       ]
     },
     {
-      "description": "Default reviewers for github.com/gorilla/mux",
-      "matchDatasources": [
-        "go"
-      ],
-      "matchPackageNames": [
-        "github.com/gorilla/mux"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for github.com/sirupsen/logrus",
-      "matchDatasources": [
-        "go"
-      ],
-      "matchPackageNames": [
-        "github.com/sirupsen/logrus"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for moment",
-      "matchDatasources": [
-        "npm"
-      ],
-      "matchPackageNames": [
-        "moment"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Auto-assign reviewers for express (affects 2 components)",
-      "matchDatasources": [
-        "npm"
-      ],
-      "matchPackageNames": [
-        "express"
-      ],
-      "reviewers": [
-        "adam",
-        "xavier",
-        "yvonne",
-        "zoe"
-      ],
-      "addLabels": [
-        "component:admin-dashboard",
-        "component:web-frontend"
-      ]
-    },
-    {
-      "description": "Default reviewers for mysql",
+      "description": "Default reviewers for ghcr.io/company/auth-service",
       "matchDatasources": [
         "container"
       ],
       "matchPackageNames": [
-        "mysql"
+        "ghcr.io/company/auth-service"
       ],
       "reviewers": [
         "techleads",
@@ -304,12 +136,12 @@
       ]
     },
     {
-      "description": "Default reviewers for memcached",
+      "description": "Default reviewers for ghcr.io/company/admin-dashboard",
       "matchDatasources": [
         "container"
       ],
       "matchPackageNames": [
-        "memcached"
+        "ghcr.io/company/admin-dashboard"
       ],
       "reviewers": [
         "techleads",
@@ -317,12 +149,12 @@
       ]
     },
     {
-      "description": "Default reviewers for git",
+      "description": "Default reviewers for rabbitmq",
       "matchDatasources": [
-        "alpine"
+        "container"
       ],
       "matchPackageNames": [
-        "git"
+        "rabbitmq"
       ],
       "reviewers": [
         "techleads",
@@ -330,12 +162,12 @@
       ]
     },
     {
-      "description": "Default reviewers for ca-certificates",
+      "description": "Default reviewers for elasticsearch",
       "matchDatasources": [
-        "alpine"
+        "container"
       ],
       "matchPackageNames": [
-        "ca-certificates"
+        "elasticsearch"
       ],
       "reviewers": [
         "techleads",
@@ -343,12 +175,12 @@
       ]
     },
     {
-      "description": "Default reviewers for musl",
+      "description": "Default reviewers for github.com/vulnerable/security-scanner",
       "matchDatasources": [
-        "alpine"
+        "go"
       ],
       "matchPackageNames": [
-        "musl"
+        "github.com/vulnerable/security-scanner"
       ],
       "reviewers": [
         "techleads",
@@ -356,25 +188,12 @@
       ]
     },
     {
-      "description": "Default reviewers for busybox",
+      "description": "Default reviewers for old-parser",
       "matchDatasources": [
-        "alpine"
+        "npm"
       ],
       "matchPackageNames": [
-        "busybox"
-      ],
-      "reviewers": [
-        "techleads",
-        "architects"
-      ]
-    },
-    {
-      "description": "Default reviewers for alpine-baselayout",
-      "matchDatasources": [
-        "alpine"
-      ],
-      "matchPackageNames": [
-        "alpine-baselayout"
+        "old-parser"
       ],
       "reviewers": [
         "techleads",
