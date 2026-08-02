@@ -64,7 +64,7 @@
         "red_version": "1.1.2"
     },
     "red/metricsdb": {
-        "origin_image": "victoriametrics/victoria-metrics:v1.144.0",
+        "origin_image": "victoriametrics/victoria-metrics:v1.148.0",
         "red_version": "1.2.1"
     },
     "red/alertagent": {
