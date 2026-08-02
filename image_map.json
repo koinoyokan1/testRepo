@@ -32,7 +32,7 @@
         "red_version": "1.0.2"
     },
     "red/healthdb": {
-        "origin_image": "mongo:8.0.26",
+        "origin_image": "mongo:8.0.28",
         "red_version": "1.1.1"
     },
     "red/message": {
