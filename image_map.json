@@ -28,7 +28,7 @@
         "purpose": "Distributed memory caching"
     },
     "red/config": {
-        "origin_image": "quay.io/coreos/etcd:v3.5.30",
+        "origin_image": "quay.io/coreos/etcd:v3.7.1",
         "red_version": "1.0.2"
     },
     "red/healthdb": {
