@@ -16,6 +16,13 @@ import re
 from pathlib import Path
 
 
+def email_to_github_username(email):
+    """Convert email to GitHub username by stripping @company.com"""
+    if '@company.com' in email:
+        return email.replace('@company.com', '')
+    return email
+
+
 def load_component_ownership(filepath="security-tooling/component_ownership.json"):
     """Load component ownership configuration"""
     try:
@@ -66,12 +73,15 @@ def get_reviewers_for_dockerfile(dockerfile_path, ownership_config):
     if not component:
         return {"reviewers": [], "labels": []}
 
-    # Collect primary and secondary owners
+    # Collect primary and secondary owners (convert emails to GitHub usernames)
     owners = component.get('owners', {})
     reviewers = list(set(
         owners.get('primary', []) +
         owners.get('secondary', [])
     ))
+
+    # Convert email addresses to GitHub usernames
+    reviewers = [email_to_github_username(r) for r in reviewers]
 
     # Create component label
     component_label = f"component:{component['name']}"

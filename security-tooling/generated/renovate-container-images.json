@@ -47,7 +47,7 @@
         "cve-2022-41716"
       ],
       "reviewers": [
-        "alice@company.com"
+        "alice"
       ]
     },
     {
@@ -95,7 +95,7 @@
         "cve-2022-21824"
       ],
       "reviewers": [
-        "xavier@company.com"
+        "xavier"
       ]
     }
   ]

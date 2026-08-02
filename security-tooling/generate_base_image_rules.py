@@ -14,6 +14,13 @@ import sys
 import os
 
 
+def email_to_github_username(email):
+    """Convert email to GitHub username by stripping @company.com"""
+    if '@company.com' in email:
+        return email.replace('@company.com', '')
+    return email
+
+
 def load_component_ownership(filepath="security-tooling/component_ownership.json"):
     """Load component ownership configuration"""
     try:
@@ -57,15 +64,18 @@ def get_reviewers_for_image(image_name, ownership_config):
         # Fall back to default reviewers
         owners = default_reviewers
     
-    # Collect primary and secondary owners
+    # Collect primary and secondary owners (convert emails to GitHub usernames)
     reviewers = list(set(
-        owners.get('primary', []) + 
+        owners.get('primary', []) +
         owners.get('secondary', [])
     ))
-    
+
+    # Convert email addresses to GitHub usernames
+    reviewers = [email_to_github_username(r) for r in reviewers]
+
     # Create label for the image type
     image_label = f"image:{image_name.replace('/', '-')}"
-    
+
     return {
         "reviewers": sorted(reviewers),
         "labels": [image_label]

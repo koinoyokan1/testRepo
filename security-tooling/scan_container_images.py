@@ -98,6 +98,13 @@ def find_image_vulnerabilities(blackduck_report):
     return image_vulns
 
 
+def email_to_github_username(email):
+    """Convert email to GitHub username by stripping @company.com"""
+    if '@company.com' in email:
+        return email.replace('@company.com', '')
+    return email
+
+
 def get_image_owner_from_compose(compose_file="docker-compose.yml"):
     """Extract owner from docker-compose.yml comments"""
     owners = {}
@@ -217,7 +224,7 @@ def generate_renovate_rule_for_custom_image(image_name, image_data, vulns):
             "container-image",
             "custom-image"
         ] + [cve.lower() for cve in cve_list],
-        "reviewers": [image_data.get('owner', 'devops-team@company.com')]
+        "reviewers": [email_to_github_username(image_data.get('owner', 'devops-team'))]
     }
 
     return rule
@@ -312,7 +319,7 @@ def main():
             # Create minimal data if not found in compose
             image_data = {
                 'dockerfile': 'Dockerfile',
-                'owner': 'devops-team@company.com',
+                'owner': 'devops-team',  # GitHub username (not email)
                 'service_name': image_name.split('/')[-1].split(':')[0]
             }
 

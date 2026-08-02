@@ -24,8 +24,8 @@
         "image:nginx"
       ],
       "reviewers": [
-        "alice@company.com",
-        "bob@company.com"
+        "alice",
+        "bob"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -52,8 +52,8 @@
         "image:postgres"
       ],
       "reviewers": [
-        "paul@company.com",
-        "quinn@company.com"
+        "paul",
+        "quinn"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -80,8 +80,8 @@
         "image:redis"
       ],
       "reviewers": [
-        "paul@company.com",
-        "quinn@company.com"
+        "paul",
+        "quinn"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -108,9 +108,9 @@
         "image:node"
       ],
       "reviewers": [
-        "karen@company.com",
-        "leo@company.com",
-        "xavier@company.com"
+        "karen",
+        "leo",
+        "xavier"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -137,9 +137,9 @@
         "image:golang"
       ],
       "reviewers": [
-        "alice@company.com",
-        "bob@company.com",
-        "david@company.com"
+        "alice",
+        "bob",
+        "david"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -166,8 +166,8 @@
         "image:mysql"
       ],
       "reviewers": [
-        "paul@company.com",
-        "quinn@company.com"
+        "paul",
+        "quinn"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -194,8 +194,8 @@
         "image:memcached"
       ],
       "reviewers": [
-        "paul@company.com",
-        "quinn@company.com"
+        "paul",
+        "quinn"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -222,8 +222,8 @@
         "image:red-config"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -250,8 +250,8 @@
         "image:red-healthdb"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -278,8 +278,8 @@
         "image:red-message"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -306,8 +306,8 @@
         "image:red-proxy"
       ],
       "reviewers": [
-        "alice@company.com",
-        "bob@company.com"
+        "alice",
+        "bob"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -334,8 +334,8 @@
         "image:red-images"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -362,8 +362,8 @@
         "image:red-nameserver"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -390,8 +390,8 @@
         "image:red-telemetry"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -418,8 +418,8 @@
         "image:red-nodeexp"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -446,8 +446,8 @@
         "image:red-alertmanager"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -474,8 +474,8 @@
         "image:red-metricsdb"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
@@ -502,8 +502,8 @@
         "image:red-alertagent"
       ],
       "reviewers": [
-        "architects@company.com",
-        "techleads@company.com"
+        "architects",
+        "techleads"
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
