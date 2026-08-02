@@ -20,7 +20,7 @@
         "purpose": "Base image for Go services"
     },
     "mysql": {
-        "origin_image": "mysql:8.0.0",
+        "origin_image": "mysql:8.4.11",
         "purpose": "Alternative database for legacy apps"
     },
     "memcached": {
