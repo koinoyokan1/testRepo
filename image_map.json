@@ -28,7 +28,7 @@
         "purpose": "Distributed memory caching"
     },
     "rabbitmq": {
-        "origin_image": "rabbitmq:3.11.0",
+        "origin_image": "rabbitmq:4.3.4",
         "purpose": "Message broker for async communication"
     },
     "elasticsearch": {
