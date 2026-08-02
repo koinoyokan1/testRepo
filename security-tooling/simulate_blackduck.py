@@ -43,8 +43,14 @@ def process_full_report():
         print(f"  Component: {vuln['component']} v{vuln['version']}")
         print(f"  CVSS Score: {vuln['cvss_score']}")
         print(f"  Description: {vuln['description']}")
-        print(f"  Fixed in: {', '.join(vuln['fixed_versions'])}")
-        print(f"  Recommended: {vuln['recommended_version']}")
+
+        fixed_versions = vuln.get('fixed_versions', [])
+        if fixed_versions:
+            print(f"  Fixed in: {', '.join(fixed_versions)}")
+            print(f"  Recommended: {vuln.get('recommended_version', 'N/A')}")
+        else:
+            print(f"  Fixed in: NO FIX AVAILABLE")
+
         print(f"  Remediation: {vuln['remediation']}")
 
     # Generate Renovate package rules for all vulnerabilities
@@ -52,12 +58,15 @@ def process_full_report():
     components_processed = set()
 
     for vuln in report['vulnerabilities']:
-        if vuln['component'] not in components_processed:
+        component = vuln['component']
+        recommended_version = vuln.get('recommended_version')
+
+        if component not in components_processed and recommended_version:
             package_rules.append({
-                "matchPackageNames": [vuln["component"]],
-                "allowedVersions": f">={vuln['recommended_version']}"
+                "matchPackageNames": [component],
+                "allowedVersions": f">={recommended_version}"
             })
-            components_processed.add(vuln['component'])
+            components_processed.add(component)
 
     print("\n" + "=" * 60)
     print("Generated Renovate package rules:")
