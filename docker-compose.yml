@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Prebuilt images - services using official images
   nginx:
-    image: nginx:1.21.0
+    image: nginx:1.21.6
     container_name: nginx-proxy
     ports:
       - "80:80"
