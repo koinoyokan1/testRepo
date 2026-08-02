@@ -20,8 +20,8 @@ from collections import defaultdict
 
 
 def load_categorization():
-    """Load vulnerability categorization from detect_base_image_vulns.py"""
-    with open("security-tooling/generated/vuln-categorization.json", 'r') as f:
+    """Load vulnerability categorization from categorize_os_vulnerabilities.py"""
+    with open("security-tooling/generated/os-vulnerability-categories.json", 'r') as f:
         return json.load(f)
 
 
@@ -191,7 +191,7 @@ def main():
     try:
         categorized = load_categorization()
     except FileNotFoundError:
-        print("❌ Error: Run detect_base_image_vulns.py first!")
+        print("❌ Error: Run categorize_os_vulnerabilities.py first!")
         return 1
     
     base_image_vulns = categorized.get('base_image_vulns', [])

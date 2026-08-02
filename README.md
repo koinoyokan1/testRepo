@@ -746,8 +746,8 @@ python3 security-tooling/generate_container_image_rules.py
 # Generate Dockerfile OS-level package rules
 python3 security-tooling/generate_dockerfile_rules.py
 
-# NEW: Detect and patch base image vulnerabilities (one-time fix)
-python3 security-tooling/detect_base_image_vulns.py
+# NEW: Categorize and patch base image vulnerabilities (one-time fix)
+python3 security-tooling/categorize_os_vulnerabilities.py
 python3 security-tooling/patch_base_image_dockerfiles.py
 
 # Generate GitHub Issues for unfixable vulnerabilities
@@ -762,7 +762,7 @@ python3 security-tooling/manage_reviewers.py generate-renovate
 - `security-tooling/generated/renovate-container-images.json` - Container image rules
 - `security-tooling/generated/renovate-dockerfile-regex.json` - Dockerfile OS-level package rules (explicit installs)
 - `security-tooling/generated/renovate-base-image-upgrades.json` - ✨ **NEW**: Base image upgrade rules
-- `security-tooling/generated/vuln-categorization.json` - ✨ **NEW**: Vulnerability categorization
+- `security-tooling/generated/os-vulnerability-categories.json` - ✨ **NEW**: OS vulnerability categorization
 - `security-tooling/generated/dockerfile-patches.json` - ✨ **NEW**: Dockerfile patch metadata
 - `security-tooling/generated/github-issues.sh` - Script to create GitHub Issues
 - `security-tooling/generated/unfixable-vulnerabilities.json` - Unfixable vulnerability metadata
@@ -902,7 +902,7 @@ This system provides **100% automated remediation** across all vulnerability typ
 | **Go/npm packages** | `go.mod`, `package.json` | `generate_package_rules.py` | ✅ Automated PR |
 | **Container base images** | `image_map.json`, `docker-compose.yml` | `generate_container_image_rules.py` | ✅ Automated PR |
 | **OS packages (explicit install)** | `RUN apk/apt/yum add` in Dockerfile | `generate_dockerfile_rules.py` | ✅ Automated PR |
-| **OS packages (base image)** | Base image layers | `detect_base_image_vulns.py`<br>`patch_base_image_dockerfiles.py` | ✅ **NEW** - One-time patch |
+| **OS packages (base image)** | Base image layers | `categorize_os_vulnerabilities.py`<br>`patch_base_image_dockerfiles.py` | ✅ **NEW** - One-time patch |
 | **Unfixable vulnerabilities** | Any ecosystem | `create_github_issues.py` | ✅ GitHub Issue |
 
 **Result:** Every vulnerability detected by Black Duck is automatically remediated through either:
@@ -1057,9 +1057,9 @@ FROM node:16.14.0-alpine
 
 Three new scripts work together to automatically patch Dockerfiles:
 
-1. **`detect_base_image_vulns.py`** - Categorizes vulnerabilities
+1. **`categorize_os_vulnerabilities.py`** - Categorizes vulnerabilities
    - Detects which OS packages are in base images vs. explicit installs
-   - Outputs: `vuln-categorization.json`
+   - Outputs: `os-vulnerability-categories.json`
 
 2. **`patch_base_image_dockerfiles.py`** - Modifies Dockerfiles
    - Adds `RUN apk/apt/yum upgrade` commands with pinned versions from Black Duck
@@ -1111,7 +1111,7 @@ When `libssl3=3.0.10-r0` becomes available, Renovate automatically creates a PR:
 ./test_base_image_patching.sh
 
 # Or step-by-step
-python3 security-tooling/detect_base_image_vulns.py
+python3 security-tooling/categorize_os_vulnerabilities.py
 python3 security-tooling/patch_base_image_dockerfiles.py --dry-run
 python3 security-tooling/patch_base_image_dockerfiles.py
 ```

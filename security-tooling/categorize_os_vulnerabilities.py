@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Detect OS-level vulnerabilities in base image layers (not in RUN commands).
+Categorize OS-level vulnerabilities from Black Duck report.
 
-This script identifies vulnerabilities that exist in the base image itself,
-which cannot be fixed by updating RUN apk/apt/yum commands.
+This script analyzes Dockerfiles to categorize OS vulnerabilities into:
+1. base_image_vulns: OS packages in base image layers (need RUN upgrade)
+2. explicit_install_vulns: OS packages in RUN commands (need version update)
+3. container_vulns: Container image version issues (need FROM update)
 
 Usage:
-    python3 security-tooling/detect_base_image_vulns.py
+    python3 security-tooling/categorize_os_vulnerabilities.py
 """
 
 import json
@@ -140,7 +142,7 @@ def categorize_vulnerabilities(blackduck_report):
 
 def main():
     print("=" * 70)
-    print("BASE IMAGE VULNERABILITY DETECTOR")
+    print("OS VULNERABILITY CATEGORIZER")
     print("=" * 70)
     print()
     
@@ -168,10 +170,10 @@ def main():
     
     # Save categorization
     os.makedirs("security-tooling/generated", exist_ok=True)
-    output_file = "security-tooling/generated/vuln-categorization.json"
+    output_file = "security-tooling/generated/os-vulnerability-categories.json"
     with open(output_file, 'w') as f:
         json.dump(categorized, f, indent=2)
-    
+
     print(f"✅ Saved categorization to: {output_file}")
     
     return 0

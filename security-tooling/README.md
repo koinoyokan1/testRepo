@@ -66,7 +66,7 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 - **`generate_container_image_rules.py`** - Generates Renovate rules for container image updates
 - **`generate_dockerfile_rules.py`** - Generates Renovate rules for OS-level packages in Dockerfiles
 - **`generate_base_image_rules.py`** - Generates Renovate rules for container base image updates
-- **`detect_base_image_vulns.py`** - Detects and categorizes base image vulnerabilities
+- **`categorize_os_vulnerabilities.py`** - Categorizes OS-level vulnerabilities (base image vs explicit install)
 - **`patch_base_image_dockerfiles.py`** - Patches Dockerfiles with one-time fixes for base image vulnerabilities (Black Duck report is the single source of truth)
 - **`create_github_issues.py`** - Creates GitHub Issues for unfixable vulnerabilities
 - **`manage_reviewers.py`** - Unified reviewer management orchestrator (Go + npm)
