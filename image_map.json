@@ -32,7 +32,7 @@
         "purpose": "Message broker for async communication"
     },
     "elasticsearch": {
-        "origin_image": "elasticsearch:7.17.0",
+        "origin_image": "elasticsearch:9.4.4",
         "purpose": "Search and analytics engine"
     },
     "red/config": {
