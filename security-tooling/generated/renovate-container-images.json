@@ -1,254 +1,39 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Auto-generated from Black Duck container image scan findings",
+  "description": "Auto-generated custom container image rules from Black Duck",
   "packageRules": [
     {
-      "description": "Black Duck - nginx CVE-2021-23017 (HIGH)",
+      "description": "Black Duck - ghcr.io/company/api-gateway CVE-2022-41716 (HIGH) - Custom Image",
       "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "nginx"
+        "Dockerfile",
+        "docker-compose.yml"
       ],
       "enabled": true,
-      "prTitle": "fix(security): update nginx to 1.25.3 to fix CVE-2021-23017",
+      "prTitle": "fix(security): rebuild ghcr.io/company/api-gateway to fix CVE-2022-41716 in base image",
       "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (PREBUILT)",
+        "### \ud83d\udd12 Security Update - Custom Container Image",
         "",
-        "**Image**: nginx:1.21.0",
-        "**Current Version**: 1.21.0",
-        "**Recommended Version**: 1.25.3",
-        "",
-        "**Vulnerabilities Fixed**:",
-        "",
-        "#### CVE-2021-23017 (HIGH)",
-        "- **CVSS Score**: 8.1",
-        "- **Description**: Off-by-one error in nginx resolver allows attackers to cause a denial of service or execute arbitrary code",
-        "",
-        "**Remediation**: Update nginx to version 1.21.1 or later, preferably 1.25.3 for latest security patches",
-        "",
-        "---",
-        "",
-        "**File to Update**: `image_versions.json`",
-        "",
-        "This PR was created based on Black Duck container image scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "container-image",
-        "prebuilt",
-        "cve-2021-23017"
-      ],
-      "reviewers": [
-        "platform-team@company.com"
-      ]
-    },
-    {
-      "description": "Black Duck - postgres CVE-2021-32027 (HIGH)",
-      "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "postgres"
-      ],
-      "enabled": true,
-      "prTitle": "fix(security): update postgres to 15.5 to fix CVE-2021-32027",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (PREBUILT)",
-        "",
-        "**Image**: postgres:13.2",
-        "**Current Version**: 13.2",
-        "**Recommended Version**: 15.5",
-        "",
-        "**Vulnerabilities Fixed**:",
-        "",
-        "#### CVE-2021-32027 (HIGH)",
-        "- **CVSS Score**: 8.8",
-        "- **Description**: Buffer overflow in PostgreSQL allows authenticated users to execute arbitrary code",
-        "",
-        "**Remediation**: Update postgres to version 13.3 or later, preferably 15.5 for latest features and security",
-        "",
-        "---",
-        "",
-        "**File to Update**: `image_versions.json`",
-        "",
-        "This PR was created based on Black Duck container image scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "container-image",
-        "prebuilt",
-        "cve-2021-32027"
-      ],
-      "reviewers": [
-        "database-team@company.com"
-      ]
-    },
-    {
-      "description": "Black Duck - redis CVE-2021-32672 (MEDIUM)",
-      "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "redis"
-      ],
-      "enabled": true,
-      "prTitle": "fix(security): update redis to 7.2.3 to fix CVE-2021-32672",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (PREBUILT)",
-        "",
-        "**Image**: redis:6.0.9",
-        "**Current Version**: 6.0.9",
-        "**Recommended Version**: 7.2.3",
-        "",
-        "**Vulnerabilities Fixed**:",
-        "",
-        "#### CVE-2021-32672 (MEDIUM)",
-        "- **CVSS Score**: 6.5",
-        "- **Description**: Integer overflow in Redis STRALGO command allows denial of service",
-        "",
-        "**Remediation**: Update redis to version 6.0.16 or later, preferably 7.2.3 for latest improvements",
-        "",
-        "---",
-        "",
-        "**File to Update**: `image_versions.json`",
-        "",
-        "This PR was created based on Black Duck container image scan findings."
-      ],
-      "labels": [
-        "security",
-        "medium-priority",
-        "blackduck",
-        "container-image",
-        "prebuilt",
-        "cve-2021-32672"
-      ],
-      "reviewers": [
-        "platform-team@company.com"
-      ]
-    },
-    {
-      "description": "Black Duck - node CVE-2022-21824 (HIGH)",
-      "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "node"
-      ],
-      "enabled": true,
-      "prTitle": "fix(security): update node to 20.10.0-alpine to fix CVE-2022-21824",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (PREBUILT)",
-        "",
-        "**Image**: node:16.14.0-alpine",
-        "**Current Version**: 16.14.0-alpine",
-        "**Recommended Version**: 20.10.0-alpine",
-        "",
-        "**Vulnerabilities Fixed**:",
-        "",
-        "#### CVE-2022-21824 (HIGH)",
-        "- **CVSS Score**: 8.2",
-        "- **Description**: Prototype pollution in Node.js allows remote attackers to execute arbitrary code",
-        "",
-        "**Remediation**: Update node to version 16.14.1 or later, preferably LTS version 20.10.0-alpine",
-        "",
-        "---",
-        "",
-        "**File to Update**: `image_versions.json`",
-        "",
-        "This PR was created based on Black Duck container image scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "container-image",
-        "prebuilt",
-        "cve-2022-21824"
-      ],
-      "reviewers": [
-        "frontend-team@company.com"
-      ]
-    },
-    {
-      "description": "Black Duck - golang CVE-2022-41716 (HIGH)",
-      "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "golang"
-      ],
-      "enabled": true,
-      "prTitle": "fix(security): update golang to 1.21.5-alpine to fix CVE-2022-41716",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (PREBUILT)",
-        "",
-        "**Image**: golang:1.19.0-alpine",
-        "**Current Version**: 1.19.0-alpine",
-        "**Recommended Version**: 1.21.5-alpine",
-        "",
-        "**Vulnerabilities Fixed**:",
-        "",
-        "#### CVE-2022-41716 (HIGH)",
-        "- **CVSS Score**: 7.5",
-        "- **Description**: Unsanitized NUL in environment variables in syscalls in Go allows code execution",
-        "",
-        "**Remediation**: Update golang to version 1.19.3 or later, preferably 1.21.5-alpine for latest features",
-        "",
-        "---",
-        "",
-        "**File to Update**: `image_versions.json`",
-        "",
-        "This PR was created based on Black Duck container image scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "container-image",
-        "prebuilt",
-        "cve-2022-41716"
-      ],
-      "reviewers": [
-        "backend-team@company.com"
-      ]
-    },
-    {
-      "description": "Black Duck - api-gateway CVE-2022-41716 (HIGH)",
-      "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "api-gateway"
-      ],
-      "enabled": true,
-      "prTitle": "fix(security): update api-gateway to v2.4.1 to fix CVE-2022-41716",
-      "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (CUSTOM)",
-        "",
-        "**Image**: ghcr.io/company/api-gateway:v2.3.1",
-        "**Current Version**: v2.3.1",
-        "**Recommended Version**: v2.4.1",
-        "",
+        "**Image**: ghcr.io/company/api-gateway",
         "**Base Image**: golang:1.19.0-alpine",
-        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "**Recommended Base**: Update to golang:v2.4.1",
+        "**Dockerfile**: Dockerfile",
         "",
-        "**Vulnerabilities Fixed**:",
+        "**Vulnerabilities in Base Image:**",
         "",
         "#### CVE-2022-41716 (HIGH)",
         "- **CVSS Score**: 7.5",
         "- **Description**: Inherited from base image golang:1.19.0-alpine - Unsanitized NUL in environment variables",
         "",
-        "**Remediation**: Rebuild with updated golang base image (1.21.5-alpine) and update to v2.4.1",
+        "**Remediation Steps**:",
+        "",
+        "1. Update the FROM statement in `Dockerfile`",
+        "2. Change base image to: `golang:v2.4.1`",
+        "3. Rebuild the container image",
+        "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**File to Update**: `image_versions.json`",
-        "**Action Required**: Rebuild container image with updated base image",
+        "**Files to Update**: `Dockerfile`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
       ],
@@ -257,45 +42,45 @@
         "high-priority",
         "blackduck",
         "container-image",
-        "custom",
+        "custom-image",
         "cve-2022-41716"
       ],
       "reviewers": [
-        "alice@company.com"
+        "devops-team@company.com"
       ]
     },
     {
-      "description": "Black Duck - web-frontend CVE-2022-21824 (HIGH)",
+      "description": "Black Duck - ghcr.io/company/web-frontend CVE-2022-21824 (HIGH) - Custom Image",
       "matchFileNames": [
-        "image_versions.json"
-      ],
-      "matchPackageNames": [
-        "web-frontend"
+        "Dockerfile",
+        "docker-compose.yml"
       ],
       "enabled": true,
-      "prTitle": "fix(security): update web-frontend to v3.3.2 to fix CVE-2022-21824",
+      "prTitle": "fix(security): rebuild ghcr.io/company/web-frontend to fix CVE-2022-21824 in base image",
       "prBodyNotes": [
-        "### \ud83d\udd12 Security Update - Container Image (CUSTOM)",
+        "### \ud83d\udd12 Security Update - Custom Container Image",
         "",
-        "**Image**: ghcr.io/company/web-frontend:v3.2.0",
-        "**Current Version**: v3.2.0",
-        "**Recommended Version**: v3.3.2",
-        "",
+        "**Image**: ghcr.io/company/web-frontend",
         "**Base Image**: node:16.14.0-alpine",
-        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "**Recommended Base**: Update to node:v3.3.2",
+        "**Dockerfile**: Dockerfile",
         "",
-        "**Vulnerabilities Fixed**:",
+        "**Vulnerabilities in Base Image:**",
         "",
         "#### CVE-2022-21824 (HIGH)",
         "- **CVSS Score**: 8.2",
         "- **Description**: Inherited from base image node:16.14.0-alpine - Prototype pollution vulnerability",
         "",
-        "**Remediation**: Rebuild with updated node base image (20.10.0-alpine) and update to v3.3.2",
+        "**Remediation Steps**:",
+        "",
+        "1. Update the FROM statement in `Dockerfile`",
+        "2. Change base image to: `node:v3.3.2`",
+        "3. Rebuild the container image",
+        "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**File to Update**: `image_versions.json`",
-        "**Action Required**: Rebuild container image with updated base image",
+        "**Files to Update**: `Dockerfile`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
       ],
@@ -304,11 +89,11 @@
         "high-priority",
         "blackduck",
         "container-image",
-        "custom",
+        "custom-image",
         "cve-2022-21824"
       ],
       "reviewers": [
-        "xavier@company.com"
+        "devops-team@company.com"
       ]
     }
   ]

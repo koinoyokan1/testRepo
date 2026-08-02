@@ -4,16 +4,12 @@
     "config:base"
   ],
   "description": "Renovate configuration for Black Duck vulnerability remediation",
-  "dependencyDashboard": true,
-  "dependencyDashboardAutoclose": false,
   "enabledManagers": ["gomod", "npm", "docker-compose", "dockerfile", "regex"],
-  "ignorePresets": [":prHourlyLimit2"],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
   "branchConcurrentLimit": 0,
   "separateMinorPatch": true,
   "separateMultipleMajor": true,
-  "separateMajorMinor": true,
   "rangeStrategy": "update-lockfile",
   "semanticCommits": "enabled",
   "commitMessagePrefix": "fix(deps):",
@@ -23,8 +19,6 @@
     "dependencies",
     "security"
   ],
-  "assignees": [],
-  "reviewers": [],
   "vulnerabilityAlerts": {
     "enabled": false
   },
@@ -36,6 +30,36 @@
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "docker"
+    },
+    {
+      "description": "Extract OS-level package versions from Dockerfiles (apk add)",
+      "fileMatch": ["(^|/)Dockerfile$", "(^|/)Dockerfile\\.[^/]*$"],
+      "matchStrings": [
+        "RUN\\s+apk\\s+(?:add|--no-cache\\s+add)\\s+.*?(?<depName>[a-z0-9-]+)=(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine/{{{depName}}}"
+    },
+    {
+      "description": "Extract OS-level package versions from Dockerfiles (apt-get install)",
+      "fileMatch": ["(^|/)Dockerfile$", "(^|/)Dockerfile\\.[^/]*$"],
+      "matchStrings": [
+        "RUN\\s+apt-get\\s+install\\s+.*?(?<depName>[a-z0-9-]+)=(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "debian/{{{depName}}}"
+    },
+    {
+      "description": "Extract OS-level package versions from Dockerfiles (yum install)",
+      "fileMatch": ["(^|/)Dockerfile$", "(^|/)Dockerfile\\.[^/]*$"],
+      "matchStrings": [
+        "RUN\\s+yum\\s+install\\s+.*?(?<depName>[a-z0-9-]+)-(?<currentValue>[^\\s]+)"
+      ],
+      "datasourceTemplate": "repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "rhel/{{{depName}}}"
     }
   ],
   "packageRules": [
@@ -58,208 +82,6 @@
       ],
       "semanticCommitType": "fix",
       "semanticCommitScope": "security"
-    },
-    {
-      "description": "Black Duck - gin CVE fixes (HIGH + MEDIUM)",
-      "matchDatasources": ["go"],
-      "matchPackageNames": ["github.com/gin-gonic/gin"],
-      "enabled": true,
-      "allowedVersions": ">=1.9.1",
-      "groupName": "gin security updates",
-      "separateMinorPatch": false,
-      "prTitle": "fix(security): update gin to v1.9.1 to fix CVE-2023-29401 and CVE-2023-26125",
-      "prBodyNotes": [
-        "### 🔒 Security Update - Black Duck Finding (GO)",
-        "",
-        "This PR fixes multiple vulnerabilities in github.com/gin-gonic/gin:",
-        "",
-        "#### CVE-2023-29401 (HIGH)",
-        "- **Severity**: HIGH (CVSS 7.5)",
-        "- **Description**: Directory traversal vulnerability in gin-gonic/gin allows attackers to access files outside the intended directory",
-        "",
-        "#### CVE-2023-26125 (MEDIUM)",
-        "- **Severity**: MEDIUM (CVSS 5.3)",
-        "- **Description**: Denial of service vulnerability through malformed requests in gin-gonic/gin",
-        "",
-        "**Current Version**: 1.8.0",
-        "**Fixed Version**: 1.9.1 (minimum safe version)",
-        "",
-        "**Remediation**: Update github.com/gin-gonic/gin to version 1.9.1 or later.",
-        "",
-        "---",
-        "",
-        "### 👥 Reviewers",
-        "",
-        "The following reviewers have been automatically assigned based on component ownership:",
-        "",
-        "- alice@company.com (API Gateway - Primary)",
-        "- architects@company.com (Default - Secondary)",
-        "- bob@company.com (API Gateway - Secondary)",
-        "- charlie@company.com (API Gateway - Secondary)",
-        "- david@company.com (Authentication Service - Primary)",
-        "",
-        "**Components Affected:** 8 total",
-        "- API Gateway",
-        "- Authentication Service",
-        "- Contrib Plugin A",
-        "- Contrib Plugin B",
-        "- Default",
-        "- Payment Processing",
-        "- Shared Utilities",
-        "- User Management",
-        "",
-        "---",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "cve-2023-29401",
-        "cve-2023-26125",
-        "go"
-      ],
-      "reviewers": [
-        "alice@company.com",
-        "architects@company.com",
-        "bob@company.com",
-        "charlie@company.com",
-        "david@company.com"
-      ],
-      "addLabels": [
-        "component:api-gateway",
-        "component:authentication-service",
-        "component:contrib-plugin-a"
-      ]
-    },
-    {
-      "description": "Black Duck - axios CVE-2021-3749 (HIGH)",
-      "matchDatasources": ["npm"],
-      "matchPackageNames": ["axios"],
-      "enabled": true,
-      "allowedVersions": ">=1.6.0",
-      "groupName": null,
-      "separateMinorPatch": false,
-      "prTitle": "fix(security): update axios to v1.6.0 to fix CVE-2021-3749 (HIGH)",
-      "prBodyNotes": [
-        "### 🔒 Security Update - Black Duck Finding (NPM)",
-        "",
-        "**Vulnerability**: CVE-2021-3749",
-        "**Severity**: HIGH (CVSS 7.5)",
-        "**Ecosystem**: npm",
-        "**Current Version**: 0.21.1",
-        "**Fixed Version**: 1.6.0 (minimum safe version)",
-        "",
-        "**Description**: Server-Side Request Forgery (SSRF) vulnerability in axios allows attackers to perform unauthorized requests",
-        "",
-        "**Remediation**: Update axios to version 1.6.0 or later.",
-        "",
-        "---",
-        "",
-        "### 👥 Reviewers",
-        "",
-        "The following reviewers have been automatically assigned based on component ownership:",
-        "",
-        "- adam@company.com (Admin Dashboard - Secondary)",
-        "- blake@company.com (Analytics Plugin - Primary)",
-        "- clara@company.com (Analytics Plugin - Secondary)",
-        "- xavier@company.com (Web Frontend - Primary)",
-        "- yvonne@company.com (Web Frontend - Secondary)",
-        "",
-        "**Components Affected:** 3 total",
-        "- Analytics Plugin",
-        "- Admin Dashboard",
-        "- Web Frontend",
-        "",
-        "---",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "cve-2021-3749",
-        "npm"
-      ],
-      "reviewers": [
-        "adam@company.com",
-        "blake@company.com",
-        "clara@company.com",
-        "xavier@company.com",
-        "yvonne@company.com"
-      ],
-      "addLabels": [
-        "component:analytics-plugin",
-        "component:admin-dashboard",
-        "component:web-frontend"
-      ]
-    },
-    {
-      "description": "Black Duck - lodash CVE fixes (HIGH + MEDIUM)",
-      "matchDatasources": ["npm"],
-      "matchPackageNames": ["lodash"],
-      "enabled": true,
-      "allowedVersions": ">=4.17.21",
-      "groupName": "lodash security updates",
-      "separateMinorPatch": false,
-      "prTitle": "fix(security): update lodash to v4.17.21 to fix CVE-2021-23337 and CVE-2020-8203",
-      "prBodyNotes": [
-        "### 🔒 Security Update - Black Duck Finding (NPM)",
-        "",
-        "This PR fixes multiple vulnerabilities in lodash:",
-        "",
-        "#### CVE-2021-23337 (HIGH)",
-        "- **Severity**: HIGH (CVSS 7.2)",
-        "- **Description**: Command injection vulnerability in lodash allows attackers to execute arbitrary code",
-        "",
-        "#### CVE-2020-8203 (MEDIUM)",
-        "- **Severity**: MEDIUM (CVSS 5.3)",
-        "- **Description**: Prototype pollution vulnerability in lodash",
-        "",
-        "**Current Versions**: 4.17.19, 4.17.20",
-        "**Fixed Version**: 4.17.21",
-        "",
-        "**Remediation**: Update lodash to version 4.17.21 or later.",
-        "",
-        "---",
-        "",
-        "### 👥 Reviewers",
-        "",
-        "The following reviewers have been automatically assigned based on component ownership:",
-        "",
-        "- adam@company.com (Admin Dashboard - Secondary)",
-        "- blake@company.com (Analytics Plugin - Primary)",
-        "- clara@company.com (Analytics Plugin - Secondary)",
-        "- zoe@company.com (Admin Dashboard - Primary)",
-        "",
-        "**Components Affected:** 2 total",
-        "- Analytics Plugin",
-        "- Admin Dashboard",
-        "",
-        "---",
-        "",
-        "This PR was created based on Black Duck security scan findings."
-      ],
-      "labels": [
-        "security",
-        "high-priority",
-        "blackduck",
-        "cve-2021-23337",
-        "cve-2020-8203",
-        "npm"
-      ],
-      "reviewers": [
-        "adam@company.com",
-        "blake@company.com",
-        "clara@company.com",
-        "zoe@company.com"
-      ],
-      "addLabels": [
-        "component:analytics-plugin",
-        "component:admin-dashboard"
-      ]
     }
   ]
 }

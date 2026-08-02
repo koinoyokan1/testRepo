@@ -1,0 +1,33 @@
+{
+  "unfixable_count": 2,
+  "issues": [
+    {
+      "cve": "CVE-2023-UNFIXED",
+      "severity": "CRITICAL",
+      "component": "zlib",
+      "title": "[Security] CVE-2023-UNFIXED (CRITICAL): No fix available for zlib",
+      "labels": [
+        "security",
+        "unfixable",
+        "blackduck",
+        "critical-priority",
+        "alpine"
+      ],
+      "body_file": "security-tooling/generated/issue-body-1.md"
+    },
+    {
+      "cve": "CVE-2023-NOFIX",
+      "severity": "HIGH",
+      "component": "github.com/vulnerable/package",
+      "title": "[Security] CVE-2023-NOFIX (HIGH): No fix available for github.com/vulnerable/package",
+      "labels": [
+        "security",
+        "unfixable",
+        "blackduck",
+        "high-priority",
+        "go"
+      ],
+      "body_file": "security-tooling/generated/issue-body-2.md"
+    }
+  ]
+}

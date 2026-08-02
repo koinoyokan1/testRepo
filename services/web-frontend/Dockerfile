@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
+# Install OS-level dependencies
+RUN apk add --no-cache libssl3=3.0.8-r0 libcrypto3=3.0.8-r0
+
 # Install dependencies
 RUN npm ci --production
 

@@ -46,8 +46,36 @@ jobs:
           if [ -f "security-tooling/blackduck_report.json" ]; then
             echo "Found Black Duck vulnerability report"
 
-            # Generate dynamic Renovate rules
+            # Generate dynamic Renovate rules for packages (go/npm)
             python3 security-tooling/generate_renovate_rules.py
+
+            # Generate dynamic Renovate rules for container images
+            python3 security-tooling/scan_container_images.py
+
+            # Generate dynamic Renovate rules for OS-level packages in Dockerfiles
+            python3 security-tooling/generate_dockerfile_rules.py
+
+            # NEW: Detect and patch base image vulnerabilities
+            echo "Detecting base image vulnerabilities..."
+            python3 security-tooling/detect_base_image_vulns.py
+
+            if [ -f "security-tooling/generated/vuln-categorization.json" ]; then
+              base_image_count=$(python3 -c "import json; data=json.load(open('security-tooling/generated/vuln-categorization.json')); print(len(data.get('base_image_vulns', [])))")
+
+              if [ "$base_image_count" -gt "0" ]; then
+                echo "Found $base_image_count base image vulnerability(ies)"
+                echo "Patching Dockerfiles..."
+                python3 security-tooling/patch_base_image_dockerfiles.py
+
+                echo "Generating Renovate regex for base image upgrades..."
+                python3 security-tooling/generate_upgrade_regex.py
+              else
+                echo "No base image vulnerabilities found"
+              fi
+            fi
+
+            # Generate GitHub Issues for unfixable vulnerabilities
+            python3 security-tooling/create_github_issues.py
 
             # Generate reviewer assignments based on component ownership
             python3 security-tooling/manage_reviewers.py generate-renovate
@@ -66,8 +94,7 @@ jobs:
             "description": "Renovate configuration with Black Duck vulnerability remediation ONLY",
             "dependencyDashboard": true,
             "dependencyDashboardAutoclose": false,
-            "enabledManagers": ["gomod"],
-            "ignorePresets": [":prHourlyLimit2"],
+            "enabledManagers": ["gomod", "npm", "docker-compose", "dockerfile", "regex"],
             "prHourlyLimit": 0,
             "prConcurrentLimit": 0,
             "branchConcurrentLimit": 0,
@@ -101,14 +128,44 @@ jobs:
               # Merge package rules from generated configs into merged config
               python3 << 'PYTHON'
           import json
+          import os
 
           # Read base merged config
           with open('renovate-merged.json') as f:
               merged = json.load(f)
 
-          # Read generated Black Duck rules
+          # Read generated Black Duck rules for packages (go/npm)
           with open('security-tooling/generated/renovate-blackduck-generated.json') as f:
               blackduck_rules = json.load(f)
+
+          # Read generated Black Duck rules for container images
+          container_rules = {}
+          try:
+              with open('security-tooling/generated/renovate-container-images.json') as f:
+                  container_rules = json.load(f)
+                  print(f"✓ Found {len(container_rules.get('packageRules', []))} container image rules")
+          except FileNotFoundError:
+              print("⚠ No container image rules found, skipping")
+
+          # Read generated Dockerfile OS-level package rules
+          dockerfile_rules = {}
+          try:
+              with open('security-tooling/generated/renovate-dockerfile-regex.json') as f:
+                  dockerfile_rules = json.load(f)
+                  print(f"✓ Found {len(dockerfile_rules.get('regexManagers', []))} Dockerfile regex managers")
+                  print(f"✓ Found {len(dockerfile_rules.get('packageRules', []))} Dockerfile package rules")
+          except FileNotFoundError:
+              print("⚠ No Dockerfile rules found, skipping")
+
+          # Read generated base image upgrade rules
+          base_image_upgrade_rules = {}
+          try:
+              with open('security-tooling/generated/renovate-base-image-upgrades.json') as f:
+                  base_image_upgrade_rules = json.load(f)
+                  print(f"✓ Found {len(base_image_upgrade_rules.get('regexManagers', []))} base image upgrade regex managers")
+                  print(f"✓ Found {len(base_image_upgrade_rules.get('packageRules', []))} base image upgrade package rules")
+          except FileNotFoundError:
+              print("⚠ No base image upgrade rules found, skipping")
 
           # Read generated reviewer assignments
           reviewer_rules = {}
@@ -122,7 +179,7 @@ jobs:
           except FileNotFoundError:
               print("⚠ No reviewer config found, skipping reviewer assignment")
 
-          # Merge Black Duck rules with reviewer assignments
+          # Merge Black Duck package rules with reviewer assignments
           final_rules = []
           for bd_rule in blackduck_rules.get('packageRules', []):
               # Get package name from rule
@@ -138,6 +195,27 @@ jobs:
 
               final_rules.append(bd_rule)
 
+          # Add container image rules (these already have reviewers from scan_container_images.py)
+          final_rules.extend(container_rules.get('packageRules', []))
+
+          # Add Dockerfile OS-level package rules
+          final_rules.extend(dockerfile_rules.get('packageRules', []))
+
+          # Add base image upgrade package rules
+          final_rules.extend(base_image_upgrade_rules.get('packageRules', []))
+
+          # Merge Dockerfile regex managers into base config
+          if dockerfile_rules.get('regexManagers'):
+              if 'regexManagers' not in merged:
+                  merged['regexManagers'] = []
+              merged['regexManagers'].extend(dockerfile_rules.get('regexManagers', []))
+
+          # Merge base image upgrade regex managers into base config
+          if base_image_upgrade_rules.get('regexManagers'):
+              if 'regexManagers' not in merged:
+                  merged['regexManagers'] = []
+              merged['regexManagers'].extend(base_image_upgrade_rules.get('regexManagers', []))
+
           # Add merged package rules
           merged['packageRules'].extend(final_rules)
 
@@ -147,12 +225,40 @@ jobs:
 
           print("✓ Merged Black Duck rules and reviewer assignments into Renovate configuration")
           print(f"✓ Total package rules: {len(merged['packageRules'])}")
+          print(f"  - Package rules (go/npm): {len(blackduck_rules.get('packageRules', []))}")
+          print(f"  - Container image rules: {len(container_rules.get('packageRules', []))}")
+          print(f"  - Dockerfile OS-level rules: {len(dockerfile_rules.get('packageRules', []))}")
+          print(f"  - Base image upgrade rules: {len(base_image_upgrade_rules.get('packageRules', []))}")
+          print(f"✓ Total regex managers: {len(merged.get('regexManagers', []))}")
           PYTHON
 
               echo "Using merged configuration with dynamic Black Duck rules"
             else
               echo "Warning: Failed to generate Black Duck rules, using base renovate.json"
               cp renovate.json renovate-merged.json
+            fi
+
+            # Create GitHub Issues for unfixable vulnerabilities
+            if [ -f "security-tooling/generated/github-issues.sh" ]; then
+              echo "Creating GitHub Issues for unfixable vulnerabilities..."
+
+              # Check if there are any unfixable vulnerabilities
+              if [ -f "security-tooling/generated/unfixable-vulnerabilities.json" ]; then
+                unfixable_count=$(jq -r '.unfixable_count' security-tooling/generated/unfixable-vulnerabilities.json)
+
+                if [ "$unfixable_count" -gt 0 ]; then
+                  echo "Found $unfixable_count unfixable vulnerability(ies)"
+
+                  # Run the GitHub issue creation script
+                  bash security-tooling/generated/github-issues.sh || {
+                    echo "⚠️ Warning: Some GitHub issues may have failed to create"
+                  }
+
+                  echo "✅ Completed GitHub Issue creation for unfixable vulnerabilities"
+                else
+                  echo "✅ No unfixable vulnerabilities to create issues for"
+                fi
+              fi
             fi
           else
             echo "No Black Duck report found, using base renovate.json"

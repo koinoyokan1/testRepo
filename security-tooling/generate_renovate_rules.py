@@ -4,10 +4,28 @@ Generate Renovate package rules from Black Duck vulnerability findings.
 
 This script reads Black Duck JSON reports and generates Renovate configuration
 that creates separate PRs for each vulnerability fix.
+
+Vulnerabilities without a fix (no recommended_version or fixed_versions) are
+filtered out and should be handled by create_github_issues.py instead.
 """
 
 import json
 import sys
+import os
+
+
+def is_fixable(vuln):
+    """Check if a vulnerability has a fix available"""
+    recommended_version = vuln.get('recommended_version')
+    fixed_versions = vuln.get('fixed_versions', [])
+
+    # Has fix if recommended_version exists or fixed_versions is non-empty
+    if recommended_version and recommended_version not in [None, '', 'unknown']:
+        return True
+    if fixed_versions and len(fixed_versions) > 0:
+        return True
+
+    return False
 
 
 def generate_package_rule_from_vuln(vuln, index):
@@ -94,15 +112,48 @@ def generate_package_rule_from_vuln(vuln, index):
 
 
 def process_report_format(filename="security-tooling/blackduck_report.json"):
-    """Process full report format"""
+    """Process full report format, filtering out unfixable vulnerabilities and OS-level packages"""
     try:
         with open(filename) as f:
             report = json.load(f)
-        
+
         rules = []
+        skipped_unfixable = []
+        skipped_os_level = []
+
         for idx, vuln in enumerate(report.get('vulnerabilities', [])):
+            ecosystem = vuln.get('ecosystem', 'go')
+
+            # Skip unfixable vulnerabilities (they'll be handled by create_github_issues.py)
+            if not is_fixable(vuln):
+                skipped_unfixable.append(vuln)
+                continue
+
+            # Skip OS-level packages (they'll be handled by Dockerfile regex manager)
+            # OS-level packages have ecosystems like 'alpine', 'debian', 'rhel', 'ubuntu'
+            if ecosystem in ['alpine', 'debian', 'rhel', 'ubuntu', 'centos', 'fedora']:
+                skipped_os_level.append(vuln)
+                continue
+
+            # Skip container ecosystem (handled separately by scan_container_images.py)
+            if ecosystem == 'container':
+                continue
+
             rules.append(generate_package_rule_from_vuln(vuln, idx))
-        
+
+        # Print summary
+        if skipped_unfixable:
+            print(f"\n⚠️  Skipped {len(skipped_unfixable)} unfixable vulnerability(ies):")
+            for v in skipped_unfixable:
+                print(f"   - {v.get('vulnerability_id')} in {v.get('component')}")
+            print("   These will be handled by create_github_issues.py")
+
+        if skipped_os_level:
+            print(f"\n📦 Skipped {len(skipped_os_level)} OS-level package(s):")
+            for v in skipped_os_level:
+                print(f"   - {v.get('component')} ({v.get('ecosystem')}) in {v.get('file_path')}")
+            print("   These will be handled by Dockerfile regex manager")
+
         return rules
     except FileNotFoundError:
         return []

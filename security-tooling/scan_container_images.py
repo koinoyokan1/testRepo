@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 """
-Scan container images from image_versions.json and find vulnerabilities from Black Duck report.
+Scan container images from docker-compose.yml and Dockerfiles, find vulnerabilities from Black Duck report.
 Generates Renovate rules for container image updates.
+
+- Prebuilt images: Tracked in image_map.json and updated by Renovate's docker datasource
+- Custom images: Detected from Dockerfiles and docker-compose.yml with build contexts
+
+Vulnerabilities without a fix (no recommended_version or fixed_versions) are
+filtered out and should be handled by create_github_issues.py instead.
 
 Usage:
     python3 security-tooling/scan_container_images.py
@@ -9,19 +15,74 @@ Usage:
 
 import json
 import sys
+import os
+import re
+import yaml
 from collections import defaultdict
 
 
-def load_image_versions(filepath="image_versions.json"):
-    """Load image versions configuration"""
-    with open(filepath, 'r') as f:
-        return json.load(f)
+def is_fixable(vuln):
+    """Check if a vulnerability has a fix available"""
+    recommended_version = vuln.get('recommended_version')
+    fixed_versions = vuln.get('fixed_versions', [])
+
+    # Has fix if recommended_version exists or fixed_versions is non-empty
+    if recommended_version and recommended_version not in [None, '', 'unknown']:
+        return True
+    if fixed_versions and len(fixed_versions) > 0:
+        return True
+
+    return False
+
+
+def load_docker_compose(filepath="docker-compose.yml"):
+    """Load docker-compose.yml to find custom images"""
+    try:
+        with open(filepath, 'r') as f:
+            return yaml.safe_load(f)
+    except FileNotFoundError:
+        return None
 
 
 def load_blackduck_report(filepath="security-tooling/blackduck_report.json"):
     """Load Black Duck vulnerability report"""
     with open(filepath, 'r') as f:
         return json.load(f)
+
+
+def extract_custom_images_from_compose(compose_data):
+    """Extract custom images from docker-compose.yml"""
+    custom_images = {}
+
+    if not compose_data or 'services' not in compose_data:
+        return custom_images
+
+    for service_name, service_config in compose_data.get('services', {}).items():
+        # Check if service has a build context (custom image)
+        if 'build' in service_config:
+            image_name = service_config.get('image', service_name)
+            build_config = service_config['build']
+
+            if isinstance(build_config, dict):
+                context = build_config.get('context', '.')
+                dockerfile = build_config.get('dockerfile', 'Dockerfile')
+            else:
+                context = build_config
+                dockerfile = 'Dockerfile'
+
+            dockerfile_path = os.path.join(context, dockerfile).replace('./', '')
+
+            # Extract owner from comments if available
+            owner = 'devops-team@company.com'  # default
+
+            custom_images[image_name] = {
+                'dockerfile': dockerfile_path,
+                'context': context,
+                'owner': owner,
+                'service_name': service_name
+            }
+
+    return custom_images
 
 
 def find_image_vulnerabilities(blackduck_report):
@@ -37,18 +98,33 @@ def find_image_vulnerabilities(blackduck_report):
     return image_vulns
 
 
-def get_image_owner(image_config, image_name, image_type):
-    """Get owner for an image"""
-    if image_type == 'prebuilt':
-        return image_config['prebuilt_images'].get(image_name, {}).get('owner', 'platform-team@company.com')
-    else:
-        return image_config['custom_images'].get(image_name, {}).get('owner', 'devops-team@company.com')
+def get_image_owner_from_compose(compose_file="docker-compose.yml"):
+    """Extract owner from docker-compose.yml comments"""
+    owners = {}
+
+    try:
+        with open(compose_file, 'r') as f:
+            current_service = None
+            for line in f:
+                # Detect service name
+                if line.strip() and not line.strip().startswith('#') and ':' in line:
+                    parts = line.split(':')
+                    if len(parts) == 2 and not line.startswith(' '):
+                        current_service = parts[0].strip()
+
+                # Extract owner from comment
+                if '# Owner:' in line and current_service:
+                    owner = line.split('# Owner:')[1].strip()
+                    owners[current_service] = owner
+    except FileNotFoundError:
+        pass
+
+    return owners
 
 
-def generate_renovate_rule_for_image(image_name, image_data, vulns, image_type):
-    """Generate a Renovate package rule for a container image"""
+def generate_renovate_rule_for_custom_image(image_name, image_data, vulns):
+    """Generate a Renovate package rule for a custom container image"""
 
-    current_version = image_data.get('tag', '')
     recommended_version = vulns[0]['recommended_version'] if vulns else None
 
     if not recommended_version:
@@ -59,36 +135,34 @@ def generate_renovate_rule_for_image(image_name, image_data, vulns, image_type):
     severity_list = [v['severity'] for v in vulns]
     highest_severity = 'HIGH' if 'HIGH' in severity_list else ('MEDIUM' if 'MEDIUM' in severity_list else 'LOW')
 
+    # Extract base image from vulns
+    base_image = vulns[0].get('base_image', 'unknown')
+    dockerfile = image_data.get('dockerfile', 'Dockerfile')
+
     # Create rule description
     if len(cve_list) == 1:
-        description = f"Black Duck - {image_name} {cve_list[0]} ({highest_severity})"
+        description = f"Black Duck - {image_name} {cve_list[0]} ({highest_severity}) - Custom Image"
     else:
-        description = f"Black Duck - {image_name} multiple CVEs ({highest_severity})"
+        description = f"Black Duck - {image_name} multiple CVEs ({highest_severity}) - Custom Image"
 
     # Build PR title
     if len(cve_list) == 1:
-        pr_title = f"fix(security): update {image_name} to {recommended_version} to fix {cve_list[0]}"
+        pr_title = f"fix(security): rebuild {image_name} to fix {cve_list[0]} in base image"
     else:
-        pr_title = f"fix(security): update {image_name} to {recommended_version} to fix {len(cve_list)} CVEs"
+        pr_title = f"fix(security): rebuild {image_name} to fix {len(cve_list)} CVEs in base image"
 
     # Build PR body notes
     pr_body = [
-        f"### 🔒 Security Update - Container Image ({image_type.upper()})",
+        "### 🔒 Security Update - Custom Container Image",
         "",
-        f"**Image**: {image_data.get('full_image', image_name)}",
-        f"**Current Version**: {current_version}",
-        f"**Recommended Version**: {recommended_version}",
+        f"**Image**: {image_name}",
+        f"**Base Image**: {base_image}",
+        f"**Recommended Base**: Update to {base_image.split(':')[0]}:{recommended_version}",
+        f"**Dockerfile**: {dockerfile}",
         ""
     ]
 
-    if image_type == 'custom':
-        pr_body.extend([
-            f"**Base Image**: {image_data.get('base_image', 'N/A')}",
-            f"**Dockerfile**: {image_data.get('dockerfile', 'N/A')}",
-            ""
-        ])
-
-    pr_body.append("**Vulnerabilities Fixed**:")
+    pr_body.append("**Vulnerabilities in Base Image:**")
     pr_body.append("")
 
     for vuln in vulns:
@@ -100,25 +174,23 @@ def generate_renovate_rule_for_image(image_name, image_data, vulns, image_type):
         ])
 
     pr_body.extend([
-        f"**Remediation**: {vulns[0]['remediation']}",
+        "**Remediation Steps**:",
+        "",
+        f"1. Update the FROM statement in `{dockerfile}`",
+        f"2. Change base image to: `{base_image.split(':')[0]}:{recommended_version}`",
+        "3. Rebuild the container image",
+        "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**File to Update**: `image_versions.json`"
-    ])
-
-    if image_type == 'custom':
-        pr_body.append("**Action Required**: Rebuild container image with updated base image")
-
-    pr_body.extend([
+        f"**Files to Update**: `{dockerfile}`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
     ])
 
     rule = {
         "description": description,
-        "matchFileNames": ["image_versions.json"],
-        "matchPackageNames": [image_name],
+        "matchFileNames": [dockerfile, "docker-compose.yml"],
         "enabled": True,
         "prTitle": pr_title,
         "prBodyNotes": pr_body,
@@ -127,7 +199,7 @@ def generate_renovate_rule_for_image(image_name, image_data, vulns, image_type):
             f"{highest_severity.lower()}-priority",
             "blackduck",
             "container-image",
-            image_type
+            "custom-image"
         ] + [cve.lower() for cve in cve_list],
         "reviewers": [image_data.get('owner', 'devops-team@company.com')]
     }
@@ -137,88 +209,128 @@ def generate_renovate_rule_for_image(image_name, image_data, vulns, image_type):
 
 def main():
     print("=" * 70)
-    print("CONTAINER IMAGE VULNERABILITY SCANNER")
+    print("CUSTOM CONTAINER IMAGE VULNERABILITY SCANNER")
     print("=" * 70)
     print()
 
     # Load configurations
-    image_config = load_image_versions()
+    compose_data = load_docker_compose()
     blackduck_report = load_blackduck_report()
+    owners = get_image_owner_from_compose()
 
-    # Find image vulnerabilities
+    # Find image vulnerabilities (only custom images - prebuilt are in image_map.json)
     image_vulns = find_image_vulnerabilities(blackduck_report)
 
     if not image_vulns:
-        print("✅ No container image vulnerabilities found!")
+        print("✅ No custom container image vulnerabilities found!")
+        print("   (Prebuilt images are tracked in image_map.json)")
         return 0
 
-    print(f"Found vulnerabilities in {len(image_vulns)} container image(s)")
+    # Extract custom images from docker-compose
+    custom_images = extract_custom_images_from_compose(compose_data)
+
+    # Update owners from compose file comments
+    for service_name, owner in owners.items():
+        for image_name, image_data in custom_images.items():
+            if image_data['service_name'] == service_name:
+                image_data['owner'] = owner
+
+    # Filter for custom images only
+    custom_image_vulns = {}
+    for image_name, vulns in image_vulns.items():
+        # Check if this is a custom image (contains company domain or matches compose)
+        if 'ghcr.io/company' in image_name or image_name in custom_images:
+            custom_image_vulns[image_name] = vulns
+
+    if not custom_image_vulns:
+        print("✅ No custom image vulnerabilities found!")
+        print(f"   Total vulnerabilities: {len(image_vulns)} (all in prebuilt images)")
+        print("   Prebuilt image vulnerabilities are handled by image_map.json Renovate updates")
+        return 0
+
+    print(f"Found vulnerabilities in {len(custom_image_vulns)} custom image(s)")
+    print(f"   (Skipping {len(image_vulns) - len(custom_image_vulns)} prebuilt images tracked in image_map.json)")
     print()
 
-    # Generate Renovate rules
+    # Filter out unfixable vulnerabilities
+    skipped_unfixable = []
+    fixable_image_vulns = {}
+
+    for image_name, vulns in custom_image_vulns.items():
+        fixable_vulns = [v for v in vulns if is_fixable(v)]
+        unfixable_vulns = [v for v in vulns if not is_fixable(v)]
+
+        if fixable_vulns:
+            fixable_image_vulns[image_name] = fixable_vulns
+
+        if unfixable_vulns:
+            skipped_unfixable.extend(unfixable_vulns)
+
+    if skipped_unfixable:
+        print(f"⚠️  Found {len(skipped_unfixable)} unfixable custom image vulnerability(ies):")
+        for v in skipped_unfixable:
+            print(f"   - {v.get('vulnerability_id')} in {v.get('component')}")
+        print("   These will be handled by create_github_issues.py\n")
+
+    # Generate Renovate rules for custom images
     renovate_rules = []
 
-    # Process prebuilt images
-    for image_name, vulns in image_vulns.items():
-        # Check if it's a prebuilt image
-        if image_name in image_config.get('prebuilt_images', {}):
-            image_data = image_config['prebuilt_images'][image_name]
-            print(f"📦 {image_name} (PREBUILT)")
-            print(f"   Current: {image_data['tag']}")
-            print(f"   Owner: {image_data['owner']}")
-            print(f"   CVEs: {len(vulns)}")
-            for v in vulns:
-                print(f"     - {v['vulnerability_id']} ({v['severity']})")
-
-            rule = generate_renovate_rule_for_image(image_name, image_data, vulns, 'prebuilt')
-            if rule:
-                renovate_rules.append(rule)
-            print()
-
     # Process custom images
-    for image_name, vulns in image_vulns.items():
-        # Extract just the image name from full path
-        short_name = image_name.split('/')[-1] if '/' in image_name else image_name
+    for image_name, vulns in fixable_image_vulns.items():
+        # Find matching custom image data
+        image_data = None
+        for custom_name, custom_data in custom_images.items():
+            if custom_name == image_name or image_name.endswith('/' + custom_name):
+                image_data = custom_data
+                break
 
-        if short_name in image_config.get('custom_images', {}):
-            image_data = image_config['custom_images'][short_name]
-            print(f"🔨 {short_name} (CUSTOM)")
-            print(f"   Full Image: {image_data['full_image']}")
-            print(f"   Current: {image_data['tag']}")
-            print(f"   Base Image: {image_data['base_image']}")
-            print(f"   Owner: {image_data['owner']}")
-            print(f"   CVEs: {len(vulns)}")
-            for v in vulns:
-                print(f"     - {v['vulnerability_id']} ({v['severity']})")
+        if not image_data:
+            # Create minimal data if not found in compose
+            image_data = {
+                'dockerfile': 'Dockerfile',
+                'owner': 'devops-team@company.com',
+                'service_name': image_name.split('/')[-1]
+            }
 
-            rule = generate_renovate_rule_for_image(short_name, image_data, vulns, 'custom')
-            if rule:
-                renovate_rules.append(rule)
-            print()
+        print(f"🔨 {image_name} (CUSTOM)")
+        print(f"   Dockerfile: {image_data['dockerfile']}")
+        print(f"   Owner: {image_data['owner']}")
+        print(f"   CVEs: {len(vulns)}")
+        for v in vulns:
+            print(f"     - {v['vulnerability_id']} ({v['severity']})")
+
+        rule = generate_renovate_rule_for_custom_image(image_name, image_data, vulns)
+        if rule:
+            renovate_rules.append(rule)
+        print()
 
     # Generate output
     output = {
         "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-        "description": "Auto-generated from Black Duck container image scan findings",
+        "description": "Auto-generated custom container image rules from Black Duck",
         "packageRules": renovate_rules
     }
 
     # Save to file
+    os.makedirs("security-tooling/generated", exist_ok=True)
     output_file = "security-tooling/generated/renovate-container-images.json"
     with open(output_file, 'w') as f:
         json.dump(output, f, indent=2)
 
     print("=" * 70)
-    print(f"✅ Generated {len(renovate_rules)} Renovate rule(s)")
+    print(f"✅ Generated {len(renovate_rules)} Renovate rule(s) for custom images")
     print(f"📁 Saved to: {output_file}")
     print("=" * 70)
     print()
 
     # Print summary
     print("📊 Summary:")
-    print(f"  • Total vulnerable images: {len(image_vulns)}")
-    print(f"  • Total CVEs: {sum(len(v) for v in image_vulns.values())}")
+    print(f"  • Custom images with vulnerabilities: {len(fixable_image_vulns)}")
+    print(f"  • Total CVEs in custom images: {sum(len(v) for v in fixable_image_vulns.values())}")
     print(f"  • Renovate rules generated: {len(renovate_rules)}")
+    print()
+    print("ℹ️  Note: Prebuilt images (nginx, postgres, redis, etc.) are tracked in image_map.json")
+    print("   and updated automatically by Renovate's docker datasource.")
     print()
 
     return 0

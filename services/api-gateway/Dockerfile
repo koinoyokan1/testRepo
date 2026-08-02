@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o api-gateway .
 
 # Final stage
 FROM alpine:latest
-RUN apk --no-cache add ca-certificates
+RUN apk --no-cache add ca-certificates openssl=3.0.7-r0 curl=7.88.0-r0
 WORKDIR /root/
 
 COPY --from=builder /app/api-gateway .
