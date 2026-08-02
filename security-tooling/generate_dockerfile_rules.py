@@ -85,17 +85,18 @@ def generate_dockerfile_rule(vuln):
             f"RUN\\s+{package_manager}\\s+(?:add|install)\\s+.*?{component}=(?<currentValue>[^\\s]+)"
         ],
         "depNameTemplate": component,
-        "datasourceTemplate": "repology",
+        "datasourceTemplate": "repology-repology",
         "versioningTemplate": "loose",
-        "packageNameTemplate": f"{ecosystem}/{component}",
+        "packageNameTemplate": f"{ecosystem}:{component}",
+        "extractVersionTemplate": "^(?<version>.+)$",
         "enabled": True
     }
     
     # Generate a packageRule for this specific package
     package_rule = {
         "description": f"Black Duck - {cve} ({severity}) - {component} in {file_path}",
-        "matchDatasources": ["repology"],
-        "matchPackageNames": [f"{ecosystem}/{component}"],
+        "matchDatasources": ["repology-repology"],
+        "matchPackageNames": [f"{ecosystem}:{component}"],
         "matchFileNames": [file_path],
         "allowedVersions": f">={recommended_version}",
         "enabled": True,

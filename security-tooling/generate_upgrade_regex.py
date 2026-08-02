@@ -83,9 +83,10 @@ def generate_regex_manager(patch_info):
             "fileMatch": [f"^{escaped_filepath}$"],
             "matchStrings": [match_pattern],
             "depNameTemplate": component,
-            "datasourceTemplate": "repology",
+            "datasourceTemplate": "repology-repology",
             "versioningTemplate": "loose",
-            "packageNameTemplate": f"{ecosystem}/{component}",
+            "packageNameTemplate": f"{ecosystem}:{component}",
+            "extractVersionTemplate": "^(?<version>.+)$",
             "enabled": True
         }
         
@@ -119,8 +120,8 @@ def generate_package_rules(patch_info):
         
         package_rule = {
             "description": f"Black Duck - {cve} ({severity}) - Base image {component}",
-            "matchDatasources": ["repology"],
-            "matchPackageNames": [f"{ecosystem}/{component}"],
+            "matchDatasources": ["repology-repology"],
+            "matchPackageNames": [f"{ecosystem}:{component}"],
             "matchFileNames": [filepath],
             "allowedVersions": f">={recommended_version}",
             "enabled": True,

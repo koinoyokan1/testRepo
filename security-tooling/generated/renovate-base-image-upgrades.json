@@ -11,9 +11,10 @@
         "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?busybox=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "busybox",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/busybox",
+      "packageNameTemplate": "alpine:busybox",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -25,9 +26,10 @@
         "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?ca-certificates=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "ca-certificates",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/ca-certificates",
+      "packageNameTemplate": "alpine:ca-certificates",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -39,9 +41,10 @@
         "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?musl=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "musl",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/musl",
+      "packageNameTemplate": "alpine:musl",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -53,9 +56,10 @@
         "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?alpine-baselayout=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "alpine-baselayout",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/alpine-baselayout",
+      "packageNameTemplate": "alpine:alpine-baselayout",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     }
   ],
@@ -63,10 +67,10 @@
     {
       "description": "Black Duck - CVE-2024-66666 (MEDIUM) - Base image busybox",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/busybox"
+        "alpine:busybox"
       ],
       "matchFileNames": [
         "services/api-gateway/Dockerfile"
@@ -104,10 +108,10 @@
     {
       "description": "Black Duck - CVE-2024-44444 (MEDIUM) - Base image ca-certificates",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/ca-certificates"
+        "alpine:ca-certificates"
       ],
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
@@ -145,10 +149,10 @@
     {
       "description": "Black Duck - CVE-2024-55555 (HIGH) - Base image musl",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/musl"
+        "alpine:musl"
       ],
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
@@ -186,10 +190,10 @@
     {
       "description": "Black Duck - CVE-2024-77777 (LOW) - Base image alpine-baselayout",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/alpine-baselayout"
+        "alpine:alpine-baselayout"
       ],
       "matchFileNames": [
         "services/auth/Dockerfile"

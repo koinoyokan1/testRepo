@@ -11,9 +11,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?openssl=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "openssl",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/openssl",
+      "packageNameTemplate": "alpine:openssl",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -25,9 +26,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?curl=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "curl",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/curl",
+      "packageNameTemplate": "alpine:curl",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -39,9 +41,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?libssl3=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "libssl3",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/libssl3",
+      "packageNameTemplate": "alpine:libssl3",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -53,9 +56,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?libcrypto3=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "libcrypto3",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/libcrypto3",
+      "packageNameTemplate": "alpine:libcrypto3",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -67,9 +71,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?git=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "git",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/git",
+      "packageNameTemplate": "alpine:git",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -81,9 +86,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?ca-certificates=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "ca-certificates",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/ca-certificates",
+      "packageNameTemplate": "alpine:ca-certificates",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -95,9 +101,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?musl=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "musl",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/musl",
+      "packageNameTemplate": "alpine:musl",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -109,9 +116,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?busybox=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "busybox",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/busybox",
+      "packageNameTemplate": "alpine:busybox",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     },
     {
@@ -123,9 +131,10 @@
         "RUN\\s+apk\\s+(?:add|install)\\s+.*?alpine-baselayout=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "alpine-baselayout",
-      "datasourceTemplate": "repology",
+      "datasourceTemplate": "repology-repology",
       "versioningTemplate": "loose",
-      "packageNameTemplate": "alpine/alpine-baselayout",
+      "packageNameTemplate": "alpine:alpine-baselayout",
+      "extractVersionTemplate": "^(?<version>.+)$",
       "enabled": true
     }
   ],
@@ -133,10 +142,10 @@
     {
       "description": "Black Duck - CVE-2023-0464 (HIGH) - openssl in services/api-gateway/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/openssl"
+        "alpine:openssl"
       ],
       "matchFileNames": [
         "services/api-gateway/Dockerfile"
@@ -173,10 +182,10 @@
     {
       "description": "Black Duck - CVE-2023-28321 (MEDIUM) - curl in services/api-gateway/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/curl"
+        "alpine:curl"
       ],
       "matchFileNames": [
         "services/api-gateway/Dockerfile"
@@ -213,10 +222,10 @@
     {
       "description": "Black Duck - CVE-2023-2650 (MEDIUM) - libssl3 in services/web-frontend/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/libssl3"
+        "alpine:libssl3"
       ],
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
@@ -253,10 +262,10 @@
     {
       "description": "Black Duck - CVE-2023-2650 (MEDIUM) - libcrypto3 in services/web-frontend/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/libcrypto3"
+        "alpine:libcrypto3"
       ],
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
@@ -293,10 +302,10 @@
     {
       "description": "Black Duck - CVE-2024-33333 (HIGH) - git in services/auth/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/git"
+        "alpine:git"
       ],
       "matchFileNames": [
         "services/auth/Dockerfile"
@@ -333,10 +342,10 @@
     {
       "description": "Black Duck - CVE-2024-44444 (MEDIUM) - ca-certificates in services/web-frontend/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/ca-certificates"
+        "alpine:ca-certificates"
       ],
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
@@ -373,10 +382,10 @@
     {
       "description": "Black Duck - CVE-2024-55555 (HIGH) - musl in services/web-frontend/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/musl"
+        "alpine:musl"
       ],
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
@@ -413,10 +422,10 @@
     {
       "description": "Black Duck - CVE-2024-66666 (MEDIUM) - busybox in services/api-gateway/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/busybox"
+        "alpine:busybox"
       ],
       "matchFileNames": [
         "services/api-gateway/Dockerfile"
@@ -453,10 +462,10 @@
     {
       "description": "Black Duck - CVE-2024-77777 (LOW) - alpine-baselayout in services/auth/Dockerfile",
       "matchDatasources": [
-        "repology"
+        "repology-repology"
       ],
       "matchPackageNames": [
-        "alpine/alpine-baselayout"
+        "alpine:alpine-baselayout"
       ],
       "matchFileNames": [
         "services/auth/Dockerfile"
