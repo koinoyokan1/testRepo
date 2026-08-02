@@ -1,6 +1,6 @@
 # Base image - VULNERABLE: CVE-2022-41716 (HIGH)
 # Recommended: golang:1.21.5-alpine
-FROM golang:1.19.0-alpine AS builder
+FROM golang:1.26.5-alpine AS builder
 
 WORKDIR /app
 
