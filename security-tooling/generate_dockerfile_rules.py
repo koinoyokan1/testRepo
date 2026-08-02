@@ -150,12 +150,22 @@ def generate_dockerfile_rule(vuln, ownership_config=None):
     # Pattern matches: package_name=version (with optional whitespace)
     regex_pattern = f'"({component})=([^\\s]+)"'
     
+    # Build flexible regex pattern that handles apk flags like --no-cache, --update, etc.
+    # Pattern: RUN apk [flags] add/install [flags] ... package=version
+    if package_manager == 'apk':
+        match_pattern = f"RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?{component}=(?<currentValue>[^\\s]+)"
+    elif package_manager == 'apt':
+        match_pattern = f"RUN\\s+apt-get\\s+[^\\n]*?install[^\\n]*?{component}=(?<currentValue>[^\\s]+)"
+    elif package_manager == 'yum':
+        match_pattern = f"RUN\\s+yum\\s+[^\\n]*?install[^\\n]*?{component}-(?<currentValue>[^\\s]+)"
+    else:
+        # Fallback to generic pattern
+        match_pattern = f"RUN\\s+{package_manager}\\s+[^\\n]*?(?:add|install)[^\\n]*?{component}[=-](?<currentValue>[^\\s]+)"
+
     rule = {
         "description": f"Black Duck - {cve} ({severity}) - {ecosystem} package in Dockerfile",
         "fileMatch": [f"^{dockerfile_pattern}$"],
-        "matchStrings": [
-            f"RUN\\s+{package_manager}\\s+(?:add|install)\\s+.*?{component}=(?<currentValue>[^\\s]+)"
-        ],
+        "matchStrings": [match_pattern],
         "depNameTemplate": component,
         "datasourceTemplate": "repology-repology",
         "versioningTemplate": "loose",

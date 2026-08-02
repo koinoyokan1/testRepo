@@ -130,16 +130,18 @@ def generate_regex_manager(patch_info):
         if not component or not recommended_version:
             continue
         
-        # Create regex pattern for this package
+        # Create flexible regex pattern for base image package upgrades
+        # These patterns handle various flag combinations
         if package_manager == 'apk':
-            # Match: RUN apk upgrade --no-cache ... component=version ...
-            match_pattern = f"RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?{component}=(?<currentValue>[^\\s]+)"
+            # Match: RUN apk upgrade [flags] ... component=version ...
+            # Handles: --no-cache, --update, or any other flags
+            match_pattern = f"RUN\\s+apk\\s+[^\\n]*?upgrade[^\\n]*?{component}=(?<currentValue>[^\\s]+)"
         elif package_manager == 'apt':
-            # Match: RUN apt-get install --only-upgrade ... component=version ...
-            match_pattern = f"RUN\\s+apt-get\\s+install\\s+.*?--only-upgrade\\s+.*?{component}=(?<currentValue>[^\\s]+)"
+            # Match: RUN apt-get install [flags] --only-upgrade [flags] ... component=version ...
+            match_pattern = f"RUN\\s+apt-get\\s+[^\\n]*?install[^\\n]*?--only-upgrade[^\\n]*?{component}=(?<currentValue>[^\\s]+)"
         elif package_manager == 'yum':
-            # Match: RUN yum update -y ... component-version ...
-            match_pattern = f"RUN\\s+yum\\s+update\\s+-y\\s+.*?{component}-(?<currentValue>[^\\s]+)"
+            # Match: RUN yum update [flags] ... component-version ...
+            match_pattern = f"RUN\\s+yum\\s+[^\\n]*?update[^\\n]*?{component}-(?<currentValue>[^\\s]+)"
         else:
             continue
         
