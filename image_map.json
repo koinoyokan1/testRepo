@@ -1,14 +1,14 @@
 {
     "nginx": {
-        "origin_image": "nginx:1.21.0",
+        "origin_image": "nginx:1.31.3",
         "purpose": "Web server and reverse proxy"
     },
     "postgres": {
-        "origin_image": "postgres:13.2",
+        "origin_image": "postgres:13.23",
         "purpose": "Primary database"
     },
     "redis": {
-        "origin_image": "redis:6.0.9",
+        "origin_image": "redis:6.2.23",
         "purpose": "Cache and session store"
     },
     "node": {
@@ -16,11 +16,11 @@
         "purpose": "Base image for Node.js services"
     },
     "golang": {
-        "origin_image": "golang:1.19.0-alpine",
+        "origin_image": "golang:1.26.5-alpine",
         "purpose": "Base image for Go services"
     },
     "mysql": {
-        "origin_image": "mysql:8.0.0",
+        "origin_image": "mysql:8.4.11",
         "purpose": "Alternative database for legacy apps"
     },
     "memcached": {
@@ -28,11 +28,11 @@
         "purpose": "Distributed memory caching"
     },
     "red/config": {
-        "origin_image": "quay.io/coreos/etcd:v3.5.30",
+        "origin_image": "quay.io/coreos/etcd:v3.7.1",
         "red_version": "1.0.2"
     },
     "red/healthdb": {
-        "origin_image": "mongo:8.0.26",
+        "origin_image": "mongo:8.3.7",
         "red_version": "1.1.1"
     },
     "red/message": {
@@ -40,7 +40,7 @@
         "red_version": "1.1.0"
     },
     "red/proxy": {
-        "origin_image": "nginx:1.30.2",
+        "origin_image": "nginx:1.31.3",
         "red_version": "1.0.2"
     },
     "red/images": {
@@ -52,11 +52,11 @@
         "red_version": "1.0.5"
     },
     "red/telemetry": {
-        "origin_image": "otel/opentelemetry-collector-contrib:0.153.0",
+        "origin_image": "otel/opentelemetry-collector-contrib:0.157.0",
         "red_version": "1.1.1"
     },
     "red/nodeexp": {
-        "origin_image": "prom/node-exporter:v1.11.1",
+        "origin_image": "prom/node-exporter:v1.12.1",
         "red_version": "1.0.1"
     },
     "red/alertmanager": {
@@ -64,11 +64,11 @@
         "red_version": "1.1.2"
     },
     "red/metricsdb": {
-        "origin_image": "victoriametrics/victoria-metrics:v1.144.0",
+        "origin_image": "victoriametrics/victoria-metrics:v1.148.0",
         "red_version": "1.2.1"
     },
     "red/alertagent": {
-        "origin_image": "victoriametrics/vmalert:v1.144.0",
+        "origin_image": "victoriametrics/vmalert:v1.148.0",
         "red_version": "1.2.1"
     }
 }
