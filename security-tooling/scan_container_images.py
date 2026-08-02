@@ -105,12 +105,22 @@ def get_image_owner_from_compose(compose_file="docker-compose.yml"):
     try:
         with open(compose_file, 'r') as f:
             current_service = None
+            in_services_block = False
             for line in f:
-                # Detect service name
-                if line.strip() and not line.strip().startswith('#') and ':' in line:
-                    parts = line.split(':')
-                    if len(parts) == 2 and not line.startswith(' '):
-                        current_service = parts[0].strip()
+                stripped = line.strip()
+
+                # Track if we're in the services block
+                if stripped == 'services:':
+                    in_services_block = True
+                    continue
+
+                # Detect service name (must be in services block, indented by 2 spaces, no leading spaces in stripped)
+                if in_services_block and line.startswith('  ') and not line.startswith('    '):
+                    if ':' in stripped and not stripped.startswith('#'):
+                        service_name = stripped.split(':')[0].strip()
+                        # Skip YAML keys like 'image', 'build', 'ports', etc.
+                        if service_name not in ['image', 'build', 'ports', 'environment', 'container_name', 'volumes', 'depends_on', 'networks']:
+                            current_service = service_name
 
                 # Extract owner from comment
                 if '# Owner:' in line and current_service:
@@ -284,9 +294,17 @@ def main():
     # Process custom images
     for image_name, vulns in fixable_image_vulns.items():
         # Find matching custom image data
+        # Black Duck may report image without version tag, docker-compose has it with tag
         image_data = None
         for custom_name, custom_data in custom_images.items():
-            if custom_name == image_name or image_name.endswith('/' + custom_name):
+            # Match with or without version tag
+            custom_base = custom_name.split(':')[0]  # Remove :version
+            image_base = image_name.split(':')[0]    # Remove :version
+
+            if (custom_name == image_name or
+                custom_base == image_base or
+                image_name.endswith('/' + custom_name) or
+                image_base.endswith('/' + custom_base.split('/')[-1])):
                 image_data = custom_data
                 break
 
@@ -295,7 +313,7 @@ def main():
             image_data = {
                 'dockerfile': 'Dockerfile',
                 'owner': 'devops-team@company.com',
-                'service_name': image_name.split('/')[-1]
+                'service_name': image_name.split('/')[-1].split(':')[0]
             }
 
         print(f"🔨 {image_name} (CUSTOM)")

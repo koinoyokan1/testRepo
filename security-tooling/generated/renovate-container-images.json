@@ -5,10 +5,11 @@
     {
       "description": "Black Duck - ghcr.io/company/api-gateway CVE-2022-41716 (HIGH) - Custom Image",
       "matchFileNames": [
-        "Dockerfile",
+        "services/api-gateway/Dockerfile",
         "docker-compose.yml"
       ],
       "enabled": true,
+      "branchName": "blackduck/custom-image/ghcr-io-company-api-gateway/cve-2022-41716",
       "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/api-gateway to fix CVE-2022-41716 in base image",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Custom Container Image",
@@ -16,7 +17,7 @@
         "**Image**: ghcr.io/company/api-gateway",
         "**Base Image**: golang:1.19.0-alpine",
         "**Recommended Base**: Update to golang:v2.4.1",
-        "**Dockerfile**: Dockerfile",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
         "",
         "**Vulnerabilities in Base Image:**",
         "",
@@ -26,14 +27,14 @@
         "",
         "**Remediation Steps**:",
         "",
-        "1. Update the FROM statement in `Dockerfile`",
+        "1. Update the FROM statement in `services/api-gateway/Dockerfile`",
         "2. Change base image to: `golang:v2.4.1`",
         "3. Rebuild the container image",
         "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**Files to Update**: `Dockerfile`, `docker-compose.yml`",
+        "**Files to Update**: `services/api-gateway/Dockerfile`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
       ],
@@ -46,16 +47,17 @@
         "cve-2022-41716"
       ],
       "reviewers": [
-        "devops-team@company.com"
+        "alice@company.com"
       ]
     },
     {
       "description": "Black Duck - ghcr.io/company/web-frontend CVE-2022-21824 (HIGH) - Custom Image",
       "matchFileNames": [
-        "Dockerfile",
+        "services/web-frontend/Dockerfile",
         "docker-compose.yml"
       ],
       "enabled": true,
+      "branchName": "blackduck/custom-image/ghcr-io-company-web-frontend/cve-2022-21824",
       "prTitle": "Custom container image upgrade: rebuild ghcr.io/company/web-frontend to fix CVE-2022-21824 in base image",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Custom Container Image",
@@ -63,7 +65,7 @@
         "**Image**: ghcr.io/company/web-frontend",
         "**Base Image**: node:16.14.0-alpine",
         "**Recommended Base**: Update to node:v3.3.2",
-        "**Dockerfile**: Dockerfile",
+        "**Dockerfile**: services/web-frontend/Dockerfile",
         "",
         "**Vulnerabilities in Base Image:**",
         "",
@@ -73,14 +75,14 @@
         "",
         "**Remediation Steps**:",
         "",
-        "1. Update the FROM statement in `Dockerfile`",
+        "1. Update the FROM statement in `services/web-frontend/Dockerfile`",
         "2. Change base image to: `node:v3.3.2`",
         "3. Rebuild the container image",
         "4. Update the image reference in `docker-compose.yml`",
         "",
         "---",
         "",
-        "**Files to Update**: `Dockerfile`, `docker-compose.yml`",
+        "**Files to Update**: `services/web-frontend/Dockerfile`, `docker-compose.yml`",
         "",
         "This PR was created based on Black Duck container image scan findings."
       ],
@@ -93,7 +95,7 @@
         "cve-2022-21824"
       ],
       "reviewers": [
-        "devops-team@company.com"
+        "xavier@company.com"
       ]
     }
   ]
