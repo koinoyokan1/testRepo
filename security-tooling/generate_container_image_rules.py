@@ -346,7 +346,7 @@ def main():
 
     # Save to file
     os.makedirs("security-tooling/generated", exist_ok=True)
-    output_file = "security-tooling/generated/renovate-container-images.json"
+    output_file = "security-tooling/generated/renovate-container-image-rules.json"
     with open(output_file, 'w') as f:
         json.dump(output, f, indent=2)
 

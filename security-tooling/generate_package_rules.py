@@ -194,7 +194,7 @@ def main():
     }
     
     # Write to file
-    output_file = "security-tooling/generated/renovate-blackduck-generated.json"
+    output_file = "security-tooling/generated/renovate-package-rules.json"
     with open(output_file, 'w') as f:
         json.dump(renovate_config, f, indent=2)
     

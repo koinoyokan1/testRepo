@@ -151,13 +151,13 @@ jobs:
               merged = json.load(f)
 
           # Read generated Black Duck rules for packages (go/npm)
-          with open('security-tooling/generated/renovate-blackduck-generated.json') as f:
+          with open('security-tooling/generated/renovate-package-rules.json') as f:
               blackduck_rules = json.load(f)
 
           # Read generated Black Duck rules for container images
           container_rules = {}
           try:
-              with open('security-tooling/generated/renovate-container-images.json') as f:
+              with open('security-tooling/generated/renovate-container-image-rules.json') as f:
                   container_rules = json.load(f)
                   print(f"✓ Found {len(container_rules.get('packageRules', []))} container image rules")
           except FileNotFoundError:
@@ -166,7 +166,7 @@ jobs:
           # Read generated Dockerfile OS-level package rules
           dockerfile_rules = {}
           try:
-              with open('security-tooling/generated/renovate-dockerfile-regex.json') as f:
+              with open('security-tooling/generated/renovate-dockerfile-rules.json') as f:
                   dockerfile_rules = json.load(f)
                   print(f"✓ Found {len(dockerfile_rules.get('regexManagers', []))} Dockerfile regex managers")
                   print(f"✓ Found {len(dockerfile_rules.get('packageRules', []))} Dockerfile package rules")

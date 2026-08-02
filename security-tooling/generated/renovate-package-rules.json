@@ -1,0 +1,162 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Auto-generated from Black Duck vulnerability findings",
+  "packageRules": [
+    {
+      "description": "Black Duck - CVE-2026-11111 (HIGH) - go",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/sirupsen/logrus"
+      ],
+      "allowedVersions": "1.9.3",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/go/logrus/cve-2026-11111",
+      "commitMessageTopic": "github.com/sirupsen/logrus",
+      "prTitle": "Go package upgrade: update logrus to v1.9.3 to fix CVE-2026-11111 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (GO)",
+        "",
+        "**Vulnerability**: CVE-2026-11111",
+        "**Severity**: HIGH (CVSS 8.2)",
+        "**Ecosystem**: go",
+        "**Current Version**: 1.8.1",
+        "**Fixed Version**: 1.9.3 (minimum safe version)",
+        "**Version Constraint**: 1.9.3",
+        "",
+        "**Description**: Log injection vulnerability in logrus allowing arbitrary code execution",
+        "",
+        "**Remediation**: Update github.com/sirupsen/logrus to exactly version 1.9.3 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "cve-2026-11111",
+        "go"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-22222 (MEDIUM) - go",
+      "matchManagers": [
+        "gomod"
+      ],
+      "matchPackageNames": [
+        "github.com/gorilla/mux"
+      ],
+      "allowedVersions": "1.8.1",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/go/mux/cve-2026-22222",
+      "commitMessageTopic": "github.com/gorilla/mux",
+      "prTitle": "Go package upgrade: update mux to v1.8.1 to fix CVE-2026-22222 (MEDIUM)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (GO)",
+        "",
+        "**Vulnerability**: CVE-2026-22222",
+        "**Severity**: MEDIUM (CVSS 6.8)",
+        "**Ecosystem**: go",
+        "**Current Version**: 1.8.0",
+        "**Fixed Version**: 1.8.1 (minimum safe version)",
+        "**Version Constraint**: 1.8.1",
+        "",
+        "**Description**: Path traversal vulnerability in gorilla/mux router",
+        "",
+        "**Remediation**: Update github.com/gorilla/mux to exactly version 1.8.1 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "medium-priority",
+        "blackduck",
+        "cve-2026-22222",
+        "go"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-33333 (CRITICAL) - npm",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "axios"
+      ],
+      "allowedVersions": "1.6.7",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/npm/axios/cve-2026-33333",
+      "commitMessageTopic": "axios",
+      "prTitle": "npm package upgrade: update axios to v1.6.7 to fix CVE-2026-33333 (CRITICAL)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (NPM)",
+        "",
+        "**Vulnerability**: CVE-2026-33333",
+        "**Severity**: CRITICAL (CVSS 9.1)",
+        "**Ecosystem**: npm",
+        "**Current Version**: 0.21.1",
+        "**Fixed Version**: 1.6.7 (minimum safe version)",
+        "**Version Constraint**: 1.6.7",
+        "",
+        "**Description**: Server-Side Request Forgery (SSRF) in axios HTTP client",
+        "",
+        "**Remediation**: Update axios to exactly version 1.6.7 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "cve-2026-33333",
+        "npm"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-44444 (HIGH) - npm",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "lodash"
+      ],
+      "allowedVersions": "4.17.21",
+      "enabled": true,
+      "groupName": null,
+      "separateMinorPatch": false,
+      "branchName": "blackduck/npm/lodash/cve-2026-44444",
+      "commitMessageTopic": "lodash",
+      "prTitle": "npm package upgrade: update lodash to v4.17.21 to fix CVE-2026-44444 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - Black Duck Finding (NPM)",
+        "",
+        "**Vulnerability**: CVE-2026-44444",
+        "**Severity**: HIGH (CVSS 7.4)",
+        "**Ecosystem**: npm",
+        "**Current Version**: 4.17.20",
+        "**Fixed Version**: 4.17.21 (minimum safe version)",
+        "**Version Constraint**: 4.17.21",
+        "",
+        "**Description**: Prototype pollution in lodash utility library",
+        "",
+        "**Remediation**: Update lodash to exactly version 4.17.21 as recommended by Black Duck.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "cve-2026-44444",
+        "npm"
+      ]
+    }
+  ]
+}
