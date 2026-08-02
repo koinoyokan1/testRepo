@@ -32,7 +32,7 @@ jobs:
         id: scan
         run: |
           echo "Running Black Duck vulnerability scan simulation..."
-          python3 simulate_blackduck.py > blackduck_scan_output.txt
+          python3 security-tooling/simulate_blackduck.py > blackduck_scan_output.txt
           cat blackduck_scan_output.txt
           
           # Check if vulnerabilities were found
