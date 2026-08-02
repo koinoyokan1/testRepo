@@ -1,0 +1,253 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Auto-generated Dockerfile OS-level package rules from Black Duck",
+  "regexManagers": [
+    {
+      "description": "Black Duck - CVE-2026-55555 (HIGH) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/web-frontend\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?curl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "curl",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:curl",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2026-66666 (CRITICAL) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/auth\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?git=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "git",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:git",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2026-77777 (CRITICAL) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/api-gateway\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?openssl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "openssl",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:openssl",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    },
+    {
+      "description": "Black Duck - CVE-2026-88888 (HIGH) - alpine package in Dockerfile",
+      "fileMatch": [
+        "^services\\/auth\\/Dockerfile$"
+      ],
+      "matchStrings": [
+        "RUN\\s+apk\\s+[^\\n]*?(?:add|install)[^\\n]*?musl=(?<currentValue>[^\\s]+)"
+      ],
+      "depNameTemplate": "musl",
+      "datasourceTemplate": "repology-repology",
+      "versioningTemplate": "loose",
+      "packageNameTemplate": "alpine:musl",
+      "extractVersionTemplate": "^(?<version>.+)$",
+      "enabled": true
+    }
+  ],
+  "packageRules": [
+    {
+      "description": "Black Duck - CVE-2026-55555 (HIGH) - curl in services/web-frontend/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:curl"
+      ],
+      "matchFileNames": [
+        "services/web-frontend/Dockerfile"
+      ],
+      "allowedVersions": ">=8.7.1-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/web-frontend/curl/cve-2026-55555",
+      "prTitle": "OS package upgrade (explicit): update curl to 8.7.1-r0 in services/web-frontend/Dockerfile to fix CVE-2026-55555 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-55555",
+        "**Severity**: HIGH (CVSS 8.6)",
+        "**Package Manager**: apk",
+        "**Package**: curl",
+        "**Current Version**: 8.0.1-r0",
+        "**Fixed Version**: 8.7.1-r0 (minimum safe version)",
+        "**Dockerfile**: services/web-frontend/Dockerfile",
+        "",
+        "**Description**: Heap buffer overflow in curl URL parsing",
+        "",
+        "**Remediation**: Update curl to version 8.7.1-r0 in the Dockerfile RUN command.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-55555",
+        "component:Web Frontend"
+      ],
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-66666 (CRITICAL) - git in services/auth/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:git"
+      ],
+      "matchFileNames": [
+        "services/auth/Dockerfile"
+      ],
+      "allowedVersions": ">=2.43.0-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/auth/git/cve-2026-66666",
+      "prTitle": "OS package upgrade (explicit): update git to 2.43.0-r0 in services/auth/Dockerfile to fix CVE-2026-66666 (CRITICAL)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-66666",
+        "**Severity**: CRITICAL (CVSS 9.8)",
+        "**Package Manager**: apk",
+        "**Package**: git",
+        "**Current Version**: 2.38.1-r0",
+        "**Fixed Version**: 2.43.0-r0 (minimum safe version)",
+        "**Dockerfile**: services/auth/Dockerfile",
+        "",
+        "**Description**: Remote code execution in git clone operation",
+        "",
+        "**Remediation**: Update git to version 2.43.0-r0 in the Dockerfile RUN command.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-66666",
+        "component:Authentication Service"
+      ],
+      "reviewers": [
+        "david",
+        "eve"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-77777 (CRITICAL) - openssl in services/api-gateway/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:openssl"
+      ],
+      "matchFileNames": [
+        "services/api-gateway/Dockerfile"
+      ],
+      "allowedVersions": ">=3.1.5-r0",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/api-gateway/openssl/cve-2026-77777",
+      "prTitle": "OS package upgrade (explicit): update openssl to 3.1.5-r0 in services/api-gateway/Dockerfile to fix CVE-2026-77777 (CRITICAL)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-77777",
+        "**Severity**: CRITICAL (CVSS 9.8)",
+        "**Package Manager**: apk",
+        "**Package**: openssl",
+        "**Current Version**: 3.1.0-r4",
+        "**Fixed Version**: 3.1.5-r0 (minimum safe version)",
+        "**Dockerfile**: services/api-gateway/Dockerfile",
+        "",
+        "**Description**: Critical vulnerability in OpenSSL certificate validation",
+        "",
+        "**Remediation**: Update openssl to version 3.1.5-r0 in the Dockerfile RUN command.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "critical-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-77777",
+        "component:API Gateway"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
+      ]
+    },
+    {
+      "description": "Black Duck - CVE-2026-88888 (HIGH) - musl in services/auth/Dockerfile",
+      "matchDatasources": [
+        "repology-repology"
+      ],
+      "matchPackageNames": [
+        "alpine:musl"
+      ],
+      "matchFileNames": [
+        "services/auth/Dockerfile"
+      ],
+      "allowedVersions": ">=1.2.4-r2",
+      "enabled": true,
+      "branchName": "blackduck/dockerfile/auth/musl/cve-2026-88888",
+      "prTitle": "OS package upgrade (explicit): update musl to 1.2.4-r2 in services/auth/Dockerfile to fix CVE-2026-88888 (HIGH)",
+      "prBodyNotes": [
+        "### \ud83d\udd12 Security Update - OS-Level Package (ALPINE)",
+        "",
+        "**Vulnerability**: CVE-2026-88888",
+        "**Severity**: HIGH (CVSS 8.1)",
+        "**Package Manager**: apk",
+        "**Package**: musl",
+        "**Current Version**: 1.2.3-r4",
+        "**Fixed Version**: 1.2.4-r2 (minimum safe version)",
+        "**Dockerfile**: services/auth/Dockerfile",
+        "",
+        "**Description**: Buffer overflow in musl libc string functions",
+        "",
+        "**Remediation**: Update musl to version 1.2.4-r2 in the Dockerfile RUN command.",
+        "",
+        "This PR was created based on Black Duck security scan findings."
+      ],
+      "labels": [
+        "security",
+        "high-priority",
+        "blackduck",
+        "dockerfile",
+        "alpine",
+        "cve-2026-88888",
+        "component:Authentication Service"
+      ],
+      "reviewers": [
+        "david",
+        "eve"
+      ]
+    }
+  ]
+}

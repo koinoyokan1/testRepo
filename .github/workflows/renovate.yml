@@ -87,9 +87,7 @@ jobs:
                 echo "Found $base_image_count base image vulnerability(ies)"
                 echo "Patching Dockerfiles..."
                 python3 security-tooling/patch_base_image_dockerfiles.py
-
-                echo "Generating Renovate regex for base image upgrades..."
-                python3 security-tooling/generate_upgrade_regex.py
+                echo "✓ Dockerfiles patched with one-time fixes from Black Duck report"
               else
                 echo "No base image vulnerabilities found"
               fi
@@ -175,15 +173,8 @@ jobs:
           except FileNotFoundError:
               print("⚠ No Dockerfile rules found, skipping")
 
-          # Read generated base image upgrade rules
-          base_image_upgrade_rules = {}
-          try:
-              with open('security-tooling/generated/renovate-base-image-upgrades.json') as f:
-                  base_image_upgrade_rules = json.load(f)
-                  print(f"✓ Found {len(base_image_upgrade_rules.get('regexManagers', []))} base image upgrade regex managers")
-                  print(f"✓ Found {len(base_image_upgrade_rules.get('packageRules', []))} base image upgrade package rules")
-          except FileNotFoundError:
-              print("⚠ No base image upgrade rules found, skipping")
+          # Base image upgrades are one-time fixes via patch_base_image_dockerfiles.py
+          # No ongoing tracking needed - Black Duck will trigger new fixes as needed
 
           # Read generated container base image rules (with reviewers)
           base_image_rules = {}
@@ -250,9 +241,6 @@ jobs:
           # Add Dockerfile OS-level package rules (these already have reviewers from generate_dockerfile_rules.py)
           final_rules.extend(dockerfile_rules.get('packageRules', []))
 
-          # Add base image upgrade package rules (these already have reviewers from generate_upgrade_regex.py)
-          final_rules.extend(base_image_upgrade_rules.get('packageRules', []))
-
           # Add container base image rules with reviewers
           final_rules.extend(base_image_rules.get('packageRules', []))
 
@@ -261,12 +249,6 @@ jobs:
               if 'regexManagers' not in merged:
                   merged['regexManagers'] = []
               merged['regexManagers'].extend(dockerfile_rules.get('regexManagers', []))
-
-          # Merge base image upgrade regex managers into base config
-          if base_image_upgrade_rules.get('regexManagers'):
-              if 'regexManagers' not in merged:
-                  merged['regexManagers'] = []
-              merged['regexManagers'].extend(base_image_upgrade_rules.get('regexManagers', []))
 
           # Add the global disable rule FIRST
           merged['packageRules'].append({

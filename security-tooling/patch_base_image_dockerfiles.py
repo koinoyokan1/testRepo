@@ -242,9 +242,9 @@ def main():
     if not args.dry_run:
         print("Next steps:")
         print("1. Review the Dockerfile changes")
-        print("2. Run: python3 security-tooling/generate_upgrade_regex.py")
-        print("3. Test the Docker builds locally")
-        print("4. Commit and push changes")
+        print("2. Test the Docker builds locally")
+        print("3. Commit and push changes")
+        print("4. Future Black Duck scans will detect if newer vulnerabilities exist")
 
     return 0
 
