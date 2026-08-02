@@ -120,14 +120,7 @@ jobs:
             "vulnerabilityAlerts": {
               "enabled": false
             },
-            "packageRules": [
-              {
-                "description": "Disable all updates by default - only Black Duck findings will be enabled",
-                "matchPackagePatterns": ["*"],
-                "matchManagers": ["gomod", "npm"],
-                "enabled": false
-              }
-            ]
+            "packageRules": []
           }
           EOF
 
@@ -222,8 +215,16 @@ jobs:
                   merged['regexManagers'] = []
               merged['regexManagers'].extend(base_image_upgrade_rules.get('regexManagers', []))
 
-          # Add merged package rules
-          # In Renovate, the last matching rule wins, so we add enable rules AFTER disable
+          # Add the global disable rule FIRST
+          merged['packageRules'].append({
+              "description": "Disable all updates by default - only Black Duck findings will be enabled",
+              "matchPackagePatterns": ["*"],
+              "matchManagers": ["gomod", "npm"],
+              "enabled": False
+          })
+
+          # Add merged package rules AFTER the disable rule
+          # In Renovate, the last matching rule wins, so enable rules override the disable
           merged['packageRules'].extend(final_rules)
 
           # Write merged config
