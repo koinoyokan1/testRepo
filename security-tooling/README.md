@@ -14,7 +14,8 @@ security-tooling/
 │   └── blackduck_report.json  # Input: Black Duck vulnerability scan report (mock data)
 ├── component_ownership.json    # Config: Component to owner mapping
 ├── generate_renovate_rules.py # Script: Generate Renovate rules from Black Duck
-├── manage_reviewers.py        # Script: Manage reviewer assignments
+├── manage_reviewers.py        # Script: Manage reviewer assignments (orchestrator)
+├── go_reviewer_utils.py       # Utility: Go dependency reviewer analysis
 ├── npm_reviewer_utils.py      # Utility: npm/TypeScript reviewer analysis
 ├── simulate_blackduck.py      # Script: Simulate Black Duck reports
 └── DOCUMENTATION.md           # Complete documentation
