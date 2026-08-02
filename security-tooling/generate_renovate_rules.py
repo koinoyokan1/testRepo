@@ -51,15 +51,18 @@ def generate_package_rule_from_vuln(vuln, index):
         cvss_score = vuln.get('cvss_score', 'N/A')
         ecosystem = vuln.get('ecosystem', 'go')
 
-    # Determine the datasource based on ecosystem
+    # Determine the datasource and manager based on ecosystem
     if ecosystem == 'npm':
         datasources = ["npm"]
+        managers = ["npm"]
         package_short_name = package_name  # npm packages don't have path separators
     elif ecosystem == 'go':
         datasources = ["go"]
+        managers = ["gomod"]
         package_short_name = package_name.split('/')[-1]
     else:
         datasources = [ecosystem]
+        managers = None
         package_short_name = package_name.split('/')[-1]
 
     # Parse the fixed version to create a constraint that stays within the same minor version
@@ -85,6 +88,7 @@ def generate_package_rule_from_vuln(vuln, index):
     rule = {
         "description": f"Black Duck - {cve} ({severity}) - {ecosystem}",
         "matchDatasources": datasources,
+        "matchManagers": managers,
         "matchPackageNames": [package_name],
         "allowedVersions": version_constraint,
         "enabled": True,
