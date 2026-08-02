@@ -1,4 +1,5 @@
 {
+  "_comment": "Force workflow trigger - updated 2026-08-02",
   "scan_date": "2026-08-02T19:23:00Z",
   "project_name": "example.com/oldversion",
   "scan_status": "COMPLETED",
