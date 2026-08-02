@@ -74,6 +74,14 @@ def generate_package_rule_from_vuln(vuln, index):
         # Fallback if version format is unexpected
         version_constraint = f">={fixed_version}"
 
+    # Determine vulnerability type prefix based on ecosystem
+    if ecosystem == 'go':
+        vuln_type_prefix = "Go package upgrade"
+    elif ecosystem == 'npm':
+        vuln_type_prefix = "npm package upgrade"
+    else:
+        vuln_type_prefix = f"{ecosystem} package upgrade"
+
     rule = {
         "description": f"Black Duck - {cve} ({severity}) - {ecosystem}",
         "matchDatasources": datasources,
@@ -82,7 +90,7 @@ def generate_package_rule_from_vuln(vuln, index):
         "groupName": None,  # Don't group - create separate PR
         "separateMinorPatch": False,
         "commitMessageTopic": package_name,
-        "prTitle": f"fix(security): update {package_short_name} to v{fixed_version} to fix {cve} ({severity})",
+        "prTitle": f"{vuln_type_prefix}: update {package_short_name} to v{fixed_version} to fix {cve} ({severity})",
         "prBodyNotes": [
             f"### 🔒 Security Update - Black Duck Finding ({ecosystem.upper()})",
             "",

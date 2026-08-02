@@ -147,9 +147,9 @@ def generate_renovate_rule_for_custom_image(image_name, image_data, vulns):
 
     # Build PR title
     if len(cve_list) == 1:
-        pr_title = f"fix(security): rebuild {image_name} to fix {cve_list[0]} in base image"
+        pr_title = f"Custom container image upgrade: rebuild {image_name} to fix {cve_list[0]} in base image"
     else:
-        pr_title = f"fix(security): rebuild {image_name} to fix {len(cve_list)} CVEs in base image"
+        pr_title = f"Custom container image upgrade: rebuild {image_name} to fix {len(cve_list)} CVEs in base image"
 
     # Build PR body notes
     pr_body = [

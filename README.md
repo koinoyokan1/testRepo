@@ -911,6 +911,24 @@ This system provides **100% automated remediation** across all vulnerability typ
 - Dockerfile modification + Renovate PR (base image OS packages)
 - GitHub Issue (unfixable vulnerabilities)
 
+### PR Title Format
+
+All Renovate PRs include a **vulnerability type prefix** for easy identification:
+
+| Vulnerability Type | PR Title Format | Example |
+|--------------------|-----------------|---------|
+| **Go packages** | `Go package upgrade: ...` | `Go package upgrade: update gin to v1.9.1 to fix CVE-2023-29401 (HIGH)` |
+| **npm packages** | `npm package upgrade: ...` | `npm package upgrade: update axios to v1.6.0 to fix CVE-2021-3749 (HIGH)` |
+| **Container base images (prebuilt)** | `Container base image upgrade: ...` | `Container base image upgrade: nginx to 1.25.3` |
+| **Container base images (custom)** | `Custom container image upgrade: ...` | `Custom container image upgrade: rebuild api-gateway to fix CVE-2022-41716` |
+| **OS packages (explicit)** | `OS package upgrade (explicit): ...` | `OS package upgrade (explicit): update openssl to 3.0.9-r0 in Dockerfile` |
+| **OS packages (base image)** | `OS package upgrade (base image): ...` | `OS package upgrade (base image): upgrade libssl3 to 3.0.9-r1 to fix CVE-2023-2650` |
+
+**Benefits:**
+- Instantly recognize vulnerability type from PR list
+- Easier prioritization and routing to subject matter experts
+- Clear audit trail for security remediation
+
 ---
 
 ## Architecture Highlights

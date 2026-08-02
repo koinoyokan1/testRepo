@@ -75,6 +75,7 @@
       "matchFileNames": ["image_map.json"],
       "enabled": true,
       "groupName": "container-images",
+      "prTitle": "Container base image upgrade: {{depName}} to {{newVersion}}",
       "labels": [
         "dependencies",
         "security",

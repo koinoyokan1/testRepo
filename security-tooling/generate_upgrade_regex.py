@@ -121,7 +121,7 @@ def generate_package_rules(patch_info):
             "matchFileNames": [filepath],
             "allowedVersions": f">={recommended_version}",
             "enabled": True,
-            "prTitle": f"fix(security): upgrade base image {component} to {recommended_version} in {filepath} to fix {cve}",
+            "prTitle": f"OS package upgrade (base image): upgrade {component} to {recommended_version} in {filepath} to fix {cve}",
             "prBodyNotes": [
                 f"### 🔒 Security Update - Base Image OS Package ({ecosystem.upper()})",
                 "",

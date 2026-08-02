@@ -99,7 +99,7 @@ def generate_dockerfile_rule(vuln):
         "matchFileNames": [file_path],
         "allowedVersions": f">={recommended_version}",
         "enabled": True,
-        "prTitle": f"fix(security): update {component} to {recommended_version} in {file_path} to fix {cve} ({severity})",
+        "prTitle": f"OS package upgrade (explicit): update {component} to {recommended_version} in {file_path} to fix {cve} ({severity})",
         "prBodyNotes": [
             f"### 🔒 Security Update - OS-Level Package ({ecosystem.upper()})",
             "",
