@@ -124,6 +124,7 @@ jobs:
               {
                 "description": "Disable all updates by default - only Black Duck findings will be enabled",
                 "matchPackagePatterns": ["*"],
+                "matchManagers": ["gomod", "npm"],
                 "enabled": false
               }
             ]
