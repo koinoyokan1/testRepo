@@ -35,8 +35,8 @@ All scripts expect to be run from the **repository root directory**:
 # Generate Renovate rules from Black Duck findings (code dependencies)
 python3 security-tooling/generate_renovate_rules.py
 
-# Scan container images and generate rules
-python3 security-tooling/scan_container_images.py
+# Generate Renovate rules for container images
+python3 security-tooling/generate_container_image_rules.py
 
 # Analyze all vulnerabilities (Go + npm)
 python3 security-tooling/manage_reviewers.py process-report
@@ -63,10 +63,16 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 
 ### Scripts
 - **`generate_renovate_rules.py`** - Creates Renovate package rules from Black Duck findings (code dependencies)
-- **`scan_container_images.py`** - Scans container images from Black Duck findings and generates Renovate rules
-- **`manage_reviewers.py`** - Unified reviewer management (Go + npm)
-- **`npm_reviewer_utils.py`** - npm/TypeScript dependency analysis utilities
-- **`simulate_blackduck.py`** - Test tool for Black Duck report processing
+- **`generate_container_image_rules.py`** - Generates Renovate rules for container image updates from Black Duck findings
+- **`generate_dockerfile_rules.py`** - Generates Renovate rules for OS-level packages in Dockerfiles
+- **`generate_base_image_rules.py`** - Generates Renovate rules for container base image updates
+- **`generate_upgrade_regex.py`** - Generates Renovate regex managers for base image upgrade commands
+- **`detect_base_image_vulns.py`** - Detects and categorizes base image vulnerabilities
+- **`patch_base_image_dockerfiles.py`** - Patches Dockerfiles to add upgrade commands for base image vulnerabilities
+- **`create_github_issues.py`** - Creates GitHub Issues for unfixable vulnerabilities
+- **`manage_reviewers.py`** - Unified reviewer management orchestrator (Go + npm)
+- **`go_reviewer_utils.py`** - Go dependency reviewer analysis utilities
+- **`npm_reviewer_utils.py`** - npm/TypeScript dependency reviewer analysis utilities
 
 ### Generated Files (in `generated/`)
 - **`renovate-blackduck-generated.json`** - Renovate package rules

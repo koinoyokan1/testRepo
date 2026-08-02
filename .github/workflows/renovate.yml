@@ -9,7 +9,7 @@ on:
       logLevel:
         description: 'Log level'
         required: false
-        default: 'debug'
+        default: 'info'
         type: choice
         options:
           - debug
@@ -27,7 +27,8 @@ on:
       - 'security-tooling/detect_*.py'
       - 'security-tooling/patch_*.py'
       - 'security-tooling/create_*.py'
-      - 'security-tooling/scan_*.py'
+      - 'security-tooling/manage_*.py'
+      - 'security-tooling/*_reviewer_utils.py'
 
 permissions:
   contents: write
@@ -70,7 +71,7 @@ jobs:
             python3 security-tooling/generate_renovate_rules.py
 
             # Generate dynamic Renovate rules for container images
-            python3 security-tooling/scan_container_images.py
+            python3 security-tooling/generate_container_image_rules.py
 
             # Generate dynamic Renovate rules for OS-level packages in Dockerfiles
             python3 security-tooling/generate_dockerfile_rules.py

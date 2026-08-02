@@ -154,7 +154,7 @@ def process_report_format(filename="security-tooling/mockBlackDuck/blackduck_rep
                 skipped_os_level.append(vuln)
                 continue
 
-            # Skip container ecosystem (handled separately by scan_container_images.py)
+            # Skip container ecosystem (handled separately by generate_container_image_rules.py)
             if ecosystem == 'container':
                 continue
 

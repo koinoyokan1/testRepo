@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-Scan container images from docker-compose.yml and Dockerfiles, find vulnerabilities from Black Duck report.
-Generates Renovate rules for container image updates.
+Generate Renovate rules for container image updates from Black Duck report.
+
+Scans container images from docker-compose.yml and Dockerfiles, finds vulnerabilities,
+and generates Renovate rules for container image updates.
 
 - Prebuilt images: Tracked in image_map.json and updated by Renovate's docker datasource
 - Custom images: Detected from Dockerfiles and docker-compose.yml with build contexts
@@ -10,7 +12,7 @@ Vulnerabilities without a fix (no recommended_version or fixed_versions) are
 filtered out and should be handled by create_github_issues.py instead.
 
 Usage:
-    python3 security-tooling/scan_container_images.py
+    python3 security-tooling/generate_container_image_rules.py
 """
 
 import json

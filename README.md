@@ -265,7 +265,7 @@ The core automation is orchestrated by `.github/workflows/renovate.yml`, which r
 ┌─────────────────────────────────────────────────────────────────┐
 │  2. Generate Renovate Rules                                     │
 │     ├─ generate_renovate_rules.py (Go/NPM packages)             │
-│     └─ scan_container_images.py (Docker images)                 │
+│     └─ generate_container_image_rules.py (Docker images)        │
 └────────────────────┬────────────────────────────────────────────┘
                      │
                      ▼
@@ -330,7 +330,7 @@ The core automation is orchestrated by `.github/workflows/renovate.yml`, which r
 
 ##### Step 2: Rule Generation for Container Images
 
-**Script:** `security-tooling/scan_container_images.py`
+**Script:** `security-tooling/generate_container_image_rules.py`
 
 **Input:**
 - `blackduck_report.json`
@@ -351,7 +351,7 @@ The core automation is orchestrated by `.github/workflows/renovate.yml`, which r
 
 **Example Generated Rule (Custom Image only):**
 
-> **Note:** Prebuilt images (nginx, postgres, redis) are tracked in `image_map.json` and updated by Renovate's docker datasource independently. The `scan_container_images.py` script only generates rules for custom images.
+> **Note:** Prebuilt images (nginx, postgres, redis) are tracked in `image_map.json` and updated by Renovate's docker datasource independently. The `generate_container_image_rules.py` script only generates rules for custom images.
 ```json
 {
   "description": "Black Duck - api-gateway CVE-2022-41716 (HIGH) - Custom Image",
@@ -741,7 +741,7 @@ Run the automation scripts to generate Renovate configuration:
 python3 security-tooling/generate_renovate_rules.py
 
 # Generate container image rules
-python3 security-tooling/scan_container_images.py
+python3 security-tooling/generate_container_image_rules.py
 
 # Generate Dockerfile OS-level package rules
 python3 security-tooling/generate_dockerfile_rules.py
@@ -901,7 +901,7 @@ This system provides **100% automated remediation** across all vulnerability typ
 | Vulnerability Type | Location | Handler | Status |
 |--------------------|----------|---------|--------|
 | **Go/npm packages** | `go.mod`, `package.json` | `generate_renovate_rules.py` | ✅ Automated PR |
-| **Container base images** | `image_map.json`, `docker-compose.yml` | `scan_container_images.py` | ✅ Automated PR |
+| **Container base images** | `image_map.json`, `docker-compose.yml` | `generate_container_image_rules.py` | ✅ Automated PR |
 | **OS packages (explicit install)** | `RUN apk/apt/yum add` in Dockerfile | `generate_dockerfile_rules.py` | ✅ Automated PR |
 | **OS packages (base image)** | Base image layers | `detect_base_image_vulns.py`<br>`patch_base_image_dockerfiles.py`<br>`generate_upgrade_regex.py` | ✅ **NEW** - Auto-patch + PR |
 | **Unfixable vulnerabilities** | Any ecosystem | `create_github_issues.py` | ✅ GitHub Issue |
