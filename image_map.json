@@ -1,6 +1,6 @@
 {
     "nginx": {
-        "origin_image": "nginx:1.21.0",
+        "origin_image": "nginx:1.21.6",
         "purpose": "Web server and reverse proxy"
     },
     "postgres": {
@@ -8,7 +8,7 @@
         "purpose": "Primary database"
     },
     "redis": {
-        "origin_image": "redis:6.0.9",
+        "origin_image": "redis:6.0.20",
         "purpose": "Cache and session store"
     },
     "node": {
@@ -16,31 +16,31 @@
         "purpose": "Base image for Node.js services"
     },
     "golang": {
-        "origin_image": "golang:1.19.0-alpine",
+        "origin_image": "golang:1.19.13-alpine",
         "purpose": "Base image for Go services"
     },
     "mysql": {
-        "origin_image": "mysql:8.0.0",
+        "origin_image": "mysql:8.0.46",
         "purpose": "Alternative database for legacy apps"
     },
     "memcached": {
-        "origin_image": "memcached:1.6.0",
+        "origin_image": "memcached:1.6.45",
         "purpose": "Distributed memory caching"
     },
     "red/config": {
-        "origin_image": "quay.io/coreos/etcd:v3.5.30",
+        "origin_image": "quay.io/coreos/etcd:v3.5.33",
         "red_version": "1.0.2"
     },
     "red/healthdb": {
-        "origin_image": "mongo:8.0.26",
+        "origin_image": "mongo:8.0.28",
         "red_version": "1.1.1"
     },
     "red/message": {
-        "origin_image": "nats:2.14.1",
+        "origin_image": "nats:2.14.4",
         "red_version": "1.1.0"
     },
     "red/proxy": {
-        "origin_image": "nginx:1.30.2",
+        "origin_image": "nginx:1.30.4",
         "red_version": "1.0.2"
     },
     "red/images": {
@@ -60,7 +60,7 @@
         "red_version": "1.0.1"
     },
     "red/alertmanager": {
-        "origin_image": "prom/alertmanager:v0.33.0",
+        "origin_image": "prom/alertmanager:v0.33.1",
         "red_version": "1.1.2"
     },
     "red/metricsdb": {
