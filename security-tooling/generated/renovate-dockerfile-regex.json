@@ -177,9 +177,14 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2023-0464"
+        "cve-2023-0464",
+        "component:API Gateway"
       ],
-      "reviewers": []
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
+      ]
     },
     {
       "description": "Black Duck - CVE-2023-28321 (MEDIUM) - curl in services/api-gateway/Dockerfile",
@@ -219,9 +224,14 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2023-28321"
+        "cve-2023-28321",
+        "component:API Gateway"
       ],
-      "reviewers": []
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
+      ]
     },
     {
       "description": "Black Duck - CVE-2023-2650 (MEDIUM) - libssl3 in services/web-frontend/Dockerfile",
@@ -261,9 +271,13 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2023-2650"
+        "cve-2023-2650",
+        "component:Web Frontend"
       ],
-      "reviewers": []
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
     },
     {
       "description": "Black Duck - CVE-2023-2650 (MEDIUM) - libcrypto3 in services/web-frontend/Dockerfile",
@@ -303,9 +317,13 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2023-2650"
+        "cve-2023-2650",
+        "component:Web Frontend"
       ],
-      "reviewers": []
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
     },
     {
       "description": "Black Duck - CVE-2024-33333 (HIGH) - git in services/auth/Dockerfile",
@@ -345,9 +363,13 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2024-33333"
+        "cve-2024-33333",
+        "component:Authentication Service"
       ],
-      "reviewers": []
+      "reviewers": [
+        "david",
+        "eve"
+      ]
     },
     {
       "description": "Black Duck - CVE-2024-44444 (MEDIUM) - ca-certificates in services/web-frontend/Dockerfile",
@@ -387,9 +409,13 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2024-44444"
+        "cve-2024-44444",
+        "component:Web Frontend"
       ],
-      "reviewers": []
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
     },
     {
       "description": "Black Duck - CVE-2024-55555 (HIGH) - musl in services/web-frontend/Dockerfile",
@@ -429,9 +455,13 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2024-55555"
+        "cve-2024-55555",
+        "component:Web Frontend"
       ],
-      "reviewers": []
+      "reviewers": [
+        "xavier",
+        "yvonne"
+      ]
     },
     {
       "description": "Black Duck - CVE-2024-66666 (MEDIUM) - busybox in services/api-gateway/Dockerfile",
@@ -471,9 +501,14 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2024-66666"
+        "cve-2024-66666",
+        "component:API Gateway"
       ],
-      "reviewers": []
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
+      ]
     },
     {
       "description": "Black Duck - CVE-2024-77777 (LOW) - alpine-baselayout in services/auth/Dockerfile",
@@ -513,9 +548,13 @@
         "blackduck",
         "dockerfile",
         "alpine",
-        "cve-2024-77777"
+        "cve-2024-77777",
+        "component:Authentication Service"
       ],
-      "reviewers": []
+      "reviewers": [
+        "david",
+        "eve"
+      ]
     }
   ]
 }

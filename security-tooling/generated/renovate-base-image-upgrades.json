@@ -8,7 +8,7 @@
         "^services\\/api-gateway\\/Dockerfile$"
       ],
       "matchStrings": [
-        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?busybox=(?<currentValue>[^\\s]+)"
+        "RUN\\s+apk\\s+[^\\n]*?upgrade[^\\n]*?busybox=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "busybox",
       "datasourceTemplate": "repology-repology",
@@ -23,7 +23,7 @@
         "^services\\/web-frontend\\/Dockerfile$"
       ],
       "matchStrings": [
-        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?ca-certificates=(?<currentValue>[^\\s]+)"
+        "RUN\\s+apk\\s+[^\\n]*?upgrade[^\\n]*?ca-certificates=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "ca-certificates",
       "datasourceTemplate": "repology-repology",
@@ -38,7 +38,7 @@
         "^services\\/web-frontend\\/Dockerfile$"
       ],
       "matchStrings": [
-        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?musl=(?<currentValue>[^\\s]+)"
+        "RUN\\s+apk\\s+[^\\n]*?upgrade[^\\n]*?musl=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "musl",
       "datasourceTemplate": "repology-repology",
@@ -53,7 +53,7 @@
         "^services\\/auth\\/Dockerfile$"
       ],
       "matchStrings": [
-        "RUN\\s+apk\\s+upgrade\\s+--no-cache\\s+.*?alpine-baselayout=(?<currentValue>[^\\s]+)"
+        "RUN\\s+apk\\s+[^\\n]*?upgrade[^\\n]*?alpine-baselayout=(?<currentValue>[^\\s]+)"
       ],
       "depNameTemplate": "alpine-baselayout",
       "datasourceTemplate": "repology-repology",
@@ -77,6 +77,7 @@
       ],
       "allowedVersions": ">=1.36.1-r0",
       "enabled": true,
+      "branchName": "blackduck/base-image/api-gateway/busybox/cve-2024-66666",
       "prTitle": "OS package upgrade (base image): upgrade busybox to 1.36.1-r0 in services/api-gateway/Dockerfile to fix CVE-2024-66666",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
@@ -102,7 +103,13 @@
         "blackduck",
         "base-image-upgrade",
         "alpine",
-        "cve-2024-66666"
+        "cve-2024-66666",
+        "component:API Gateway"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie"
       ]
     },
     {
@@ -118,6 +125,7 @@
       ],
       "allowedVersions": ">=20240705-r0",
       "enabled": true,
+      "branchName": "blackduck/base-image/web-frontend/ca-certificates/cve-2024-44444",
       "prTitle": "OS package upgrade (base image): upgrade ca-certificates to 20240705-r0 in services/web-frontend/Dockerfile to fix CVE-2024-44444",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
@@ -143,7 +151,12 @@
         "blackduck",
         "base-image-upgrade",
         "alpine",
-        "cve-2024-44444"
+        "cve-2024-44444",
+        "component:Web Frontend"
+      ],
+      "reviewers": [
+        "xavier",
+        "yvonne"
       ]
     },
     {
@@ -159,6 +172,7 @@
       ],
       "allowedVersions": ">=1.2.5-r0",
       "enabled": true,
+      "branchName": "blackduck/base-image/web-frontend/musl/cve-2024-55555",
       "prTitle": "OS package upgrade (base image): upgrade musl to 1.2.5-r0 in services/web-frontend/Dockerfile to fix CVE-2024-55555",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
@@ -184,7 +198,12 @@
         "blackduck",
         "base-image-upgrade",
         "alpine",
-        "cve-2024-55555"
+        "cve-2024-55555",
+        "component:Web Frontend"
+      ],
+      "reviewers": [
+        "xavier",
+        "yvonne"
       ]
     },
     {
@@ -200,6 +219,7 @@
       ],
       "allowedVersions": ">=3.4.3-r0",
       "enabled": true,
+      "branchName": "blackduck/base-image/auth/alpine-baselayout/cve-2024-77777",
       "prTitle": "OS package upgrade (base image): upgrade alpine-baselayout to 3.4.3-r0 in services/auth/Dockerfile to fix CVE-2024-77777",
       "prBodyNotes": [
         "### \ud83d\udd12 Security Update - Base Image OS Package (ALPINE)",
@@ -225,7 +245,12 @@
         "blackduck",
         "base-image-upgrade",
         "alpine",
-        "cve-2024-77777"
+        "cve-2024-77777",
+        "component:Authentication Service"
+      ],
+      "reviewers": [
+        "david",
+        "eve"
       ]
     }
   ]

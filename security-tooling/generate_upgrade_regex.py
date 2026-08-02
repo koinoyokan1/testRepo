@@ -35,7 +35,7 @@ def load_component_ownership(filepath="security-tooling/component_ownership.json
 
 def find_component_for_dockerfile(dockerfile_path, ownership_config):
     """
-    Map a Dockerfile path to its component using path patterns.
+    Map a Dockerfile path to its component using directories from component_ownership.json.
 
     Args:
         dockerfile_path: Path to Dockerfile (e.g., "services/api-gateway/Dockerfile")
@@ -44,18 +44,16 @@ def find_component_for_dockerfile(dockerfile_path, ownership_config):
     Returns:
         Component dict with name and owners, or None if no match
     """
-    # Normalize the path
+    # Normalize the path - get the directory containing the Dockerfile
     path = Path(dockerfile_path)
     dockerfile_dir = str(path.parent)
 
-    # Try to match against component path patterns
+    # Try to match against component directories
     for component in ownership_config.get('components', []):
-        for pattern in component.get('path_patterns', []):
-            # Simple glob-style matching
-            pattern_str = str(pattern).replace('**', '.*').replace('*', '[^/]*')
-            pattern_str = '^' + pattern_str + '$'
-
-            if re.match(pattern_str, dockerfile_dir) or re.match(pattern_str, dockerfile_path):
+        for comp_dir in component.get('directories', []):
+            # Check if the Dockerfile directory matches the component directory
+            # e.g., "services/api-gateway" matches "services/api-gateway/Dockerfile"
+            if dockerfile_dir == comp_dir or dockerfile_dir.startswith(comp_dir + '/'):
                 return component
 
     return None
