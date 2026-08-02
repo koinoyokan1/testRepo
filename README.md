@@ -264,7 +264,7 @@ The core automation is orchestrated by `.github/workflows/renovate.yml`, which r
                      ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │  2. Generate Renovate Rules                                     │
-│     ├─ generate_renovate_rules.py (Go/NPM packages)             │
+│     ├─ generate_package_rules.py (Go/NPM packages)              │
 │     └─ generate_container_image_rules.py (Docker images)        │
 └────────────────────┬────────────────────────────────────────────┘
                      │
@@ -291,7 +291,7 @@ The core automation is orchestrated by `.github/workflows/renovate.yml`, which r
 
 #### Step 1: Rule Generation for Packages (Go/NPM)
 
-**Script:** `security-tooling/generate_renovate_rules.py`
+**Script:** `security-tooling/generate_package_rules.py`
 
 **Input:** `blackduck_report.json`
 
@@ -738,7 +738,7 @@ Run the automation scripts to generate Renovate configuration:
 
 ```bash
 # Generate package rules (Go/NPM)
-python3 security-tooling/generate_renovate_rules.py
+python3 security-tooling/generate_package_rules.py
 
 # Generate container image rules
 python3 security-tooling/generate_container_image_rules.py
@@ -900,7 +900,7 @@ This system provides **100% automated remediation** across all vulnerability typ
 
 | Vulnerability Type | Location | Handler | Status |
 |--------------------|----------|---------|--------|
-| **Go/npm packages** | `go.mod`, `package.json` | `generate_renovate_rules.py` | ✅ Automated PR |
+| **Go/npm packages** | `go.mod`, `package.json` | `generate_package_rules.py` | ✅ Automated PR |
 | **Container base images** | `image_map.json`, `docker-compose.yml` | `generate_container_image_rules.py` | ✅ Automated PR |
 | **OS packages (explicit install)** | `RUN apk/apt/yum add` in Dockerfile | `generate_dockerfile_rules.py` | ✅ Automated PR |
 | **OS packages (base image)** | Base image layers | `detect_base_image_vulns.py`<br>`patch_base_image_dockerfiles.py`<br>`generate_upgrade_regex.py` | ✅ **NEW** - Auto-patch + PR |

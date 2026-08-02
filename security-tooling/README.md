@@ -13,7 +13,7 @@ security-tooling/
 ├── mockBlackDuck/
 │   └── blackduck_report.json  # Input: Black Duck vulnerability scan report (mock data)
 ├── component_ownership.json    # Config: Component to owner mapping
-├── generate_renovate_rules.py # Script: Generate Renovate rules from Black Duck
+├── generate_package_rules.py  # Script: Generate package rules for Go/npm dependencies
 ├── manage_reviewers.py        # Script: Manage reviewer assignments (orchestrator)
 ├── go_reviewer_utils.py       # Utility: Go dependency reviewer analysis
 ├── npm_reviewer_utils.py      # Utility: npm/TypeScript reviewer analysis
@@ -32,8 +32,8 @@ Note: GitHub Actions workflows are in the repository root at `../.github/workflo
 All scripts expect to be run from the **repository root directory**:
 
 ```bash
-# Generate Renovate rules from Black Duck findings (code dependencies)
-python3 security-tooling/generate_renovate_rules.py
+# Generate Renovate rules for code packages (Go/npm)
+python3 security-tooling/generate_package_rules.py
 
 # Generate Renovate rules for container images
 python3 security-tooling/generate_container_image_rules.py
@@ -62,8 +62,8 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 - **`renovate.yml`** - Renovate PR creation and reviewer assignment
 
 ### Scripts
-- **`generate_renovate_rules.py`** - Creates Renovate package rules from Black Duck findings (code dependencies)
-- **`generate_container_image_rules.py`** - Generates Renovate rules for container image updates from Black Duck findings
+- **`generate_package_rules.py`** - Generates Renovate package rules for Go/npm code dependencies
+- **`generate_container_image_rules.py`** - Generates Renovate rules for container image updates
 - **`generate_dockerfile_rules.py`** - Generates Renovate rules for OS-level packages in Dockerfiles
 - **`generate_base_image_rules.py`** - Generates Renovate rules for container base image updates
 - **`generate_upgrade_regex.py`** - Generates Renovate regex managers for base image upgrade commands
@@ -82,7 +82,7 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 ## 🔄 Workflow
 
 1. **Black Duck Scan** → Generates `mockBlackDuck/blackduck_report.json`
-2. **Generate Rules** → `generate_renovate_rules.py` creates Renovate package rules
+2. **Generate Rules** → `generate_package_rules.py` creates Renovate package rules
 3. **Find Reviewers** → `manage_reviewers.py` analyzes affected components and assigns reviewers
 4. **Renovate PRs** → Automated PRs are created with correct reviewers assigned
 

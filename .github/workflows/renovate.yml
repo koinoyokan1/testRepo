@@ -68,7 +68,7 @@ jobs:
             echo "Found Black Duck vulnerability report"
 
             # Generate dynamic Renovate rules for packages (go/npm)
-            python3 security-tooling/generate_renovate_rules.py
+            python3 security-tooling/generate_package_rules.py
 
             # Generate dynamic Renovate rules for container images
             python3 security-tooling/generate_container_image_rules.py

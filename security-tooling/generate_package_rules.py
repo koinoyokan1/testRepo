@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 """
-Generate Renovate package rules from Black Duck vulnerability findings.
+Generate Renovate package rules for Go and npm code dependencies.
 
-This script reads Black Duck JSON reports and generates Renovate configuration
-that creates separate PRs for each vulnerability fix.
+Reads Black Duck JSON reports and generates Renovate configuration
+for Go modules and npm packages that creates separate PRs for each vulnerability fix.
 
+Filters out container and OS-level packages (handled by other generators).
 Vulnerabilities without a fix (no recommended_version or fixed_versions) are
 filtered out and should be handled by create_github_issues.py instead.
+
+Usage:
+    python3 security-tooling/generate_package_rules.py
 """
 
 import json
