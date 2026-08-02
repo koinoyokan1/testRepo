@@ -223,6 +223,7 @@ jobs:
               merged['regexManagers'].extend(base_image_upgrade_rules.get('regexManagers', []))
 
           # Add merged package rules
+          # In Renovate, the last matching rule wins, so we add enable rules AFTER disable
           merged['packageRules'].extend(final_rules)
 
           # Write merged config

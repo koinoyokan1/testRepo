@@ -87,7 +87,6 @@ def generate_package_rule_from_vuln(vuln, index):
 
     rule = {
         "description": f"Black Duck - {cve} ({severity}) - {ecosystem}",
-        "matchDatasources": datasources,
         "matchManagers": managers,
         "matchPackageNames": [package_name],
         "allowedVersions": version_constraint,
