@@ -2,17 +2,14 @@
 # Recommended: node:20.10.0-alpine
 FROM node:16.14.0-alpine
 
-# Security: Upgrade base image OS packages to fix vulnerabilities
-# Fixes: CVE-2024-44444, CVE-2024-55555
-RUN apk upgrade --no-cache ca-certificates=20240705-r0 musl=1.2.5-r0
+# TYPE 4: Base image OS package upgrades (VULNERABLE - will be fixed by Renovate)
+# CVE-2024-33333 (HIGH) - zlib 1.2.12-r3 -> 1.3.1-r0
+RUN apk upgrade --no-cache zlib=1.2.12-r3
 
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-
-# Install OS-level dependencies
-RUN apk add --no-cache libssl3=3.0.8-r0 libcrypto3=3.0.8-r0
 
 # Install dependencies
 RUN npm ci --production

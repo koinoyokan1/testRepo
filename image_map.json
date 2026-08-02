@@ -27,6 +27,14 @@
         "origin_image": "memcached:1.6.0",
         "purpose": "Distributed memory caching"
     },
+    "rabbitmq": {
+        "origin_image": "rabbitmq:3.11.0",
+        "purpose": "Message broker for async communication"
+    },
+    "elasticsearch": {
+        "origin_image": "elasticsearch:7.17.0",
+        "purpose": "Search and analytics engine"
+    },
     "red/config": {
         "origin_image": "quay.io/coreos/etcd:v3.5.30",
         "red_version": "1.0.2"

@@ -55,6 +55,7 @@ services:
       - "8081:8081"
     # Base: golang:1.19.0-alpine
     # Owner: david@company.com
+    # CVE: CVE-2024-AUTH-001 (HIGH) - Fix: v1.6.0
 
   user-service:
     image: ghcr.io/company/user-service:v1.8.0
@@ -89,3 +90,4 @@ services:
       - "3001:3000"
     # Base: node:16.14.0-alpine
     # Owner: zoe@company.com
+    # CVE: CVE-2024-ADMIN-001 (MEDIUM) - Fix: v2.2.0
