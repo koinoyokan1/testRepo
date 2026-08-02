@@ -24,6 +24,11 @@ on:
       - 'renovate.json'
       - 'security-tooling/blackduck_report.json'
       - 'security-tooling/renovate.json'
+      - 'security-tooling/generate_*.py'
+      - 'security-tooling/detect_*.py'
+      - 'security-tooling/patch_*.py'
+      - 'security-tooling/create_*.py'
+      - 'security-tooling/scan_*.py'
 
 permissions:
   contents: write
