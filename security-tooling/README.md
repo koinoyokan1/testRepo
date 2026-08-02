@@ -13,7 +13,6 @@ security-tooling/
 ├── mockBlackDuck/
 │   └── blackduck_report.json  # Input: Black Duck vulnerability scan report (mock data)
 ├── component_ownership.json    # Config: Component to owner mapping
-├── renovate.json              # Config: Base Renovate configuration
 ├── generate_renovate_rules.py # Script: Generate Renovate rules from Black Duck
 ├── manage_reviewers.py        # Script: Manage reviewer assignments
 ├── npm_reviewer_utils.py      # Utility: npm/TypeScript reviewer analysis
@@ -53,7 +52,7 @@ python3 security-tooling/manage_reviewers.py analyze --npm axios
 
 ### Configuration Files
 - **`component_ownership.json`** - Maps directories to team owners
-- **`renovate.json`** - Base Renovate configuration
+- **`../renovate.json`** - Base Renovate configuration template (at repository root)
 - **`mockBlackDuck/blackduck_report.json`** - Black Duck vulnerability scan results (mock data for testing)
 - **`../image_versions.json`** - Container image versions (prebuilt + custom)
 

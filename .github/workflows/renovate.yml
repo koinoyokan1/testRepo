@@ -23,7 +23,6 @@ on:
       - '.github/workflows/renovate.yml'
       - 'renovate.json'
       - 'security-tooling/mockBlackDuck/blackduck_report.json'
-      - 'security-tooling/renovate.json'
       - 'security-tooling/generate_*.py'
       - 'security-tooling/detect_*.py'
       - 'security-tooling/patch_*.py'
