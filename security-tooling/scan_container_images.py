@@ -188,10 +188,16 @@ def generate_renovate_rule_for_custom_image(image_name, image_data, vulns):
         "This PR was created based on Black Duck container image scan findings."
     ])
 
+    # Create unique branch name to avoid collisions
+    safe_image_name = image_name.replace('/', '-').replace(':', '-').replace('.', '-')
+    safe_cve = cve_list[0].lower().replace('_', '-') if len(cve_list) == 1 else 'multiple-cves'
+    branch_name = f"blackduck/custom-image/{safe_image_name}/{safe_cve}"
+
     rule = {
         "description": description,
         "matchFileNames": [dockerfile, "docker-compose.yml"],
         "enabled": True,
+        "branchName": branch_name,  # Unique branch to prevent collision
         "prTitle": pr_title,
         "prBodyNotes": pr_body,
         "labels": [

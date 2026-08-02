@@ -93,6 +93,12 @@ def generate_dockerfile_rule(vuln):
     }
     
     # Generate a packageRule for this specific package
+    # Create unique branch name
+    safe_component = component.replace('/', '-').replace('_', '-')
+    safe_cve = cve.lower().replace('_', '-')
+    dockerfile_short = file_path.split('/')[-2] if '/' in file_path else 'root'
+    branch_name = f"blackduck/dockerfile/{dockerfile_short}/{safe_component}/{safe_cve}"
+
     package_rule = {
         "description": f"Black Duck - {cve} ({severity}) - {component} in {file_path}",
         "matchDatasources": ["repology-repology"],
@@ -100,6 +106,7 @@ def generate_dockerfile_rule(vuln):
         "matchFileNames": [file_path],
         "allowedVersions": f">={recommended_version}",
         "enabled": True,
+        "branchName": branch_name,  # Unique branch to prevent collision
         "prTitle": f"OS package upgrade (explicit): update {component} to {recommended_version} in {file_path} to fix {cve} ({severity})",
         "prBodyNotes": [
             f"### 🔒 Security Update - OS-Level Package ({ecosystem.upper()})",

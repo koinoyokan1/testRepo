@@ -85,6 +85,12 @@ def generate_package_rule_from_vuln(vuln, index):
     else:
         vuln_type_prefix = f"{ecosystem} package upgrade"
 
+    # Create unique branch name to avoid collisions with regular Renovate updates
+    # Format: blackduck/{ecosystem}/{package-short}/{cve}
+    safe_pkg_name = package_short_name.replace('/', '-').replace('@', '').lower()
+    safe_cve = cve.lower().replace('_', '-')
+    branch_name = f"blackduck/{ecosystem}/{safe_pkg_name}/{safe_cve}"
+
     rule = {
         "description": f"Black Duck - {cve} ({severity}) - {ecosystem}",
         "matchManagers": managers,
@@ -93,6 +99,7 @@ def generate_package_rule_from_vuln(vuln, index):
         "enabled": True,
         "groupName": None,  # Don't group - create separate PR
         "separateMinorPatch": False,
+        "branchName": branch_name,  # Unique branch to prevent collision with regular updates
         "commitMessageTopic": package_name,
         "prTitle": f"{vuln_type_prefix}: update {package_short_name} to v{fixed_version} to fix {cve} ({severity})",
         "prBodyNotes": [

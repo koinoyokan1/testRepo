@@ -118,6 +118,12 @@ def generate_package_rules(patch_info):
         if not component or not recommended_version:
             continue
         
+        # Create unique branch name
+        safe_component = component.replace('/', '-').replace('_', '-')
+        safe_cve = cve.lower().replace('_', '-')
+        dockerfile_short = filepath.split('/')[-2] if '/' in filepath else 'root'
+        branch_name = f"blackduck/base-image/{dockerfile_short}/{safe_component}/{safe_cve}"
+
         package_rule = {
             "description": f"Black Duck - {cve} ({severity}) - Base image {component}",
             "matchDatasources": ["repology-repology"],
@@ -125,6 +131,7 @@ def generate_package_rules(patch_info):
             "matchFileNames": [filepath],
             "allowedVersions": f">={recommended_version}",
             "enabled": True,
+            "branchName": branch_name,  # Unique branch to prevent collision
             "prTitle": f"OS package upgrade (base image): upgrade {component} to {recommended_version} in {filepath} to fix {cve}",
             "prBodyNotes": [
                 f"### 🔒 Security Update - Base Image OS Package ({ecosystem.upper()})",
