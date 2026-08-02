@@ -69,17 +69,9 @@ def generate_package_rule_from_vuln(vuln, index):
         managers = None
         package_short_name = package_name.split('/')[-1]
 
-    # Parse the fixed version to create a constraint that stays within the same minor version
-    # e.g., if fixed_version is "1.9.1", constraint is ">=1.9.1 <1.10.0"
-    version_parts = fixed_version.split('.')
-    if len(version_parts) >= 2:
-        major = version_parts[0]
-        minor = version_parts[1]
-        next_minor = str(int(minor) + 1)
-        version_constraint = f">={fixed_version} <{major}.{next_minor}.0"
-    else:
-        # Fallback if version format is unexpected
-        version_constraint = f">={fixed_version}"
+    # Use EXACTLY the Black Duck recommended version - no range
+    # Black Duck is the single source of truth
+    version_constraint = fixed_version
 
     # Determine vulnerability type prefix based on ecosystem
     if ecosystem == 'go':
@@ -118,7 +110,7 @@ def generate_package_rule_from_vuln(vuln, index):
             "",
             f"**Description**: {description}",
             "",
-            f"**Remediation**: Update {package_name} to version {fixed_version}. Constrained to same minor version to minimize breaking changes.",
+            f"**Remediation**: Update {package_name} to exactly version {fixed_version} as recommended by Black Duck.",
             "",
             "This PR was created based on Black Duck security scan findings."
         ],

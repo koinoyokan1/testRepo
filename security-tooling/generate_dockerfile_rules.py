@@ -194,7 +194,7 @@ def generate_dockerfile_rule(vuln, ownership_config=None):
         "matchDatasources": ["repology-repology"],
         "matchPackageNames": [f"{ecosystem}:{component}"],
         "matchFileNames": [file_path],
-        "allowedVersions": f">={recommended_version}",
+        "allowedVersions": recommended_version,  # EXACTLY the Black Duck recommended version
         "enabled": True,
         "branchName": branch_name,  # Unique branch to prevent collision
         "prTitle": f"OS package upgrade (explicit): update {component} to {recommended_version} in {file_path} to fix {cve} ({severity})",
@@ -206,12 +206,12 @@ def generate_dockerfile_rule(vuln, ownership_config=None):
             f"**Package Manager**: {package_manager}",
             f"**Package**: {component}",
             f"**Current Version**: {current_version}",
-            f"**Fixed Version**: {recommended_version} (minimum safe version)",
+            f"**Fixed Version**: {recommended_version} (exact version from Black Duck)",
             f"**Dockerfile**: {file_path}",
             "",
             f"**Description**: {description}",
             "",
-            f"**Remediation**: Update {component} to version {recommended_version} in the Dockerfile RUN command.",
+            f"**Remediation**: Update {component} to exactly version {recommended_version} in the Dockerfile RUN command as recommended by Black Duck.",
             "",
             "This PR was created based on Black Duck security scan findings."
         ],

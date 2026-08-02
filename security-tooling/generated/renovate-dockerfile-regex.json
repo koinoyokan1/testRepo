@@ -75,7 +75,7 @@
       "matchFileNames": [
         "services/web-frontend/Dockerfile"
       ],
-      "allowedVersions": ">=8.7.1-r0",
+      "allowedVersions": "8.7.1-r0",
       "enabled": true,
       "branchName": "blackduck/dockerfile/web-frontend/curl/cve-2026-55555",
       "prTitle": "OS package upgrade (explicit): update curl to 8.7.1-r0 in services/web-frontend/Dockerfile to fix CVE-2026-55555 (HIGH)",
@@ -87,12 +87,12 @@
         "**Package Manager**: apk",
         "**Package**: curl",
         "**Current Version**: 8.0.1-r0",
-        "**Fixed Version**: 8.7.1-r0 (minimum safe version)",
+        "**Fixed Version**: 8.7.1-r0 (exact version from Black Duck)",
         "**Dockerfile**: services/web-frontend/Dockerfile",
         "",
         "**Description**: Heap buffer overflow in curl URL parsing",
         "",
-        "**Remediation**: Update curl to version 8.7.1-r0 in the Dockerfile RUN command.",
+        "**Remediation**: Update curl to exactly version 8.7.1-r0 in the Dockerfile RUN command as recommended by Black Duck.",
         "",
         "This PR was created based on Black Duck security scan findings."
       ],
@@ -121,7 +121,7 @@
       "matchFileNames": [
         "services/auth/Dockerfile"
       ],
-      "allowedVersions": ">=2.43.0-r0",
+      "allowedVersions": "2.43.0-r0",
       "enabled": true,
       "branchName": "blackduck/dockerfile/auth/git/cve-2026-66666",
       "prTitle": "OS package upgrade (explicit): update git to 2.43.0-r0 in services/auth/Dockerfile to fix CVE-2026-66666 (CRITICAL)",
@@ -133,12 +133,12 @@
         "**Package Manager**: apk",
         "**Package**: git",
         "**Current Version**: 2.38.1-r0",
-        "**Fixed Version**: 2.43.0-r0 (minimum safe version)",
+        "**Fixed Version**: 2.43.0-r0 (exact version from Black Duck)",
         "**Dockerfile**: services/auth/Dockerfile",
         "",
         "**Description**: Remote code execution in git clone operation",
         "",
-        "**Remediation**: Update git to version 2.43.0-r0 in the Dockerfile RUN command.",
+        "**Remediation**: Update git to exactly version 2.43.0-r0 in the Dockerfile RUN command as recommended by Black Duck.",
         "",
         "This PR was created based on Black Duck security scan findings."
       ],
@@ -167,7 +167,7 @@
       "matchFileNames": [
         "services/api-gateway/Dockerfile"
       ],
-      "allowedVersions": ">=3.1.5-r0",
+      "allowedVersions": "3.1.5-r0",
       "enabled": true,
       "branchName": "blackduck/dockerfile/api-gateway/openssl/cve-2026-77777",
       "prTitle": "OS package upgrade (explicit): update openssl to 3.1.5-r0 in services/api-gateway/Dockerfile to fix CVE-2026-77777 (CRITICAL)",
@@ -179,12 +179,12 @@
         "**Package Manager**: apk",
         "**Package**: openssl",
         "**Current Version**: 3.1.0-r4",
-        "**Fixed Version**: 3.1.5-r0 (minimum safe version)",
+        "**Fixed Version**: 3.1.5-r0 (exact version from Black Duck)",
         "**Dockerfile**: services/api-gateway/Dockerfile",
         "",
         "**Description**: Critical vulnerability in OpenSSL certificate validation",
         "",
-        "**Remediation**: Update openssl to version 3.1.5-r0 in the Dockerfile RUN command.",
+        "**Remediation**: Update openssl to exactly version 3.1.5-r0 in the Dockerfile RUN command as recommended by Black Duck.",
         "",
         "This PR was created based on Black Duck security scan findings."
       ],
@@ -214,7 +214,7 @@
       "matchFileNames": [
         "services/auth/Dockerfile"
       ],
-      "allowedVersions": ">=1.2.4-r2",
+      "allowedVersions": "1.2.4-r2",
       "enabled": true,
       "branchName": "blackduck/dockerfile/auth/musl/cve-2026-88888",
       "prTitle": "OS package upgrade (explicit): update musl to 1.2.4-r2 in services/auth/Dockerfile to fix CVE-2026-88888 (HIGH)",
@@ -226,12 +226,12 @@
         "**Package Manager**: apk",
         "**Package**: musl",
         "**Current Version**: 1.2.3-r4",
-        "**Fixed Version**: 1.2.4-r2 (minimum safe version)",
+        "**Fixed Version**: 1.2.4-r2 (exact version from Black Duck)",
         "**Dockerfile**: services/auth/Dockerfile",
         "",
         "**Description**: Buffer overflow in musl libc string functions",
         "",
-        "**Remediation**: Update musl to version 1.2.4-r2 in the Dockerfile RUN command.",
+        "**Remediation**: Update musl to exactly version 1.2.4-r2 in the Dockerfile RUN command as recommended by Black Duck.",
         "",
         "This PR was created based on Black Duck security scan findings."
       ],
