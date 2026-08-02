@@ -36,7 +36,7 @@
         "red_version": "1.1.1"
     },
     "red/message": {
-        "origin_image": "nats:2.14.1",
+        "origin_image": "nats:2.14.4",
         "red_version": "1.1.0"
     },
     "red/proxy": {
