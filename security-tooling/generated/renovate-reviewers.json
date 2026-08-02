@@ -1,0 +1,217 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Auto-generated reviewer assignments based on component ownership",
+  "packageRules": [
+    {
+      "description": "Auto-assign reviewers for github.com/sirupsen/logrus (affects 1 components)",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/sirupsen/logrus"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie",
+        "david"
+      ],
+      "addLabels": [
+        "component:core-services"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for github.com/gorilla/mux (affects 1 components)",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/gorilla/mux"
+      ],
+      "reviewers": [
+        "alice",
+        "bob",
+        "charlie",
+        "david"
+      ],
+      "addLabels": [
+        "component:core-services"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for axios (affects 3 components)",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "axios"
+      ],
+      "reviewers": [
+        "adam",
+        "blake",
+        "clara",
+        "xavier",
+        "yvonne"
+      ],
+      "addLabels": [
+        "component:analytics-plugin",
+        "component:admin-dashboard",
+        "component:web-frontend"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for lodash (affects 3 components)",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "lodash"
+      ],
+      "reviewers": [
+        "adam",
+        "blake",
+        "clara",
+        "xavier",
+        "yvonne"
+      ],
+      "addLabels": [
+        "component:analytics-plugin",
+        "component:admin-dashboard",
+        "component:web-frontend"
+      ]
+    },
+    {
+      "description": "Default reviewers for curl",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "curl"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for git",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "git"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for openssl",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "openssl"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for musl",
+      "matchDatasources": [
+        "alpine"
+      ],
+      "matchPackageNames": [
+        "musl"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for ghcr.io/company/api-gateway",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/company/api-gateway"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for ghcr.io/company/user-service",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/company/user-service"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for postgres",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "postgres"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for nginx",
+      "matchDatasources": [
+        "container"
+      ],
+      "matchPackageNames": [
+        "nginx"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Default reviewers for github.com/insecure/crypto-utils",
+      "matchDatasources": [
+        "go"
+      ],
+      "matchPackageNames": [
+        "github.com/insecure/crypto-utils"
+      ],
+      "reviewers": [
+        "techleads",
+        "architects"
+      ]
+    },
+    {
+      "description": "Auto-assign reviewers for insecure-hash (affects 1 components)",
+      "matchDatasources": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "insecure-hash"
+      ],
+      "reviewers": [
+        "adam",
+        "zoe"
+      ],
+      "addLabels": [
+        "component:admin-dashboard"
+      ]
+    }
+  ]
+}

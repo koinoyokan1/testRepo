@@ -211,11 +211,7 @@ def generate_renovate_reviewers_config(
         if ecosystem == 'npm':
             result = analyze_npm_package_reviewers(package, ownership_config)
         else:  # go
-            result = get_reviewers_for_dependency(
-                package,
-                ownership_config,
-                include_secondary=True
-            )
+            result = analyze_go_package_reviewers(package, ownership_config)
 
         if result and result.get('reviewers'):
             reviewers = result['reviewers']
