@@ -87,6 +87,7 @@ def generate_package_rule_from_vuln(vuln, index):
         "matchDatasources": datasources,
         "matchPackageNames": [package_name],
         "allowedVersions": version_constraint,
+        "enabled": True,
         "groupName": None,  # Don't group - create separate PR
         "separateMinorPatch": False,
         "commitMessageTopic": package_name,
