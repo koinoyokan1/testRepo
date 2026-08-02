@@ -4,7 +4,7 @@
         "purpose": "Web server and reverse proxy"
     },
     "postgres": {
-        "origin_image": "postgres:13.2",
+        "origin_image": "postgres:15.18",
         "purpose": "Primary database"
     },
     "redis": {
