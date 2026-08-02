@@ -19,6 +19,14 @@
         "origin_image": "golang:1.19.0-alpine",
         "purpose": "Base image for Go services"
     },
+    "mysql": {
+        "origin_image": "mysql:8.0.0",
+        "purpose": "Alternative database for legacy apps"
+    },
+    "memcached": {
+        "origin_image": "memcached:1.6.0",
+        "purpose": "Distributed memory caching"
+    },
     "red/config": {
         "origin_image": "quay.io/coreos/etcd:v3.5.30",
         "red_version": "1.0.2"

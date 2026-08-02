@@ -2,7 +2,11 @@ module example.com/oldversion
 
 go 1.20
 
-require github.com/gin-gonic/gin v1.8.0
+require (
+	github.com/gin-gonic/gin v1.8.0
+	github.com/gorilla/mux v1.8.0
+	github.com/sirupsen/logrus v1.8.1
+)
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
