@@ -16,7 +16,7 @@
         "purpose": "Base image for Node.js services"
     },
     "golang": {
-        "origin_image": "golang:1.19.0-alpine",
+        "origin_image": "golang:1.19.13-alpine",
         "purpose": "Base image for Go services"
     },
     "mysql": {
