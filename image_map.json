@@ -24,7 +24,7 @@
         "purpose": "Alternative database for legacy apps"
     },
     "memcached": {
-        "origin_image": "memcached:1.6.0",
+        "origin_image": "memcached:1.6.45",
         "purpose": "Distributed memory caching"
     },
     "red/config": {
