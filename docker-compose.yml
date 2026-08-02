@@ -3,7 +3,7 @@ version: '3.8'
 services:
   # Prebuilt images - services using official images
   nginx:
-    image: nginx:1.21.0
+    image: nginx:1.21.6
     container_name: nginx-proxy
     ports:
       - "80:80"
@@ -13,7 +13,7 @@ services:
     # CVE: CVE-2026-NGINX-001 (HIGH) - Fix: 1.25.4
 
   postgres:
-    image: postgres:13.2
+    image: postgres:13.23
     container_name: postgres-db
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -24,7 +24,7 @@ services:
     # CVE: CVE-2026-PG-001 (CRITICAL) - Fix: 16.2
 
   redis:
-    image: redis:6.0.9
+    image: redis:6.0.20
     container_name: redis-cache
     ports:
       - "6379:6379"
