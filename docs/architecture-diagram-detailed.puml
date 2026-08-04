@@ -1,0 +1,208 @@
+@startuml Security Remediation Pipeline - Detailed Flow
+
+!define INPUT_COLOR #FFF9C4
+!define PROCESS_COLOR #BBDEFB
+!define ARTIFACT_COLOR #E1BEE7
+!define OUTPUT_COLOR #C8E6C9
+
+title Automated Security Remediation Pipeline - Detailed Architecture
+
+skinparam componentStyle rectangle
+
+' Main flow from left to right
+left to right direction
+
+' Phase 1: Input Sources
+package "Phase 1: Input Sources" as phase1 {
+  database "Black Duck\nVulnerability Report" as blackduck #INPUT_COLOR {
+    card "14 Vulnerabilities" {
+      [2 Go packages]
+      [2 npm packages]
+      [2 Alpine explicit]
+      [2 Alpine base]
+      [2 Custom containers]
+      [4 Prebuilt containers]
+    }
+  }
+  
+  database "Component\nOwnership Map" as ownership #INPUT_COLOR {
+    card "Ownership Rules" {
+      [File patterns → Owners]
+      [Image maps → Reviewers]
+      [Default fallbacks]
+    }
+  }
+  
+  database "Repository\nCodebase" as codebase #INPUT_COLOR {
+    [go.mod files]
+    [package.json files]
+    [Dockerfiles]
+    [docker-compose.yml]
+    [image_map.json]
+  }
+}
+
+' Phase 2: Analysis & Processing
+package "Phase 2: Analysis & Processing\n(Python Orchestrator)" as phase2 {
+  
+  rectangle "Vulnerability Categorization" as categorize #PROCESS_COLOR {
+    component "categorize_os_vulnerabilities.py" {
+      [Base image vulns (2)]
+      [Explicit install vulns (2)]
+      [Container vulns (6)]
+    }
+  }
+  
+  rectangle "Dependency Analysis" as dep_analysis #PROCESS_COLOR {
+    component "go_reviewer_utils.py" {
+      [Scan go.mod imports]
+      [Map to file paths]
+      [Find components]
+    }
+    component "npm_reviewer_utils.py" {
+      [Scan package.json]
+      [Map to directories]
+      [Find components]
+    }
+  }
+  
+  rectangle "Reviewer Resolution" as reviewer_resolve #PROCESS_COLOR {
+    component "manage_reviewers.py" {
+      [Component → Owners lookup]
+      [Email → GitHub username]
+      [Primary + Secondary merge]
+    }
+  }
+}
+
+' Phase 3: Rule Generation
+package "Phase 3: Rule Generation" as phase3 {
+  
+  rectangle "Type 1 & 2: Application Dependencies" as app_deps #ARTIFACT_COLOR {
+    component "generate_package_rules.py" {
+      file "renovate-package-rules.json" {
+        [Go: allowedVersions: "1.9.3"]
+        [npm: allowedVersions: "1.6.7"]
+        [CVE metadata]
+        [Branch names]
+      }
+    }
+  }
+  
+  rectangle "Type 3: OS Explicit Packages" as os_explicit #ARTIFACT_COLOR {
+    component "generate_dockerfile_rules.py" {
+      file "renovate-dockerfile-rules.json" {
+        [Regex managers for RUN]
+        [Package rules]
+        [Repology datasource]
+      }
+    }
+  }
+  
+  rectangle "Type 5 & 6: Container Images" as containers #ARTIFACT_COLOR {
+    component "generate_container_image_rules.py" {
+      file "renovate-container-image-rules.json" {
+        [Custom image rules]
+      }
+    }
+    component "generate_base_image_rules.py" {
+      file "renovate-base-image-rules.json" {
+        [Prebuilt image rules]
+        [Image-specific reviewers]
+      }
+    }
+  }
+  
+  rectangle "Reviewer Assignments" as reviewers #ARTIFACT_COLOR {
+    component "manage_reviewers.py\ngenerate-renovate" {
+      file "renovate-go-npm-reviewers.json" {
+        [Go package → reviewers]
+        [npm package → reviewers]
+        [Component labels]
+      }
+    }
+  }
+}
+
+' Phase 4: Configuration Merge
+package "Phase 4: Configuration Merge" as phase4 {
+  rectangle "Merge Process" as merge_process #PROCESS_COLOR {
+    component "merge_renovate_config.py" {
+      [Load base config]
+      [Merge all fragments]
+      [Add global disable rule]
+      [Merge reviewer assignments]
+    }
+  }
+  
+  file "renovate-merged.json" as merged #OUTPUT_COLOR {
+    [31 package rules]
+    [8 regex managers]
+    [All with reviewers]
+    [Security metadata]
+  }
+}
+
+' Phase 5: Execution
+package "Phase 5: GitHub Actions Execution" as phase5 {
+  rectangle "Workflow Trigger" as trigger #PROCESS_COLOR {
+    [Hourly cron: 0 * * * *]
+    [Manual dispatch]
+    [Config change push]
+  }
+  
+  rectangle "Renovate Bot" as renovate #PROCESS_COLOR {
+    [Read merged config]
+    [Scan dependencies]
+    [Create branches]
+    [Generate PRs]
+  }
+}
+
+' Phase 6: Output
+package "Phase 6: Automated Pull Requests" as phase6 {
+  cloud "GitHub Repository" {
+    card "Pull Request 1" #OUTPUT_COLOR {
+      [Title: CVE-2026-11111 (HIGH)]
+      [Branch: blackduck/go/logrus/...]
+      [Reviewers: alice, bob, charlie]
+      [Labels: security, high-priority]
+      [Body: CVSS 8.2, remediation]
+      [Files: go.mod, go.sum]
+    }
+    
+    card "Pull Request 2...14" #OUTPUT_COLOR {
+      [Similar structure]
+      [One PR per vulnerability]
+      [Exact version pinning]
+      [Component-specific reviewers]
+    }
+  }
+}
+
+' Data Flow Arrows
+blackduck --> categorize
+blackduck --> app_deps
+blackduck --> os_explicit
+blackduck --> containers
+
+ownership --> reviewer_resolve
+codebase --> dep_analysis
+
+categorize --> os_explicit
+
+dep_analysis --> reviewer_resolve
+reviewer_resolve --> reviewers
+
+app_deps --> merge_process
+os_explicit --> merge_process
+containers --> merge_process
+reviewers --> merge_process
+
+merge_process --> merged
+merged --> renovate
+
+trigger --> renovate
+renovate --> phase6
+
+@enduml

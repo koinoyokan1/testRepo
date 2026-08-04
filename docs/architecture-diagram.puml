@@ -1,0 +1,158 @@
+@startuml Security Remediation Pipeline Architecture
+
+!define RECTANGLE_COLOR #E3F2FD
+!define PROCESS_COLOR #BBDEFB
+!define DATA_COLOR #FFF9C4
+!define OUTPUT_COLOR #C8E6C9
+
+title Automated Security Remediation Pipeline Architecture
+
+' Input Data Sources
+package "Input Data Sources" as inputs {
+  database "Security Vulnerability\nReport\n(Black Duck JSON)" as vuln_report #DATA_COLOR
+  database "Component Ownership\nMap\n(JSON)" as ownership_map #DATA_COLOR
+  
+  note right of vuln_report
+    Contains:
+    - CVE identifiers
+    - Package versions
+    - Severity (CVSS)
+    - Recommended versions
+    - Affected file paths
+  end note
+  
+  note right of ownership_map
+    Maps:
+    - File patterns → Owners
+    - Packages → Components
+    - Images → Reviewers
+    - Default reviewers
+  end note
+}
+
+' Processing Layer
+package "Security Tooling Orchestrator\n(Python-based)" as orchestrator {
+  
+  component "Vulnerability Analysis" as analysis #PROCESS_COLOR {
+    [Type 1: Go Modules\nAnalyzer]
+    [Type 2: npm Packages\nAnalyzer]
+    [Type 3: OS Explicit\nPackages Analyzer]
+    [Type 4: OS Base Image\nPackages Analyzer]
+    [Type 5: Custom Container\nImages Analyzer]
+    [Type 6: Prebuilt Container\nImages Analyzer]
+  }
+  
+  component "Reviewer Mapping" as reviewer_mapping #PROCESS_COLOR {
+    [Go Import Scanner]
+    [npm Dependency Scanner]
+    [File Path Matcher]
+    [Component Correlator]
+  }
+  
+  component "Rule Generation" as rule_gen #PROCESS_COLOR {
+    [Package Rules\nGenerator]
+    [Regex Manager\nGenerator]
+    [Dockerfile Rules\nGenerator]
+    [Container Image\nRules Generator]
+    [Base Image Rules\nGenerator]
+    [Reviewer Assignment\nGenerator]
+  }
+}
+
+' Intermediate Artifacts
+package "Renovate Rule Fragments" as fragments {
+  file "renovate-package-rules.json\n(Go/npm)" as pkg_rules #DATA_COLOR
+  file "renovate-dockerfile-rules.json\n(OS packages + regex)" as dockerfile_rules #DATA_COLOR
+  file "renovate-container-image-rules.json\n(Custom images)" as container_rules #DATA_COLOR
+  file "renovate-base-image-rules.json\n(Prebuilt images)" as base_image_rules #DATA_COLOR
+  file "renovate-go-npm-reviewers.json\n(Reviewer assignments)" as reviewer_rules #DATA_COLOR
+}
+
+' Configuration Merger
+component "Configuration Merger" as merger #PROCESS_COLOR
+database "Base Renovate\nConfiguration\n(renovate.json)" as base_config #DATA_COLOR
+file "Consolidated Renovate\nConfiguration\n(renovate-merged.json)" as merged_config #OUTPUT_COLOR
+
+' Execution Environment
+package "GitHub Actions Workflow" as github_actions {
+  component "Scheduled Trigger\n(Hourly)" as trigger #PROCESS_COLOR
+  component "Dynamic Config\nGeneration" as dynamic_gen #PROCESS_COLOR
+  component "Renovate Bot\nExecution" as renovate_bot #PROCESS_COLOR
+}
+
+' End Results
+cloud "GitHub Repository" as github_repo {
+  component "Automated Pull Requests" as prs #OUTPUT_COLOR {
+    card "PR Metadata" as pr_metadata {
+      [Exact Version Pinning]
+      [CVE ID in Title]
+      [Severity Labels]
+      [CVSS Scores]
+      [Component Owners\nas Reviewers]
+      [Remediation Steps]
+    }
+  }
+}
+
+' Data Flow
+vuln_report --> analysis
+ownership_map --> reviewer_mapping
+
+analysis --> rule_gen
+reviewer_mapping --> rule_gen
+
+rule_gen --> pkg_rules
+rule_gen --> dockerfile_rules
+rule_gen --> container_rules
+rule_gen --> base_image_rules
+rule_gen --> reviewer_rules
+
+pkg_rules --> merger
+dockerfile_rules --> merger
+container_rules --> merger
+base_image_rules --> merger
+reviewer_rules --> merger
+base_config --> merger
+
+merger --> merged_config
+
+merged_config --> dynamic_gen
+trigger --> dynamic_gen
+dynamic_gen --> renovate_bot
+
+renovate_bot --> prs
+
+' Legend
+legend right
+  |= Type |= Scope |= Handler |= Example |
+  | **Type 1** | Go Modules | Package Rules Generator | github.com/sirupsen/logrus |
+  | **Type 2** | npm Packages | Package Rules Generator | axios, lodash |
+  | **Type 3** | OS Explicit (RUN) | Dockerfile Rules Generator | apk add curl=version |
+  | **Type 4** | OS Base Image | Dockerfile Patcher + Base Rules | openssl in FROM layer |
+  | **Type 5** | Custom Containers | Container Image Rules Generator | ghcr.io/company/api-gateway |
+  | **Type 6** | Prebuilt Containers | Base Image Rules Generator | postgres, nginx, redis |
+
+  **Key Architectural Features:**
+  ✓ Exact version pinning (allowedVersions: "1.9.3")
+  ✓ Custom regex managers for non-standard files (image_map.json, Dockerfiles)
+  ✓ Dynamic reviewer assignment via codebase import/usage analysis
+  ✓ Security metadata propagation (CVE IDs, severity, CVSS scores)
+  ✓ 100% vulnerability coverage across all 6 types
+  ✓ Single source of truth: Security scanner drives all updates
+
+  **Datasources Used:**
+  • Docker Registry (container images)
+  • npm Registry (JavaScript packages)
+  • Go Module Proxy (Go packages)
+  • Repology (Alpine/Debian/RHEL OS packages)
+endlegend
+
+note bottom of github_repo
+  **Example Pull Request:**
+  Title: "Go package upgrade: update logrus to v1.9.3 to fix CVE-2026-11111 (HIGH)"
+  Labels: [security, high-priority, blackduck, cve-2026-11111, go]
+  Reviewers: [alice, bob, charlie] (from component ownership analysis)
+  Body: Includes CVSS score, vulnerability details, remediation steps
+end note
+
+@enduml
