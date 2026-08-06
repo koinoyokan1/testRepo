@@ -9,7 +9,7 @@
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
-    "axios": "0.21.1",
+    "axios": "1.6.7",
     "lodash": "4.17.19",
     "express": "4.17.1"
   },
